@@ -6,6 +6,13 @@ use Exception;
 
 trait UnicartCheck
 {
+    private function checkIsCartEmpty()
+    {
+        if (count($this->cartItems) == 0) {
+            throw new Exception('Cart is empty');
+        }
+    }
+
     private function checkItemExist(int|string $id)
     {
         if (isset($this->cartItems[$id])) {
@@ -29,7 +36,7 @@ trait UnicartCheck
 
     private function checkAnyItemHasTaxApplied(string $applying)
     {
-        foreach ($this->items() as $item) {
+        foreach ($this->getItems() as $item) {
             if ($item['taxes'] != null) {
                 throw new Exception('Can not apply ' . $applying . ' on cart as tax has already been applied on item with Id: ' . $item['id']);
             }
@@ -38,7 +45,7 @@ trait UnicartCheck
 
     private function checkAnyItemHasDeliveryChargeApplied(string $applying)
     {
-        foreach ($this->items() as $item) {
+        foreach ($this->getItems() as $item) {
             if ($item['deliveryCharge'] != null) {
                 throw new Exception('Can not apply ' . $applying . ' on cart as delivery charge has already been applied on item with Id: ' . $item['id']);
             }
@@ -83,7 +90,8 @@ trait UnicartCheck
         }
     }
 
-    private function checkDeliveryChargeBeforeAddingNew(){
+    private function checkDeliveryChargeBeforeAddingNew()
+    {
         if (count($this->deliveryCharge) > 0) {
             throw new Exception('Can not add another delivery charge on the cart');
         }

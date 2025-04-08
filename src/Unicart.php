@@ -2,53 +2,61 @@
 
 namespace Unicart;
 
-use Exception;
 use Unicart\Classes\Discount;
 use Unicart\Classes\Item;
 use Unicart\Checks\UnicartCheck;
+use Unicart\Formats\OutputFormat;
 
 class Unicart
 {
-    use UnicartCheck;
+    use UnicartCheck, OutputFormat;
 
+    /**
+     * Cart items
+     * @var array
+     */
     private $cartItems = [];
+
+    /**
+     * Delivery charge on cart
+     * @var array
+     */
     private $deliveryCharge = [];
+
+    /**
+     * Discounts on cart
+     * @var array
+     */
     private $discounts = [];
+
+    /**
+     * Taxes on cart
+     * @var array
+     */
     private $taxes = [];
+
+    /**
+     * Flag for checking whether cart methods has been initiated
+     * @var bool
+     */
     private $hasCartApplicationInitiated = false;
-    private $finalPayable = null;
 
-    private function items()
-    {
-        $cart = [];
+    /**
+     * Final payable amount (after discount, delivery charge, or tax application)
+     * @var int|float
+     */
+    private $payableAmount = null;
 
-        foreach ($this->cartItems as $cartItem) {
-            $cart[] = $cartItem->detail();
-        }
-
-        return $cart;
-    }
-
-    private function getCartSummary()
-    {
-        $beforeTotal = 0;
-        $afterTotal = 0;
-
-        foreach ($this->cartItems as $item) {
-            $details = $item->detail();
-            $beforeTotal += $details['initialPayable'];
-            $afterTotal += $details['finalPayable'];
-        }
-
-        return [
-            'discounts' => count($this->discounts) > 0 ? $this->discounts : null,
-            'deliveryCharge' => count($this->deliveryCharge) > 0 ? $this->deliveryCharge : null,
-            'initialPayable' => round($beforeTotal, 2),
-            'finalPayable' => round($this->finalPayable ?? $afterTotal, 2)
-        ];
-    }
-
-    public function addItem(int|string $id, int|float $price, int $quantity = 1)
+    /**
+     * Adds a new item to the cart.
+     * 
+     * @param int|string $id A Unique identifier for the item.
+     * @param int|float $price The price of a single unit of the item.
+     * @param int $quantity The quantity of the item to be added. Defaults to 1.
+     * 
+     * @return self
+     */
+    public function addItem(int|string $id, int|float $price, int $quantity = 1): self
     {
         $this->checkHasCartInitiated($id, 'new item');
         $this->checkItemExist($id);
@@ -57,7 +65,15 @@ class Unicart
         return $this;
     }
 
-    public function addFlatDiscountOnItem(int|string $id, int|float $discount)
+    /**
+     * Applies a flat discount on existing item.
+     * 
+     * @param int|string $id A unique identifier for the existing item.
+     * @param int|float $discount The discount amount.
+     * 
+     * @return self
+     */
+    public function applyFlatDiscountOnItem(int|string $id, int|float $discount): self
     {
         $this->checkHasCartInitiated($id, 'discount');
         $this->checkItemDoesNotExist($id);
@@ -66,7 +82,16 @@ class Unicart
         return $this;
     }
 
-    public function addPercentageDiscountOnItem(int|string $id, int|float $percentage, int|float $upto = 0)
+    /**
+     * Applies a percentage-based discount on existing item.
+     * 
+     * @param int|string $id A unique identifier for the existing item.
+     * @param int|float $percentage The discount percentage.
+     * @param int|float $upto [optional] The maximum discount allowed. Defaults to 0 (no limit).
+     * 
+     * @return self
+     */
+    public function applyPercentageDiscountOnItem(int|string $id, int|float $percentage, int|float $upto = 0): self
     {
         $this->checkHasCartInitiated($id, 'discount');
         $this->checkUptoAmount($id, $upto);
@@ -76,7 +101,15 @@ class Unicart
         return $this;
     }
 
-    public function addDeliveryChargeOnItem(int|string $id, int|float $charge)
+    /**
+     * Applies a delivery charge on existing item.
+     * 
+     * @param int|string $id A unique identifier for the existing item.
+     * @param int|float $charge The delivery charge.
+     * 
+     * @return self
+     */
+    public function applyDeliveryChargeOnItem(int|string $id, int|float $charge): self
     {
         $this->checkHasCartInitiated($id, 'delivery charge');
         $this->checkItemDoesNotExist($id);
@@ -86,7 +119,16 @@ class Unicart
         return $this;
     }
 
-    public function addTaxOnItem(int|string $id, int|float $rate, string $type = 'general')
+    /**
+     * Applies a tax on existing item.
+     * 
+     * @param int|string $id A unique identifier for the existing item.
+     * @param int|float $rate The tax rate in %.
+     * @param string $type The type of tax being applied on the item.
+     * 
+     * @return self
+     */
+    public function applyTaxOnItem(int|string $id, int|float $rate, string $type = 'general'): self
     {
         $this->checkHasCartInitiated($id, 'tax');
         $this->checkItemDoesNotExist($id);
@@ -96,104 +138,198 @@ class Unicart
         return $this;
     }
 
-    public function addFlatDiscountOnCart(int|float $discount)
+    /**
+     * Applies a flat discount on the cart.
+     * 
+     * @param int|float $discount The discount amount.
+     * 
+     * @return self
+     */
+    public function applyFlatDiscountOnCart(int|float $discount): self
     {
+        $this->checkIsCartEmpty();
         $this->checkItemLevelApplications('discount');
         $this->checkTaxHasBeenApplied();
         $this->checkDeliveryChargeHasBeenApplied();
 
-        if ($this->finalPayable) {
-            $initialPayable = $finalPayable = $this->finalPayable;
-            $finalPayable = Discount::flatDiscount($finalPayable, $discount);
-        } else {
-            $cartSummary = $this->getCartSummary();
-            $initialPayable = $finalPayable = $cartSummary['finalPayable'];
-
-            $this->finalPayable = Discount::flatDiscount($finalPayable, $discount);
-        }
+        $originalPayable = $payableAmount = $this->payableAmount();
+        $this->payableAmount = Discount::flatDiscount($payableAmount, $discount);
 
         $this->discounts[] = [
             'type' => Discount::FLAT_TYPE,
             'discount' => $discount,
-            'beforeDiscount' => $initialPayable,
-            'afterDiscount' => $this->finalPayable
+            'beforeDiscount' => $originalPayable,
+            'afterDiscount' => $this->payableAmount
         ];
         return $this;
     }
 
-    public function addPercentageDiscountOnCart(int|float $percentage, int|float $upto = 0)
+    /**
+     * Applies a percentage-based discount on the cart.
+     * 
+     * @param int|float $percentage The discount percentage.
+     * @param int|float $upto [optional] The maximum discount allowed. Defaults to 0 (no limit).
+     * 
+     * @return self
+     */
+    public function applyPercentageDiscountOnCart(int|float $percentage, int|float $upto = 0): self
     {
+        $this->checkIsCartEmpty();
         $this->checkItemLevelApplications('discount');
         $this->checkTaxHasBeenApplied();
         $this->checkDeliveryChargeHasBeenApplied();
         $this->checkUptoAmountForCart($upto);
 
-        if ($this->finalPayable) {
-            $initialPayable = $finalPayable = $this->finalPayable;
-            $this->finalPayable = Discount::percentageDiscount($finalPayable, $percentage, $upto);
-        } else {
-            $cartSummary = $this->getCartSummary();
-            $initialPayable = $finalPayable = $cartSummary['finalPayable'];
+        $originalPayable = $payableAmount = $this->payableAmount();
+        $this->payableAmount = Discount::percentageDiscount($payableAmount, $percentage, $upto);
 
-            $this->finalPayable = Discount::percentageDiscount($finalPayable, $percentage, $upto);
-        }
-
-        $this->discounts[] = $upto > 0 ? [
+        $this->discounts[] = [
             'type' => Discount::PERCENTAGE_TYPE,
             'discount' => $percentage,
-            'upto' => $upto,
-            'beforeDiscount' => $initialPayable,
-            'afterDiscount' => $this->finalPayable
-        ] : [
-            'type' => Discount::PERCENTAGE_TYPE,
-            'discount' => $percentage,
-            'beforeDiscount' => $initialPayable,
-            'afterDiscount' => $this->finalPayable
+            ...($upto > 0 ? ['upto' => $upto] : []),
+            'beforeDiscount' => $originalPayable,
+            'afterDiscount' => $this->payableAmount
         ];
 
         return $this;
     }
 
-    public function addDeliveryChargeOnCart(int|float $charge)
+    /**
+     * Applies a delivery charge on the cart.
+     * 
+     * @param int|float $charge The delivery charge.
+     * 
+     * @return self
+     */
+    public function applyDeliveryChargeOnCart(int|float $charge): self
     {
+        $this->checkIsCartEmpty();
         $this->checkItemLevelApplications('delivery charge');
         $this->checkDeliveryChargeBeforeAddingNew();
 
-        $initialPayable = $finalPayable = $this->finalPayable ?? $this->getCartSummary()['finalPayable'];
-        $this->finalPayable = $finalPayable + $charge;
+        $originalPayable = $payableAmount = $this->payableAmount ?? $this->summary()['payableAmount'];
+        $this->payableAmount = $payableAmount + $charge;
 
         $this->deliveryCharge[] = [
-            'beforeDeliveryCharge' => $initialPayable,
-            'afterDeliveryCharge' => $this->finalPayable
+            'beforeDeliveryCharge' => $originalPayable,
+            'afterDeliveryCharge' => $this->payableAmount
         ];
 
         return $this;
     }
 
-    public function addTaxOnCart(int|float $rate, string $type = 'general')
+
+    /**
+     * Applies a tax on the cart.
+     * 
+     * @param int|float $rate The tax rate in %.
+     * @param string $type The type of tax being applied on the cart.
+     * 
+     * @return self
+     */
+    public function applyTaxOnCart(int|float $rate, string $type = 'general'): self
     {
+        $this->checkIsCartEmpty();
         $this->checkItemLevelApplications('tax');
 
-        $initialPayable = $finalPayable = $this->finalPayable ?? $this->getCartSummary()['finalPayable'];
+        $originalPayable = $payableAmount = $this->payableAmount ?? $this->summary()['payableAmount'];
 
-        $this->finalPayable = $finalPayable + (($finalPayable * $rate) / 100);
+        $this->payableAmount = $payableAmount + (($payableAmount * $rate) / 100);
 
         $this->taxes[] = [
             'type' => $type,
             'rate' => $rate,
-            'beforeTax' => $initialPayable,
-            'afterTax' => $this->finalPayable
+            'beforeTax' => $originalPayable,
+            'afterTax' => $this->payableAmount
         ];
 
         return $this;
     }
 
+    /**
+     * Retrieves the list of items currently in the cart.
+     * 
+     * @return mixed
+     */
+    public function getItems(): ?array
+    {
+        $cart = [];
 
-    public function summary()
+        foreach ($this->cartItems as $cartItem) {
+            $cart[] = $cartItem->toArray();
+        }
+
+        return count($cart) > 0 ? $cart : null;
+    }
+
+    /**
+     * Retrieves the item using the unique identifier.
+     * 
+     * @param int|string $id A unique identifier for the existing item.
+     * 
+     * @return object
+     */
+
+    public function item(int|string $id): object
+    {
+        $this->checkItemDoesNotExist($id);
+        return $this->cartItems[$id];
+    }
+
+    /**
+     * Retrieves original payable of the cart.
+     * 
+     * @return int|float
+     */
+    public function originalPayable(): int|float
+    {
+        return $this->summary()['originalPayable'];
+    }
+
+    /**
+     * Retrieves final payable of the cart.
+     * 
+     * @return int|float
+     */
+    public function payableAmount(): int|float
+    {
+        return $this->payableAmount ?? $this->summary()['payableAmount'];
+    }
+
+    /**
+     * Calculates and returns a summary of the entire cart.
+     * 
+     * @return array
+     */
+    private function summary(): array
+    {
+        $beforeTotal = 0;
+        $afterTotal = 0;
+
+        foreach ($this->cartItems as $item) {
+            $details = $item->toArray();
+            $beforeTotal += $details['originalPayable'];
+            $afterTotal += $details['payableAmount'];
+        }
+
+        return [
+            'discounts' => count($this->discounts) > 0 ? $this->discounts : null,
+            'deliveryCharge' => count($this->deliveryCharge) > 0 ? $this->deliveryCharge : null,
+            'originalPayable' => round($beforeTotal, 2),
+            'payableAmount' => round($this->payableAmount ?? $afterTotal, 2)
+        ];
+    }
+
+    /**
+     * Cart cart detail
+     * 
+     * @return array
+     */
+    private function getDetail(): array
     {
         return [
-            'items' => $this->items(),
-            ...$this->getCartSummary()
+            'items' => $this->getItems(),
+            ...$this->summary()
         ];
     }
 }
