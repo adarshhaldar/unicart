@@ -41,7 +41,7 @@ trait OutputFormat
     /**
      * Retrieves applied discounts.
      * 
-     * @param string $as Flag to fetch data in different formats. Accepted format are array, object, json
+     * @param string $as Flag to fetch data in different formats. Accepted formats are array, object, json
      *
      * @return mixed
      */
@@ -53,7 +53,7 @@ trait OutputFormat
     /**
      * Retrieves applied delivery charge.
      * 
-     * @param string $as Flag to fetch data in different formats. Accepted format are array, object, json
+     * @param string $as Flag to fetch data in different formats. Accepted formats are array, object, json
      *
      * @return mixed
      */

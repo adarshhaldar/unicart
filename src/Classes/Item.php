@@ -2,12 +2,12 @@
 
 namespace Unicart\Classes;
 
-use Unicart\Checks\ItemCheck;
 use Unicart\Formats\OutputFormat;
+use Unicart\Validators\ItemValidator;
 
 class Item
 {
-    use ItemCheck, OutputFormat;
+    use ItemValidator, OutputFormat;
 
     /**
      * Item unique identifier
@@ -95,8 +95,7 @@ class Item
      */
     public function applyFlatDiscount(int|float $discount): void
     {
-        $this->checkTaxBeforeApplyingDiscount();
-        $this->checkDeliveryChargeBeforeApplyingDiscount();
+        $this->validate('applyingFlatDiscount');
 
         $beforeDiscount = $this->payableAmount;
         $this->payableAmount = Discount::flatDiscount($this->payableAmount, $discount);
@@ -119,8 +118,7 @@ class Item
      */
     public function applyPercentageDiscount(int|float $percentage, int|float $upto = 0): void
     {
-        $this->checkTaxBeforeApplyingDiscount();
-        $this->checkDeliveryChargeBeforeApplyingDiscount();
+        $this->validate('applyingPercentageDiscount', $upto);
 
         $beforeDiscount = $this->payableAmount;
         $this->payableAmount = Discount::percentageDiscount($this->payableAmount, $percentage, $upto);
@@ -143,7 +141,7 @@ class Item
      */
     public function applyDeliveryCharge(int|float $charge): void
     {
-        $this->checkDeliveryChargeBeforeAddingNew();
+        $this->validate('applyingDeliveryCharge');
 
         $beforeDeliveryCharge = $this->payableAmount;
         $this->payableAmount = $this->payableAmount + $charge;
@@ -194,7 +192,6 @@ class Item
     {
         return $this->payableAmount;
     }
-
 
     /**
      * Retrieves a detailed breakdown of the item's pricing and modifications.

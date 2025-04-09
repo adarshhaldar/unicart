@@ -4,12 +4,12 @@ namespace Unicart;
 
 use Unicart\Classes\Discount;
 use Unicart\Classes\Item;
-use Unicart\Checks\UnicartCheck;
 use Unicart\Formats\OutputFormat;
+use Unicart\Validators\UnicartValidator;
 
 class Unicart
 {
-    use UnicartCheck, OutputFormat;
+    use UnicartValidator, OutputFormat;
 
     /**
      * Cart items
@@ -58,8 +58,7 @@ class Unicart
      */
     public function addItem(int|string $id, int|float $price, int $quantity = 1): self
     {
-        $this->checkHasCartInitiated($id, 'new item');
-        $this->checkItemExist($id);
+        $this->validate('addingItem', $id);
 
         $this->cartItems[$id] = Item::add($id, $price, $quantity);
         return $this;
@@ -75,8 +74,7 @@ class Unicart
      */
     public function applyFlatDiscountOnItem(int|string $id, int|float $discount): self
     {
-        $this->checkHasCartInitiated($id, 'discount');
-        $this->checkItemDoesNotExist($id);
+        $this->validate('applyingFlatDiscountOnItem', $id);
 
         $this->cartItems[$id]->applyFlatDiscount($discount);
         return $this;
@@ -93,9 +91,7 @@ class Unicart
      */
     public function applyPercentageDiscountOnItem(int|string $id, int|float $percentage, int|float $upto = 0): self
     {
-        $this->checkHasCartInitiated($id, 'discount');
-        $this->checkUptoAmount($id, $upto);
-        $this->checkItemDoesNotExist($id);
+        $this->validate('applyingPercentageDiscountOnItem', $id, $upto);
 
         $this->cartItems[$id]->applyPercentageDiscount($percentage, $upto);
         return $this;
@@ -111,8 +107,7 @@ class Unicart
      */
     public function applyDeliveryChargeOnItem(int|string $id, int|float $charge): self
     {
-        $this->checkHasCartInitiated($id, 'delivery charge');
-        $this->checkItemDoesNotExist($id);
+        $this->validate('applyingDeliveryChargeOnItem', $id);
 
         $this->cartItems[$id]->applyDeliveryCharge($charge);
 
@@ -130,8 +125,7 @@ class Unicart
      */
     public function applyTaxOnItem(int|string $id, int|float $rate, string $type = 'general'): self
     {
-        $this->checkHasCartInitiated($id, 'tax');
-        $this->checkItemDoesNotExist($id);
+        $this->validate('applyingTaxOnItem', $id);
 
         $this->cartItems[$id]->applyTax($type, $rate);
 
@@ -147,10 +141,7 @@ class Unicart
      */
     public function applyFlatDiscountOnCart(int|float $discount): self
     {
-        $this->checkIsCartEmpty();
-        $this->checkItemLevelApplications('discount');
-        $this->checkTaxHasBeenApplied();
-        $this->checkDeliveryChargeHasBeenApplied();
+        $this->validate('applyingFlatDiscountOnCart');
 
         $originalPayable = $payableAmount = $this->payableAmount();
         $this->payableAmount = Discount::flatDiscount($payableAmount, $discount);
@@ -174,11 +165,7 @@ class Unicart
      */
     public function applyPercentageDiscountOnCart(int|float $percentage, int|float $upto = 0): self
     {
-        $this->checkIsCartEmpty();
-        $this->checkItemLevelApplications('discount');
-        $this->checkTaxHasBeenApplied();
-        $this->checkDeliveryChargeHasBeenApplied();
-        $this->checkUptoAmountForCart($upto);
+        $this->validate('applyingPercentageDiscountOnCart', null, $upto);
 
         $originalPayable = $payableAmount = $this->payableAmount();
         $this->payableAmount = Discount::percentageDiscount($payableAmount, $percentage, $upto);
@@ -203,9 +190,7 @@ class Unicart
      */
     public function applyDeliveryChargeOnCart(int|float $charge): self
     {
-        $this->checkIsCartEmpty();
-        $this->checkItemLevelApplications('delivery charge');
-        $this->checkDeliveryChargeBeforeAddingNew();
+        $this->validate('applyingDeliveryChargeOnCart');
 
         $originalPayable = $payableAmount = $this->payableAmount ?? $this->summary()['payableAmount'];
         $this->payableAmount = $payableAmount + $charge;
@@ -218,7 +203,6 @@ class Unicart
         return $this;
     }
 
-
     /**
      * Applies a tax on the cart.
      * 
@@ -229,8 +213,7 @@ class Unicart
      */
     public function applyTaxOnCart(int|float $rate, string $type = 'general'): self
     {
-        $this->checkIsCartEmpty();
-        $this->checkItemLevelApplications('tax');
+        $this->validate('applyingTaxOnCart');
 
         $originalPayable = $payableAmount = $this->payableAmount ?? $this->summary()['payableAmount'];
 
@@ -249,9 +232,11 @@ class Unicart
     /**
      * Retrieves the list of items currently in the cart.
      * 
+     * @param string $as Flag to fetch data in different formats. Accepted formats are array, object, json
+     * 
      * @return mixed
      */
-    public function getItems(): ?array
+    public function items(string $as = 'array'): mixed
     {
         $cart = [];
 
@@ -259,7 +244,7 @@ class Unicart
             $cart[] = $cartItem->toArray();
         }
 
-        return count($cart) > 0 ? $cart : null;
+        return $this->formatter($as, count($cart) > 0 ? $cart : null);
     }
 
     /**
@@ -328,7 +313,7 @@ class Unicart
     private function getDetail(): array
     {
         return [
-            'items' => $this->getItems(),
+            'items' => $this->items(),
             ...$this->summary()
         ];
     }
