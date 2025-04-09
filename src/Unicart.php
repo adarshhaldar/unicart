@@ -98,6 +98,24 @@ class Unicart
     }
 
     /**
+     * Applies a bxgy-based discount on existing item.
+     * 
+     * @param int|string $id A unique identifier for the existing item.
+     * @param int $xQuantity The buy quantity.
+     * @param int $yQuantity The get quantity.
+     * @param string $label The to describe the bxgy discount.
+     * 
+     * @return self
+     */
+    public function applyBxGyOnItem(int|string $id, int $xQuantity, int $yQuantity, string $label = 'bxgy')
+    {
+        $this->validate('applyingBxGyOnItem', $id, 0, $xQuantity, $yQuantity);
+
+        $this->cartItems[$id]->applyBxGy($xQuantity, $yQuantity, $label);
+        return $this;
+    }
+
+    /**
      * Applies a delivery charge on existing item.
      * 
      * @param int|string $id A unique identifier for the existing item.

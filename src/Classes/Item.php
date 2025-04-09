@@ -40,6 +40,12 @@ class Item
     private $payableAmount = null;
 
     /**
+     * Flag to check if bxgy discount applied
+     * @var bool
+     */
+    private $isBxGyApplied = false;
+
+    /**
      * Delivery charge on item
      * @var array
      */
@@ -127,6 +133,30 @@ class Item
             'type' => Discount::PERCENTAGE_TYPE,
             'discount' => $percentage,
             ...($upto > 0 ? ['upto' => $upto] : []),
+            'beforeDiscount' => $beforeDiscount,
+            'afterDiscount' => $this->payableAmount
+        ];
+    }
+
+    /**
+     * Applies a bxgy-based discount to the item.
+     * 
+     * @param int $xQuantity The buy quantity.
+     * @param int $yQuantity The get quantity.
+     * @param string $label The to describe the bxgy discount.
+     * 
+     * @return void
+     */
+    public function applyBxGy(int $xQuantity, int $yQuantity, string $label = 'bxgy'): void
+    {
+        $this->validate('applyingBogo', 0, $xQuantity, $yQuantity);
+
+        $beforeDiscount = $this->payableAmount;
+        $this->payableAmount = Discount::bxgy($this->price, $this->quantity, $xQuantity, $yQuantity);
+
+        $this->discounts[] = [
+            'type' => Discount::BXGY_TYPE,
+            'label' => $label,
             'beforeDiscount' => $beforeDiscount,
             'afterDiscount' => $this->payableAmount
         ];

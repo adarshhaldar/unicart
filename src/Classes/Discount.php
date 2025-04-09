@@ -15,6 +15,11 @@ final class Discount
     const PERCENTAGE_TYPE = 'percentage';
 
     /**
+     * BxGy type identifier.
+     */
+    const BXGY_TYPE = 'bxgy';
+
+    /**
      * Private constructor to prevent instantiation.
      * This class is intended to be used in a static context only.
      */
@@ -46,5 +51,24 @@ final class Discount
     {
         $discount = $upto > 0 ? min($upto, (($payable * $percentage) / 100)) : (($payable * $percentage) / 100);
         return self::flatDiscount($payable, $discount);
+    }
+
+    /**
+     * Applies a bxgy-based discount on item with multiple quantity.
+     * 
+     * @param int|float $price The price of the item.
+     * @param int $quantity The item's current quantity.
+     * @param int $xQuantity The buy quantity.
+     * @param int $yQuantity The get quantity.
+     * 
+     * @return int|float
+     */
+    public static function bxgy(int|float $price, int $quantity, int $xQuantity, int $yQuantity): int|float
+    {
+        $sets = intdiv($quantity, $xQuantity + $yQuantity);
+        $freeItems = $sets * $yQuantity;
+        $paidItems = $quantity - $freeItems;
+
+        return $paidItems * $price;
     }
 }

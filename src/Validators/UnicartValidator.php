@@ -13,6 +13,7 @@ trait UnicartValidator
         'addingItem',
         'applyingFlatDiscountOnItem',
         'applyingPercentageDiscountOnItem',
+        'applyingBxGyOnItem',
         'applyingDeliveryChargeOnItem',
         'applyingTaxOnItem',
         'applyingFlatDiscountOnCart',
@@ -191,15 +192,50 @@ trait UnicartValidator
     }
 
     /**
+     * Checks if both the buy and get quantites are valid.
+     * 
+     * @param mixed $id Unique identifier for item based validations.
+     * @param int $xQuantity The buy quantity.
+     * @param int $yQuantity The get quantity.
+     * 
+     * @return void
+     */
+    private function checkBxGyQuantity(int|string $id, int $xQuantity, int $yQuantity): void
+    {
+        if ($xQuantity < 0 || $yQuantity < 0) {
+            throw new Exception('BxGy buy or get quantity can not be negative for item with Id: ' . $this->item($id)->toArray()['id']);
+        }
+    }
+
+    /**
+     * Checks if the item quantity and the buy and get quantites are satisfyable.
+     * 
+     * @param mixed $id Unique identifier for item based validations.
+     * @param int $xQuantity The buy quantity.
+     * @param int $yQuantity The get quantity.
+     * 
+     * @return void
+     */
+    private function checkItemQuantityForBxGy(int|string $id, int $xQuantity, int $yQuantity): void
+    {
+        $itemQuantity = $this->item($id)->toArray()['quantity'];
+        if ($itemQuantity < ($xQuantity + $yQuantity)) {
+            throw new Exception('Quantity does not satisfy BxGy buy and get quantities for item with Id: ' . $this->item($id)->toArray()['id']);
+        }
+    }
+
+    /**
      * Validates item or cart before mentioned operations/applications
      * 
      * @param string $for Validate for variable to check through available validations.
      * @param mixed $id Unique identifier for item based validations.
      * @param int|float $upto The maximum discount allowed in percentage-based discounts. Defaults to 0 (no limit).
+     * @param int $xQuantity The buy quantity. Defaults to 0.
+     * @param int $yQuantity The get quantity. Defaults to 0.
      * 
      * @return void
      */
-    private function validate(string $for, mixed $id = null, int|float $upto = 0): void
+    private function validate(string $for, mixed $id = null, int|float $upto = 0, int $xQuantity = 0, int $yQuantity = 0): void
     {
         if (!in_array($for, self::VALIDATORS)) {
             throw new Exception('Invalid validator for item validation');
@@ -218,6 +254,12 @@ trait UnicartValidator
                 $this->checkHasCartInitiated($id, 'discount');
                 $this->checkUptoAmount($id, $upto);
                 $this->checkItemDoesNotExist($id);
+                break;
+            case 'applyingBxGyOnItem':
+                $this->checkHasCartInitiated($id, 'discount');
+                $this->checkItemDoesNotExist($id);
+                $this->checkBxGyQuantity($id, $xQuantity, $yQuantity);
+                $this->checkItemQuantityForBxGy($id, $xQuantity, $yQuantity);
                 break;
             case 'applyingDeliveryChargeOnItem':
                 $this->checkHasCartInitiated($id, 'delivery charge');
