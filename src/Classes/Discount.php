@@ -20,6 +20,11 @@ final class Discount
     const BXGY_TYPE = 'bxgy';
 
     /**
+     * SxGy type identifier.
+     */
+    const SXGY_TYPE = 'sxgy';
+
+    /**
      * Private constructor to prevent instantiation.
      * This class is intended to be used in a static context only.
      */

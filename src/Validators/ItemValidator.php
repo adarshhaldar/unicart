@@ -229,23 +229,41 @@ trait ItemValidator
     }
 
     /**
+     * Fetch variable and their data from param array
+     * 
+     * @param array $params List of parameters
+     * 
+     * @return array
+     */
+    private function getVariablesFromParams($params): array
+    {
+        return [
+            $params['id'] ?? null,
+            $params['price'] ?? null,
+            $params['quantity'] ?? null,
+            $params['upto'] ?? null,
+            $params['xQuantity'] ?? null,
+            $params['yQuantity'] ?? null,
+            $params['spend'] ?? null,
+            $params['get'] ?? null
+        ];
+    }
+
+    /**
      * Validates item before mentioned operations/applications
      * 
      * @param string $for Validate for variable to check through available validations.
-     * @param mixed $id Unique identifier for item.
-     * @param int|float $price Price of the item.
-     * @param int $quantity Quantity of the item.
-     * @param int|float $upto The maximum discount allowed in percentage-based discounts. Defaults to 0 (no limit).
-     * @param int $xQuantity The buy quantity. Defaults to 0.
-     * @param int $yQuantity The get quantity. Defaults to 0.
+     * @param array $params List of parameters.
      * 
      * @return void
      */
-    private function validate(string $for, mixed $id = null, int|float $price = 0, int $quantity = 0, int|float $upto = 0, int $xQuantity = 0, int $yQuantity = 0): void
+    private function validate(string $for, array $params = []): void
     {
         if (!in_array($for, self::VALIDATORS)) {
             throw new Exception('Invalid validator for item validation');
         }
+
+        list($id, $price, $quantity, $upto, $xQuantity, $yQuantity) = $this->getVariablesFromParams($params);
 
         match ($for) {
             'addingItem' => $this->validateAddingItem($id, $price, $quantity),

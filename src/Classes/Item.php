@@ -72,7 +72,7 @@ class Item
      */
     public function __construct(int|string $id, int|float $price, int $quantity)
     {
-        $this->validate('addingItem', $id, $price, $quantity);
+        $this->validate('addingItem', ['id' => $id, 'price' => $price, 'quantity' => $quantity]);
 
         $this->id = $id;
         $this->price = $price;
@@ -114,7 +114,7 @@ class Item
      */
     public function applyPercentageDiscount(int|float $percentage, int|float $upto = 0): self
     {
-        $this->validate('applyingPercentageDiscount', null, 0, 0, $upto);
+        $this->validate('applyingPercentageDiscount', ['upto' => $upto]);
 
         $beforeDiscount = $this->payableAmount;
         $this->payableAmount = Discount::percentageDiscount($this->payableAmount, $percentage, $upto);
@@ -141,7 +141,7 @@ class Item
      */
     public function applyBxGy(int $xQuantity, int $yQuantity, string $label = 'bxgy'): self
     {
-        $this->validate('applyingBogo', null, 0, 0, 0, $xQuantity, $yQuantity);
+        $this->validate('applyingBxGy', ['xQuantity' => $xQuantity, 'yQuantity' => $yQuantity]);
 
         $beforeDiscount = $this->payableAmount;
         $this->payableAmount = Discount::bxgy($this->price, $this->quantity, $xQuantity, $yQuantity);

@@ -42,6 +42,12 @@ class Unicart
     private $hasCartApplicationInitiated = false;
 
     /**
+     * Flag for checking whether sxgy discount is applied on cart
+     * @var bool
+     */
+    private $isSxGyApplied = false;
+
+    /**
      * Final payable amount (after discount, delivery charge, or tax application)
      * @var int|float
      */
@@ -58,7 +64,7 @@ class Unicart
      */
     public function addItem(int|string $id, int|float $price, int $quantity = 1): self
     {
-        $this->validate('addingItem', $id, $price, $quantity);
+        $this->validate('addingItem', ['id' => $id, 'price' => $price, 'quantity' => $quantity]);
 
         $this->cartItems[$id] = new Item($id, $price, $quantity);
         return $this;
@@ -74,7 +80,7 @@ class Unicart
      */
     public function applyFlatDiscountOnItem(int|string $id, int|float $discount): self
     {
-        $this->validate('applyingFlatDiscountOnItem', $id);
+        $this->validate('applyingFlatDiscountOnItem', ['id' => $id]);
 
         $this->cartItems[$id]->applyFlatDiscount($discount);
         return $this;
@@ -91,7 +97,7 @@ class Unicart
      */
     public function applyPercentageDiscountOnItem(int|string $id, int|float $percentage, int|float $upto = 0): self
     {
-        $this->validate('applyingPercentageDiscountOnItem', $id, 0, 0, $upto);
+        $this->validate('applyingPercentageDiscountOnItem', ['id' => $id, 'upto' => $upto]);
 
         $this->cartItems[$id]->applyPercentageDiscount($percentage, $upto);
         return $this;
@@ -109,7 +115,7 @@ class Unicart
      */
     public function applyBxGyOnItem(int|string $id, int $xQuantity, int $yQuantity, string $label = 'bxgy'): self
     {
-        $this->validate('applyingBxGyOnItem', $id, 0, 0, 0, $xQuantity, $yQuantity);
+        $this->validate('applyingBxGyOnItem', ['id' => $id, 'xQuantity' => $xQuantity, 'yQuantity' => $yQuantity]);
 
         $this->cartItems[$id]->applyBxGy($xQuantity, $yQuantity, $label);
         return $this;
@@ -125,7 +131,7 @@ class Unicart
      */
     public function applyDeliveryChargeOnItem(int|string $id, int|float $charge): self
     {
-        $this->validate('applyingDeliveryChargeOnItem', $id);
+        $this->validate('applyingDeliveryChargeOnItem', ['id' => $id]);
 
         $this->cartItems[$id]->applyDeliveryCharge($charge);
 
@@ -143,7 +149,7 @@ class Unicart
      */
     public function applyTaxOnItem(int|string $id, int|float $rate, string $type = 'general'): self
     {
-        $this->validate('applyingTaxOnItem', $id);
+        $this->validate('applyingTaxOnItem', ['id' => $id]);
 
         $this->cartItems[$id]->applyTax($type, $rate);
 
@@ -183,7 +189,7 @@ class Unicart
      */
     public function applyPercentageDiscountOnCart(int|float $percentage, int|float $upto = 0): self
     {
-        $this->validate('applyingPercentageDiscountOnCart', null, 0, 0, $upto);
+        $this->validate('applyingPercentageDiscountOnCart', ['upto' => $upto]);
 
         $originalPayable = $payableAmount = $this->payableAmount();
         $this->payableAmount = Discount::percentageDiscount($payableAmount, $percentage, $upto);
@@ -243,6 +249,36 @@ class Unicart
             'beforeTax' => $originalPayable,
             'afterTax' => $this->payableAmount
         ];
+
+        return $this;
+    }
+
+    /**
+     * Applies a sxgy-based discount on cart.
+     * 
+     * @param int|float $spend The cart expenditure.
+     * @param int|float $get The off amount.
+     * @param string $label A label to describe the SxGy discount.
+     * 
+     * @return self
+     */
+    public function applySpendxGetyOffOnCart(int|float $spend, int|float $get, string $label = 'spendXgetY'): self
+    {
+        $this->validate('applyingSpendXGetYOffOnCart', ['spend' => $spend, 'get' => $get]);
+
+        $originalPayable = $payableAmount = $this->payableAmount ?? $this->summary()['payableAmount'];
+
+        if ($payableAmount >= $spend) {
+            $this->isSxGyApplied = true;
+            $this->payableAmount = Discount::flatDiscount($payableAmount, $get);
+
+            $this->discounts[] = [
+                'type' => Discount::SXGY_TYPE,
+                'label' => $label,
+                'beforeDiscount' => $originalPayable,
+                'afterDiscount' => $this->payableAmount
+            ];
+        }
 
         return $this;
     }
