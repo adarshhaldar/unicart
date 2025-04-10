@@ -7,7 +7,7 @@ use Exception;
 trait UnicartValidator
 {
     /**
-     * Validators for item and cart validation before any application
+     * Validators for item and cart level validation before any application
      */
     const VALIDATORS = [
         'addingItem',
@@ -29,8 +29,38 @@ trait UnicartValidator
      */
     private function checkIsCartEmpty(): void
     {
-        if (count($this->cartItems) == 0) {
+        if (count($this->cartItems) === 0) {
             throw new Exception('Cart is empty');
+        }
+    }
+
+    /**
+     * Validates addition of new item's price
+     * 
+     * @param mixed $id Unique identifier for item.
+     * @param int|float $price Price of the item.
+     * 
+     * @return void
+     */
+    private function checkItemPrice(int|string $id, int|float $price): void
+    {
+        if ($price <= 0) {
+            throw new Exception('Price for item with Id: ' . $id . ' can not be less than or equal to 0.');
+        }
+    }
+
+    /**
+     * Validates addition of new item's quantity
+     * 
+     * @param mixed $id Unique identifier for item.
+     * @param int $quantity Quantity of the item.
+     * 
+     * @return void
+     */
+    private function checkItemQuantity(int|string $id, int $quantity): void
+    {
+        if ($quantity <= 0) {
+            throw new Exception('Quantity for item with Id: ' . $id . ' can not be less than or equal to 0.');
         }
     }
 
@@ -202,8 +232,8 @@ trait UnicartValidator
      */
     private function checkBxGyQuantity(int|string $id, int $xQuantity, int $yQuantity): void
     {
-        if ($xQuantity < 0 || $yQuantity < 0) {
-            throw new Exception('BxGy buy or get quantity can not be negative for item with Id: ' . $this->item($id)->toArray()['id']);
+        if ($xQuantity <= 0 || $yQuantity <= 0) {
+            throw new Exception('Buy or get quantity cannot be less than or equal to 0 for item with Id: ' . $this->item($id)->toArray()['id']);
         }
     }
 
@@ -220,8 +250,148 @@ trait UnicartValidator
     {
         $itemQuantity = $this->item($id)->toArray()['quantity'];
         if ($itemQuantity < ($xQuantity + $yQuantity)) {
-            throw new Exception('Quantity does not satisfy BxGy buy and get quantities for item with Id: ' . $this->item($id)->toArray()['id']);
+            throw new Exception('Item quantity is insufficient for the specified BxGy values for item with Id: ' . $this->item($id)->toArray()['id']);
         }
+    }
+
+    /**
+     * Validates application of tax on cart
+     * 
+     * @return void
+     */
+    private function validateApplyingTaxOnCart(): void
+    {
+        $this->checkIsCartEmpty();
+        $this->checkItemLevelApplications('tax');
+    }
+
+    /**
+     * Validates application of delivery charge on cart
+     * 
+     * @return void
+     */
+    private function validateApplyingDeliveryChargeOnCart(): void
+    {
+        $this->checkIsCartEmpty();
+        $this->checkItemLevelApplications('delivery charge');
+        $this->checkDeliveryChargeBeforeAddingNew();
+    }
+
+    /**
+     * Validates application of percentage-based discount on cart
+     * 
+     * @param int|float $upto The maximum discount allowed in percentage-based discounts. Defaults to 0 (no limit).
+     * 
+     * @return void
+     */
+    private function validateApplyingPercentageDiscountOnCart(int|float $upto): void
+    {
+        $this->checkIsCartEmpty();
+        $this->checkItemLevelApplications('discount');
+        $this->checkTaxHasBeenApplied();
+        $this->checkDeliveryChargeHasBeenApplied();
+        $this->checkUptoAmountForCart($upto);
+    }
+
+    /**
+     * Validates application of flat discount on cart
+     * 
+     * @return void
+     */
+    private function validateApplyingFlatDiscountOnCart(): void
+    {
+        $this->checkIsCartEmpty();
+        $this->checkItemLevelApplications('discount');
+        $this->checkTaxHasBeenApplied();
+        $this->checkDeliveryChargeHasBeenApplied();
+    }
+
+    /**
+     * Validates application of tax on item
+     * 
+     * @param int|string $id Unique identifier for item.
+     * 
+     * @return void
+     */
+    private function validateApplyingTaxOnItem(int|string $id): void
+    {
+        $this->checkHasCartInitiated($id, 'tax');
+        $this->checkItemDoesNotExist($id);
+    }
+
+    /**
+     * Validates application of delivery charge on item
+     * 
+     * @param int|string $id Unique identifier for item.
+     * 
+     * @return void
+     */
+    private function validateApplyingDeliveryChargeOnItem(int|string $id): void
+    {
+        $this->checkHasCartInitiated($id, 'delivery charge');
+        $this->checkItemDoesNotExist($id);
+    }
+
+    /**
+     * Validates application of BxGy discount on item
+     * 
+     * @param int|string $id Unique identifier for item.
+     * @param int $xQuantity The buy quantity. Defaults to 0.
+     * @param int $yQuantity The get quantity. Defaults to 0.
+     * 
+     * @return void
+     */
+    private function validateApplyingBxGyOnItem(int|string $id, int $xQuantity, int $yQuantity): void
+    {
+        $this->checkHasCartInitiated($id, 'discount');
+        $this->checkItemDoesNotExist($id);
+        $this->checkBxGyQuantity($id, $xQuantity, $yQuantity);
+        $this->checkItemQuantityForBxGy($id, $xQuantity, $yQuantity);
+    }
+
+    /**
+     * Validates application of percentage-based discount on item
+     * 
+     * @param int|string $id Unique identifier for item.
+     * @param int|float $upto The maximum discount allowed in percentage-based discounts. Defaults to 0 (no limit).
+     * 
+     * @return void
+     */
+    private function validateApplyingPercentageDiscountOnItem(int|string $id, int|float $upto): void
+    {
+        $this->checkHasCartInitiated($id, 'discount');
+        $this->checkUptoAmount($id, $upto);
+        $this->checkItemDoesNotExist($id);
+    }
+
+    /**
+     * Validates application of flat discount on item
+     * 
+     * @param int|string $id Unique identifier for item.
+     * 
+     * @return void
+     */
+    private function validateApplyingFlatDiscountOnItem(int|string $id): void
+    {
+        $this->checkHasCartInitiated($id, 'discount');
+        $this->checkItemDoesNotExist($id);
+    }
+
+    /**
+     * Validates item creation
+     * 
+     * @param int|string $id Unique identifier for item.
+     * @param int|float $price Price of the item.
+     * @param int $quantity Quantity of the item.
+     * 
+     * @return void
+     */
+    private function validateAddingItem(int|string $id, int|float $price, int $quantity): void
+    {
+        $this->checkItemPrice($id, $price);
+        $this->checkItemQuantity($id, $quantity);
+        $this->checkHasCartInitiated($id, 'new item');
+        $this->checkItemExist($id);
     }
 
     /**
@@ -229,70 +399,31 @@ trait UnicartValidator
      * 
      * @param string $for Validate for variable to check through available validations.
      * @param mixed $id Unique identifier for item based validations.
+     * @param int|float $price Price of the item.
+     * @param int $quantity Quantity of the item.
      * @param int|float $upto The maximum discount allowed in percentage-based discounts. Defaults to 0 (no limit).
      * @param int $xQuantity The buy quantity. Defaults to 0.
      * @param int $yQuantity The get quantity. Defaults to 0.
      * 
      * @return void
      */
-    private function validate(string $for, mixed $id = null, int|float $upto = 0, int $xQuantity = 0, int $yQuantity = 0): void
+    private function validate(string $for, mixed $id = null, int|float $price = 0, int $quantity = 0, int|float $upto = 0, int $xQuantity = 0, int $yQuantity = 0): void
     {
         if (!in_array($for, self::VALIDATORS)) {
             throw new Exception('Invalid validator for item validation');
         }
 
-        switch ($for) {
-            case 'addingItem':
-                $this->checkHasCartInitiated($id, 'new item');
-                $this->checkItemExist($id);
-                break;
-            case 'applyingFlatDiscountOnItem':
-                $this->checkHasCartInitiated($id, 'discount');
-                $this->checkItemDoesNotExist($id);
-                break;
-            case 'applyingPercentageDiscountOnItem':
-                $this->checkHasCartInitiated($id, 'discount');
-                $this->checkUptoAmount($id, $upto);
-                $this->checkItemDoesNotExist($id);
-                break;
-            case 'applyingBxGyOnItem':
-                $this->checkHasCartInitiated($id, 'discount');
-                $this->checkItemDoesNotExist($id);
-                $this->checkBxGyQuantity($id, $xQuantity, $yQuantity);
-                $this->checkItemQuantityForBxGy($id, $xQuantity, $yQuantity);
-                break;
-            case 'applyingDeliveryChargeOnItem':
-                $this->checkHasCartInitiated($id, 'delivery charge');
-                $this->checkItemDoesNotExist($id);
-                break;
-            case 'applyingTaxOnItem':
-                $this->checkHasCartInitiated($id, 'tax');
-                $this->checkItemDoesNotExist($id);
-                break;
-            case 'applyingFlatDiscountOnCart':
-                $this->checkIsCartEmpty();
-                $this->checkItemLevelApplications('discount');
-                $this->checkTaxHasBeenApplied();
-                $this->checkDeliveryChargeHasBeenApplied();
-                break;
-            case 'applyingPercentageDiscountOnCart':
-                $this->checkIsCartEmpty();
-                $this->checkItemLevelApplications('discount');
-                $this->checkTaxHasBeenApplied();
-                $this->checkDeliveryChargeHasBeenApplied();
-                $this->checkUptoAmountForCart($upto);
-                break;
-            case 'applyingDeliveryChargeOnCart':
-                $this->checkIsCartEmpty();
-                $this->checkItemLevelApplications('delivery charge');
-                $this->checkDeliveryChargeBeforeAddingNew();
-                break;
-            case 'applyingTaxOnCart':
-                $this->checkIsCartEmpty();
-                $this->checkItemLevelApplications('tax');
-                break;
-            default:
-                return;
-        }
+        match ($for) {
+            'addingItem' => $this->validateAddingItem($id, $price, $quantity),
+            'applyingFlatDiscountOnItem' => $this->validateApplyingFlatDiscountOnItem($id),
+            'applyingPercentageDiscountOnItem' => $this->validateApplyingPercentageDiscountOnItem($id, $upto),
+            'applyingBxGyOnItem' => $this->validateApplyingBxGyOnItem($id, $xQuantity, $yQuantity),
+            'applyingDeliveryChargeOnItem' => $this->validateApplyingDeliveryChargeOnItem($id),
+            'applyingTaxOnItem' => $this->validateApplyingTaxOnItem($id),
+            'applyingFlatDiscountOnCart' => $this->validateApplyingFlatDiscountOnCart(),
+            'applyingPercentageDiscountOnCart' => $this->validateApplyingPercentageDiscountOnCart($upto),
+            'applyingDeliveryChargeOnCart' => $this->validateApplyingDeliveryChargeOnCart(),
+            'applyingTaxOnCart' => $this->validateApplyingTaxOnCart()
+        };
     }
 }

@@ -64,14 +64,16 @@ class Item
     private $taxes = [];
 
     /**
-     * Private constructor to initialize a new item with ID, price, and quantity.
+     * Public constructor to initialize a new item with ID, price, and quantity.
      *
      * @param int|string $id The unique identifier of the item.
      * @param int|float $price The price of a single unit of the item.
      * @param int $quantity The quantity of the item.
      */
-    private function __construct(int|string $id, int|float $price, int $quantity)
+    public function __construct(int|string $id, int|float $price, int $quantity)
     {
+        $this->validate('addingItem', $id, $price, $quantity);
+
         $this->id = $id;
         $this->price = $price;
         $this->quantity = $quantity;
@@ -79,27 +81,13 @@ class Item
     }
 
     /**
-     * Static method to create and return a new item instance.
-     *
-     * @param int|string $id The unique identifier of the item.
-     * @param int|float $price The price of a single unit of the item.
-     * @param int $quantity The quantity of the item.
-     *
-     * @return self
-     */
-    public static function add(int|string $id, int|float $price, int $quantity): self
-    {
-        return new self($id, $price, $quantity);
-    }
-
-    /**
      * Applies a flat discount to the item.
      * 
      * @param int|float $discount The discount amount to apply.
      *
-     * @return void
+     * @return self
      */
-    public function applyFlatDiscount(int|float $discount): void
+    public function applyFlatDiscount(int|float $discount): self
     {
         $this->validate('applyingFlatDiscount');
 
@@ -112,6 +100,8 @@ class Item
             'beforeDiscount' => $beforeDiscount,
             'afterDiscount' => $this->payableAmount
         ];
+
+        return $this;
     }
 
     /**
@@ -120,11 +110,11 @@ class Item
      * @param int|float $percentage The discount percentage.
      * @param int|float $upto The maximum discount allowed. Defaults to 0 (no limit).
      *
-     * @return void
+     * @return self
      */
-    public function applyPercentageDiscount(int|float $percentage, int|float $upto = 0): void
+    public function applyPercentageDiscount(int|float $percentage, int|float $upto = 0): self
     {
-        $this->validate('applyingPercentageDiscount', $upto);
+        $this->validate('applyingPercentageDiscount', null, 0, 0, $upto);
 
         $beforeDiscount = $this->payableAmount;
         $this->payableAmount = Discount::percentageDiscount($this->payableAmount, $percentage, $upto);
@@ -136,6 +126,8 @@ class Item
             'beforeDiscount' => $beforeDiscount,
             'afterDiscount' => $this->payableAmount
         ];
+
+        return $this;
     }
 
     /**
@@ -145,11 +137,11 @@ class Item
      * @param int $yQuantity The get quantity.
      * @param string $label The to describe the bxgy discount.
      * 
-     * @return void
+     * @return self
      */
-    public function applyBxGy(int $xQuantity, int $yQuantity, string $label = 'bxgy'): void
+    public function applyBxGy(int $xQuantity, int $yQuantity, string $label = 'bxgy'): self
     {
-        $this->validate('applyingBogo', 0, $xQuantity, $yQuantity);
+        $this->validate('applyingBogo', null, 0, 0, 0, $xQuantity, $yQuantity);
 
         $beforeDiscount = $this->payableAmount;
         $this->payableAmount = Discount::bxgy($this->price, $this->quantity, $xQuantity, $yQuantity);
@@ -160,6 +152,8 @@ class Item
             'beforeDiscount' => $beforeDiscount,
             'afterDiscount' => $this->payableAmount
         ];
+
+        return $this;
     }
 
     /**
@@ -167,9 +161,9 @@ class Item
      *
      * @param int|float $charge The delivery charge to apply.
      *
-     * @return void
+     * @return self
      */
-    public function applyDeliveryCharge(int|float $charge): void
+    public function applyDeliveryCharge(int|float $charge): self
     {
         $this->validate('applyingDeliveryCharge');
 
@@ -180,6 +174,8 @@ class Item
             'beforeDeliveryCharge' => $beforeDeliveryCharge,
             'afterDeliveryCharge' => $this->payableAmount
         ];
+
+        return $this;
     }
 
     /**
@@ -188,9 +184,9 @@ class Item
      * @param string $type The type/label of the tax.
      * @param int|float $rate The tax rate in percentage.
      *
-     * @return void
+     * @return self
      */
-    public function applyTax(string $type = 'general', int|float $rate): void
+    public function applyTax(string $type = 'general', int|float $rate): self
     {
         $beforeTax = $this->payableAmount;
         $this->payableAmount = $this->payableAmount + (($this->payableAmount * $rate) / 100);
@@ -201,6 +197,8 @@ class Item
             'beforeTax' => $beforeTax,
             'afterTax' => $this->payableAmount
         ];
+
+        return $this;
     }
 
     /**

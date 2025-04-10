@@ -58,9 +58,9 @@ class Unicart
      */
     public function addItem(int|string $id, int|float $price, int $quantity = 1): self
     {
-        $this->validate('addingItem', $id);
+        $this->validate('addingItem', $id, $price, $quantity);
 
-        $this->cartItems[$id] = Item::add($id, $price, $quantity);
+        $this->cartItems[$id] = new Item($id, $price, $quantity);
         return $this;
     }
 
@@ -91,7 +91,7 @@ class Unicart
      */
     public function applyPercentageDiscountOnItem(int|string $id, int|float $percentage, int|float $upto = 0): self
     {
-        $this->validate('applyingPercentageDiscountOnItem', $id, $upto);
+        $this->validate('applyingPercentageDiscountOnItem', $id, 0, 0, $upto);
 
         $this->cartItems[$id]->applyPercentageDiscount($percentage, $upto);
         return $this;
@@ -103,13 +103,13 @@ class Unicart
      * @param int|string $id A unique identifier for the existing item.
      * @param int $xQuantity The buy quantity.
      * @param int $yQuantity The get quantity.
-     * @param string $label The to describe the bxgy discount.
+     * @param string $label A label to describe the BxGy discount.
      * 
      * @return self
      */
-    public function applyBxGyOnItem(int|string $id, int $xQuantity, int $yQuantity, string $label = 'bxgy')
+    public function applyBxGyOnItem(int|string $id, int $xQuantity, int $yQuantity, string $label = 'bxgy'): self
     {
-        $this->validate('applyingBxGyOnItem', $id, 0, $xQuantity, $yQuantity);
+        $this->validate('applyingBxGyOnItem', $id, 0, 0, 0, $xQuantity, $yQuantity);
 
         $this->cartItems[$id]->applyBxGy($xQuantity, $yQuantity, $label);
         return $this;
@@ -183,7 +183,7 @@ class Unicart
      */
     public function applyPercentageDiscountOnCart(int|float $percentage, int|float $upto = 0): self
     {
-        $this->validate('applyingPercentageDiscountOnCart', null, $upto);
+        $this->validate('applyingPercentageDiscountOnCart', null, 0, 0, $upto);
 
         $originalPayable = $payableAmount = $this->payableAmount();
         $this->payableAmount = Discount::percentageDiscount($payableAmount, $percentage, $upto);
