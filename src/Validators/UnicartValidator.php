@@ -35,10 +35,25 @@ trait UnicartValidator
         }
     }
 
+
     /**
-     * Validates addition of new item's price
+     * Checks new item's id
      * 
-     * @param mixed $id Unique identifier for item.
+     * @param int|string $id Unique identifier for item.
+     * 
+     * @return void
+     */
+    private function checkItemId(int|string $id)
+    {
+        if (is_float($id)) {
+            throw new Exception('Float values are not allowed as item IDs. Id: ' . $id);
+        }
+    }
+
+    /**
+     * Checks new item's price
+     * 
+     * @param int|string $id Unique identifier for item.
      * @param int|float $price Price of the item.
      * 
      * @return void
@@ -51,9 +66,9 @@ trait UnicartValidator
     }
 
     /**
-     * Validates addition of new item's quantity
+     * Checks new item's quantity
      * 
-     * @param mixed $id Unique identifier for item.
+     * @param int|string $id Unique identifier for item.
      * @param int $quantity Quantity of the item.
      * 
      * @return void
@@ -256,14 +271,14 @@ trait UnicartValidator
     }
 
     /**
-     * Validates application of sxgy on cart
+     * Checks the validity of sxgy values
      * 
      * @param int|float $spend The cart expenditure.
      * @param int|float $get The off amount.
      * 
      * @return void
      */
-    private function validateSpendXGetYDiscountOnCart(int|float $spend, int|float $get)
+    private function checkSpendXGetYValidity(int|float $spend, int|float $get)
     {
         if ($this->isSxGyApplied) {
             throw new Exception('Can not apply another SxGy discount on the cart');
@@ -276,6 +291,23 @@ trait UnicartValidator
         if ($spend < $get) {
             throw new Exception('Spend can not be less than get for spendXgetY discount');
         }
+    }
+
+    /**
+     * Validates application of sxgy on cart
+     * 
+     * @param int|float $spend The cart expenditure.
+     * @param int|float $get The off amount.
+     * 
+     * @return void
+     */
+    private function validateSpendXGetYDiscountOnCart(int|float $spend, int|float $get)
+    {
+        $this->checkIsCartEmpty();
+        $this->checkItemLevelApplications('discount');
+        $this->checkTaxHasBeenApplied();
+        $this->checkDeliveryChargeHasBeenApplied();
+        $this->checkSpendXGetYValidity($spend, $get);
     }
 
     /**
@@ -412,6 +444,7 @@ trait UnicartValidator
      */
     private function validateAddingItem(int|string $id, int|float $price, int $quantity): void
     {
+        $this->checkItemId($id);
         $this->checkItemPrice($id, $price);
         $this->checkItemQuantity($id, $quantity);
         $this->checkHasCartInitiated($id, 'new item');

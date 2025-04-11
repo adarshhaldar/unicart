@@ -18,9 +18,23 @@ trait ItemValidator
     ];
 
     /**
-     * Validates addition of new item's price
+     * Checks new item's id
      * 
-     * @param mixed $id Unique identifier for item.
+     * @param int|string $id Unique identifier for item.
+     * 
+     * @return void
+     */
+    private function checkId(int|string $id)
+    {
+        if (is_float($id)) {
+            throw new Exception('Float values are not allowed as item IDs. Id: ' . $id);
+        }
+    }
+
+    /**
+     * Checks new item's price
+     * 
+     * @param int|string $id Unique identifier for item.
      * @param int|float $price Price of the item.
      * 
      * @return void
@@ -33,9 +47,9 @@ trait ItemValidator
     }
 
     /**
-     * Validates addition of new item's quantity
+     * Checks new item's quantity
      * 
-     * @param mixed $id Unique identifier for item.
+     * @param int|string $id Unique identifier for item.
      * @param int $quantity Quantity of the item.
      * 
      * @return void
@@ -224,6 +238,7 @@ trait ItemValidator
      */
     private function validateAddingItem(int|string $id, int|float $price, int $quantity): void
     {
+        $this->checkId($id);
         $this->checkPrice($id, $price);
         $this->checkQuantity($id, $quantity);
     }
