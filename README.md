@@ -21,7 +21,7 @@
 
 ## Documentation
 
-For full documentation, usage and explaination, please visit https://adarsh-haldar.free.nf/unicart-docs
+For full documentation, usage and explanation, please visit https://adarsh-haldar.free.nf/unicart-docs
 
 ---
 
