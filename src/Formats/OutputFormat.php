@@ -67,7 +67,7 @@ trait OutputFormat
      *
      * @param string $as Flag to fetch data in different formats. Accepted format are array, object, json
      * 
-     * @return array
+     * @return mixed
      */
     public function taxes(string $as = 'array'): mixed
     {

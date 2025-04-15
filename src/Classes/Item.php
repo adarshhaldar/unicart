@@ -68,9 +68,9 @@ class Item
      *
      * @param int|string $id The unique identifier of the item.
      * @param int|float $price The price of a single unit of the item.
-     * @param int $quantity The quantity of the item.
+     * @param int $quantity The quantity of the item, defaults to 1.
      */
-    public function __construct(int|string $id, int|float $price, int $quantity)
+    public function __construct(int|string $id, int|float $price, int $quantity = 1)
     {
         $this->validate('addingItem', ['id' => $id, 'price' => $price, 'quantity' => $quantity]);
 
