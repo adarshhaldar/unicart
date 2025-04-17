@@ -12,7 +12,42 @@ trait OutputFormat
         'json'
     ];
 
-    private function formatter(string $as = 'array', $data)
+    /**
+     * Rounds the value according to the mode
+     * 
+     * @param string $mode The mode in which the value will be calculated. Default set to round.
+     * @param int|float $value The to be calculated.
+     * 
+     * @return int|float
+     */
+    private function roundValue(string $mode = 'round', int|float $value): int|float
+    {
+        switch ($mode) {
+            case 'round':
+                $value = round($value, 2);
+                break;
+            case 'floor':
+                $value = floor($value);
+                break;
+            case 'ceil':
+                $value = ceil($value);
+                break;
+            default:
+                $value = round($value, 2);
+        }
+
+        return $value;
+    }
+
+    /**
+     * Formats the data into desirable mode
+     * 
+     * @param string $as The mode in which the output will be given. Default set to array.
+     * @param mixed $data The The data to be converted.
+     * 
+     * @return mixed
+     */
+    private function formatter(string $as = 'array', mixed $data): mixed
     {
         $oldAs = $as;
         $as = strtolower($as);

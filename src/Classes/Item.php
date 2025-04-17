@@ -52,6 +52,12 @@ class Item
     private $deliveryCharge = [];
 
     /**
+     * Flag for checking if item has discount
+     * @var bool
+     */
+    private $hasDiscount = false;
+
+    /**
      * Discounts on item
      * @var array
      */
@@ -64,20 +70,49 @@ class Item
     private $taxes = [];
 
     /**
+     * Flag for allowing discount to stack
+     * @var bool
+     */
+    private $allowDiscountStacking = true;
+
+    /**
+     * Rounding method for output
+     * @var string
+     */
+    private $roundingMode = 'round';
+
+    /**
      * Public constructor to initialize a new item with ID, price, and quantity.
      *
      * @param int|string $id The unique identifier of the item.
      * @param int|float $price The price of a single unit of the item.
      * @param int $quantity The quantity of the item, defaults to 1.
+     * @param string $roundingMode The round off mode. Default set to round. Valid modes are round,floor,ceil
      */
-    public function __construct(int|string $id, int|float $price, int $quantity = 1)
+    public function __construct(int|string $id, int|float $price, int $quantity = 1, string $roundingMode = 'round')
     {
         $this->validate('addingItem', ['id' => $id, 'price' => $price, 'quantity' => $quantity]);
+
+        $this->roundingMode = $roundingMode;
 
         $this->id = $id;
         $this->price = $price;
         $this->quantity = $quantity;
         $this->originalPayable = $this->payableAmount = $price * $quantity;
+    }
+
+    /**
+     * Set permission for discount stacking
+     * 
+     * @param bool $allowDiscountStacking The flag to allow/disallow discount stacking. Default set to true.
+     * 
+     * @return self
+     */
+    public function setDiscountStacking(bool $allowDiscountStacking = true): self
+    {
+        $this->allowDiscountStacking = $allowDiscountStacking;
+
+        return $this;
     }
 
     /**
@@ -92,7 +127,7 @@ class Item
         $this->validate('applyingFlatDiscount');
 
         $beforeDiscount = $this->payableAmount;
-        $this->payableAmount = Discount::flatDiscount($this->payableAmount, $discount);
+        $this->payableAmount = Discount::flatDiscount($this->payableAmount, $discount * $this->quantity);
 
         $this->discounts[] = [
             'type' => Discount::FLAT_TYPE,
@@ -235,8 +270,8 @@ class Item
             'discounts' => count($this->discounts) > 0 ? $this->discounts : null,
             'taxes' => count($this->taxes) > 0 ? $this->taxes : null,
             'deliveryCharge' => count($this->deliveryCharge) > 0 ? $this->deliveryCharge : null,
-            'originalPayable' => round($this->originalPayable, 2),
-            'payableAmount' => round($this->payableAmount, 2),
+            'originalPayable' => $this->roundValue($this->roundingMode, $this->originalPayable),
+            'payableAmount' => $this->roundValue($this->roundingMode, $this->payableAmount),
         ];
     }
 }

@@ -18,10 +18,22 @@ class Unicart
     private $cartItems = [];
 
     /**
+     * Flag for checking if any item has discount
+     * @var bool
+     */
+    private $anyItemHasDiscount = false;
+
+    /**
      * Delivery charge on cart
      * @var array
      */
     private $deliveryCharge = [];
+
+    /**
+     * Flag for checking if cart has discount
+     * @var bool
+     */
+    private $cartHasDiscount = false;
 
     /**
      * Discounts on cart
@@ -54,6 +66,46 @@ class Unicart
     private $payableAmount = null;
 
     /**
+     * Flag for allowing discount to stack
+     * @var bool
+     */
+    private $allowDiscountStacking = true;
+
+    /**
+     * Rounding method for output
+     * @var string
+     */
+    private $roundingMode = 'round';
+
+    /**
+     * Set permission for discount stacking
+     * 
+     * @param bool $allowDiscountStacking The flag to allow/disallow discount stacking. Default set to true.
+     * 
+     * @return self
+     */
+    public function setDiscountStacking(bool $allowDiscountStacking = true): self
+    {
+        $this->allowDiscountStacking = $allowDiscountStacking;
+
+        return $this;
+    }
+
+    /**
+     * Set round off method for output
+     * 
+     * @param string $roundingMode The round off mode. Default set to round. Valid modes are round,floor,ceil
+     * 
+     * @return self
+     */
+    public function setRoundingMode(string $roundingMode = 'round'): self
+    {
+        $this->roundingMode = $roundingMode;
+
+        return $this;
+    }
+
+    /**
      * Adds a new item to the cart.
      * 
      * @param int|string $id A Unique identifier for the item.
@@ -66,7 +118,8 @@ class Unicart
     {
         $this->validate('addingItem', ['id' => $id, 'price' => $price, 'quantity' => $quantity]);
 
-        $this->cartItems[$id] = new Item($id, $price, $quantity);
+        $item = new Item($id, $price, $quantity);
+        $this->cartItems[$id] = $item;
         return $this;
     }
 
@@ -354,8 +407,8 @@ class Unicart
         return [
             'discounts' => count($this->discounts) > 0 ? $this->discounts : null,
             'deliveryCharge' => count($this->deliveryCharge) > 0 ? $this->deliveryCharge : null,
-            'originalPayable' => round($beforeTotal, 2),
-            'payableAmount' => round($this->payableAmount ?? $afterTotal, 2)
+            'originalPayable' => $this->roundValue($this->roundingMode, $beforeTotal),
+            'payableAmount' => $this->roundValue($this->roundingMode, $this->payableAmount ?? $afterTotal)
         ];
     }
 

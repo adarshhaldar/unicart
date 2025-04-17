@@ -2,7 +2,7 @@
 
 namespace Unicart\Validators;
 
-use Exception;
+use Unicart\Exceptions\UnicartException;
 
 trait UnicartValidator
 {
@@ -31,7 +31,7 @@ trait UnicartValidator
     private function checkIsCartEmpty(): void
     {
         if (count($this->cartItems) === 0) {
-            throw new Exception('Cart is empty');
+            throw new UnicartException('Cart is empty');
         }
     }
 
@@ -43,10 +43,10 @@ trait UnicartValidator
      * 
      * @return void
      */
-    private function checkItemId(int|string $id)
+    private function checkItemId(int|string $id): void
     {
         if (is_float($id)) {
-            throw new Exception('Float values are not allowed as item IDs. Id: ' . $id);
+            throw new UnicartException('Float values are not allowed as item IDs. Id: ' . $id);
         }
     }
 
@@ -61,7 +61,7 @@ trait UnicartValidator
     private function checkItemPrice(int|string $id, int|float $price): void
     {
         if ($price <= 0) {
-            throw new Exception('Price for item with Id: ' . $id . ' can not be less than or equal to 0.');
+            throw new UnicartException('Price for item with Id: ' . $id . ' can not be less than or equal to 0.');
         }
     }
 
@@ -76,7 +76,7 @@ trait UnicartValidator
     private function checkItemQuantity(int|string $id, int $quantity): void
     {
         if ($quantity <= 0) {
-            throw new Exception('Quantity for item with Id: ' . $id . ' can not be less than or equal to 0.');
+            throw new UnicartException('Quantity for item with Id: ' . $id . ' can not be less than or equal to 0.');
         }
     }
 
@@ -90,7 +90,7 @@ trait UnicartValidator
     private function checkItemExist(int|string $id): void
     {
         if (isset($this->cartItems[$id])) {
-            throw new Exception('Item with Id: ' . $id . ' already exist.');
+            throw new UnicartException('Item with Id: ' . $id . ' already exist.');
         }
     }
 
@@ -104,7 +104,7 @@ trait UnicartValidator
     private function checkItemDoesNotExist(int|string $id): void
     {
         if (!isset($this->cartItems[$id])) {
-            throw new Exception('Item with Id: ' . $id . ' does not exist.');
+            throw new UnicartException('Item with Id: ' . $id . ' does not exist.');
         }
     }
 
@@ -119,7 +119,7 @@ trait UnicartValidator
     private function checkUptoAmount(int|string $id, int|float $upto): void
     {
         if ($upto < 0) {
-            throw new Exception('Upto discount amount for Item with Id: ' . $id . ' is invalid.');
+            throw new UnicartException('Upto discount amount for Item with Id: ' . $id . ' is invalid.');
         }
     }
 
@@ -134,7 +134,7 @@ trait UnicartValidator
     {
         foreach ($this->items() as $item) {
             if ($item['taxes'] != null) {
-                throw new Exception('Can not apply ' . $applying . ' on cart as tax has already been applied on item with Id: ' . $item['id']);
+                throw new UnicartException('Can not apply ' . $applying . ' on cart as tax has already been applied on item with Id: ' . $item['id']);
             }
         }
     }
@@ -150,7 +150,7 @@ trait UnicartValidator
     {
         foreach ($this->items() as $item) {
             if ($item['deliveryCharge'] != null) {
-                throw new Exception('Can not apply ' . $applying . ' on cart as delivery charge has already been applied on item with Id: ' . $item['id']);
+                throw new UnicartException('Can not apply ' . $applying . ' on cart as delivery charge has already been applied on item with Id: ' . $item['id']);
             }
         }
     }
@@ -183,7 +183,7 @@ trait UnicartValidator
     private function checkHasCartInitiated(int|string $id, string $applying): void
     {
         if ($this->hasCartApplicationInitiated) {
-            throw new Exception('Can not add ' . $applying . ' after cart initiation on item with Id: ' . $id);
+            throw new UnicartException('Can not add ' . $applying . ' after cart initiation on item with Id: ' . $id);
         }
     }
 
@@ -197,7 +197,7 @@ trait UnicartValidator
     private function checkUptoAmountForCart(int|float $upto): void
     {
         if ($upto < 0) {
-            throw new Exception('Upto discount amount for cart is invalid.');
+            throw new UnicartException('Upto discount amount for cart is invalid.');
         }
     }
 
@@ -209,7 +209,7 @@ trait UnicartValidator
     private function checkTaxHasBeenApplied(): void
     {
         if (count($this->taxes) > 0) {
-            throw new Exception('Can not add discount after taxation');
+            throw new UnicartException('Can not add discount after taxation');
         }
     }
 
@@ -221,7 +221,7 @@ trait UnicartValidator
     private function checkDeliveryChargeHasBeenApplied(): void
     {
         if (count($this->deliveryCharge) > 0) {
-            throw new Exception('Can not add discount after adding delivery charge');
+            throw new UnicartException('Can not add discount after adding delivery charge');
         }
     }
 
@@ -233,7 +233,7 @@ trait UnicartValidator
     private function checkDeliveryChargeBeforeAddingNew(): void
     {
         if (count($this->deliveryCharge) > 0) {
-            throw new Exception('Can not add another delivery charge on the cart');
+            throw new UnicartException('Can not add another delivery charge on the cart');
         }
     }
 
@@ -249,7 +249,7 @@ trait UnicartValidator
     private function checkBxGyQuantity(int|string $id, int $xQuantity, int $yQuantity): void
     {
         if ($xQuantity <= 0 || $yQuantity <= 0) {
-            throw new Exception('Buy or get quantity cannot be less than or equal to 0 for item with Id: ' . $this->item($id)->toArray()['id']);
+            throw new UnicartException('Buy or get quantity cannot be less than or equal to 0 for item with Id: ' . $this->item($id)->toArray()['id']);
         }
     }
 
@@ -266,7 +266,7 @@ trait UnicartValidator
     {
         $itemQuantity = $this->item($id)->toArray()['quantity'];
         if ($itemQuantity < ($xQuantity + $yQuantity)) {
-            throw new Exception('Item quantity is insufficient for the specified BxGy values for item with Id: ' . $this->item($id)->toArray()['id']);
+            throw new UnicartException('Item quantity is insufficient for the specified BxGy values for item with Id: ' . $this->item($id)->toArray()['id']);
         }
     }
 
@@ -278,36 +278,31 @@ trait UnicartValidator
      * 
      * @return void
      */
-    private function checkSpendXGetYValidity(int|float $spend, int|float $get)
+    private function checkSpendXGetYValidity(int|float $spend, int|float $get): void
     {
         if ($this->isSxGyApplied) {
-            throw new Exception('Can not apply another SxGy discount on the cart');
+            throw new UnicartException('Can not apply another SxGy discount on the cart');
         }
 
         if ($spend <= 0 || $get <= 0) {
-            throw new Exception('Spend or Get can not be less than or equal to 0 of spendXgetY discount');
+            throw new UnicartException('Spend or Get can not be less than or equal to 0 of spendXgetY discount');
         }
 
         if ($spend < $get) {
-            throw new Exception('Spend can not be less than get for spendXgetY discount');
+            throw new UnicartException('Spend can not be less than get for spendXgetY discount');
         }
     }
 
     /**
-     * Validates application of sxgy on cart
-     * 
-     * @param int|float $spend The cart expenditure.
-     * @param int|float $get The off amount.
+     * Checks the stacking of discount
      * 
      * @return void
      */
-    private function validateSpendXGetYDiscountOnCart(int|float $spend, int|float $get)
+    private function checkDiscountStacking(): void
     {
-        $this->checkIsCartEmpty();
-        $this->checkItemLevelApplications('discount');
-        $this->checkTaxHasBeenApplied();
-        $this->checkDeliveryChargeHasBeenApplied();
-        $this->checkSpendXGetYValidity($spend, $get);
+        if (!$this->allowDiscountStacking && ($this->cartHasDiscount || $this->anyItemHasDiscount)) {
+            throw new UnicartException('Discount stacking is disabled. A discount has already been applied.');
+        }
     }
 
     /**
@@ -334,6 +329,28 @@ trait UnicartValidator
     }
 
     /**
+     * Validates application of sxgy on cart
+     * 
+     * @param int|float $spend The cart expenditure.
+     * @param int|float $get The off amount.
+     * 
+     * @return void
+     */
+    private function validateSpendXGetYDiscountOnCart(int|float $spend, int|float $get): void
+    {
+        $this->checkIsCartEmpty();
+        $this->checkItemLevelApplications('discount');
+        $this->checkTaxHasBeenApplied();
+        $this->checkDeliveryChargeHasBeenApplied();
+        $this->checkSpendXGetYValidity($spend, $get);
+
+        $this->checkDiscountStacking();
+        if (!$this->cartHasDiscount) {
+            $this->cartHasDiscount = true;
+        }
+    }
+
+    /**
      * Validates application of percentage-based discount on cart
      * 
      * @param int|float $upto The maximum discount allowed in percentage-based discounts. Defaults to 0 (no limit).
@@ -347,6 +364,11 @@ trait UnicartValidator
         $this->checkTaxHasBeenApplied();
         $this->checkDeliveryChargeHasBeenApplied();
         $this->checkUptoAmountForCart($upto);
+
+        $this->checkDiscountStacking();
+        if (!$this->cartHasDiscount) {
+            $this->cartHasDiscount = true;
+        }
     }
 
     /**
@@ -360,6 +382,11 @@ trait UnicartValidator
         $this->checkItemLevelApplications('discount');
         $this->checkTaxHasBeenApplied();
         $this->checkDeliveryChargeHasBeenApplied();
+
+        $this->checkDiscountStacking();
+        if (!$this->cartHasDiscount) {
+            $this->cartHasDiscount = true;
+        }
     }
 
     /**
@@ -403,6 +430,11 @@ trait UnicartValidator
         $this->checkItemDoesNotExist($id);
         $this->checkBxGyQuantity($id, $xQuantity, $yQuantity);
         $this->checkItemQuantityForBxGy($id, $xQuantity, $yQuantity);
+
+        $this->checkDiscountStacking();
+        if (!$this->anyItemHasDiscount) {
+            $this->anyItemHasDiscount = true;
+        }
     }
 
     /**
@@ -418,6 +450,11 @@ trait UnicartValidator
         $this->checkHasCartInitiated($id, 'discount');
         $this->checkUptoAmount($id, $upto);
         $this->checkItemDoesNotExist($id);
+
+        $this->checkDiscountStacking();
+        if (!$this->anyItemHasDiscount) {
+            $this->anyItemHasDiscount = true;
+        }
     }
 
     /**
@@ -431,6 +468,11 @@ trait UnicartValidator
     {
         $this->checkHasCartInitiated($id, 'discount');
         $this->checkItemDoesNotExist($id);
+
+        $this->checkDiscountStacking();
+        if (!$this->anyItemHasDiscount) {
+            $this->anyItemHasDiscount = true;
+        }
     }
 
     /**
@@ -483,7 +525,7 @@ trait UnicartValidator
     private function validate(string $for, $params = []): void
     {
         if (!in_array($for, self::VALIDATORS)) {
-            throw new Exception('Invalid validator for item validation');
+            throw new UnicartException('Invalid validator for validation');
         }
 
         list($id, $price, $quantity, $upto, $xQuantity, $yQuantity, $spend, $get) = $this->getVariablesFromParams($params);
