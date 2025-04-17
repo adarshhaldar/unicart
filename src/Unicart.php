@@ -66,6 +66,12 @@ class Unicart
     private $payableAmount = null;
 
     /**
+     * Flag for allowing item to get override
+     * @var bool
+     */
+    private $allowItemOverride = false;
+
+    /**
      * Flag for allowing discount to stack
      * @var bool
      */
@@ -76,6 +82,20 @@ class Unicart
      * @var string
      */
     private $roundingMode = 'round';
+
+    /**
+     * Set permission for item override
+     * 
+     * @param bool $allowItemOverride The flag to allow/disallow item overriding. Default set to false.
+     * 
+     * @return self
+     */
+    public function setItemOverriding(bool $allowItemOverride = false): self
+    {
+        $this->allowItemOverride = $allowItemOverride;
+
+        return $this;
+    }
 
     /**
      * Set permission for discount stacking
@@ -120,6 +140,22 @@ class Unicart
 
         $item = new Item($id, $price, $quantity);
         $this->cartItems[$id] = $item;
+        return $this;
+    }
+
+    /**
+     * Add metadata for specific item
+     * 
+     * @param int|string $id A Unique identifier for the item.
+     * @param array $metadata The metadata to add for the item.
+     * 
+     * @return self
+     */
+    public function addItemMetaData(int|string $id, array $metadata = []): self
+    {
+        $this->checkItemDoesNotExist($id);
+        $this->cartItems[$id]->addMetaData($metadata);
+
         return $this;
     }
 

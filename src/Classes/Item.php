@@ -70,6 +70,12 @@ class Item
     private $taxes = [];
 
     /**
+     * Meta data of item
+     * @var array
+     */
+    private $metadata = [];
+
+    /**
      * Flag for allowing discount to stack
      * @var bool
      */
@@ -99,6 +105,19 @@ class Item
         $this->price = $price;
         $this->quantity = $quantity;
         $this->originalPayable = $this->payableAmount = $price * $quantity;
+    }
+
+    /**
+     * Add metadata
+     * 
+     * @param array $metadata The metadata to add for the item.
+     * 
+     * @return self
+     */
+    public function addMetaData(array $metadata = []): self
+    {
+        $this->metadata = $metadata;
+        return $this;
     }
 
     /**
@@ -263,7 +282,7 @@ class Item
      */
     private function getDetail(): array
     {
-        return [
+        $detail = [
             'id' => $this->id,
             'price' => $this->price,
             'quantity' => $this->quantity,
@@ -273,5 +292,11 @@ class Item
             'originalPayable' => $this->roundValue($this->roundingMode, $this->originalPayable),
             'payableAmount' => $this->roundValue($this->roundingMode, $this->payableAmount),
         ];
+
+        if (count($this->metadata) > 0) {
+            $detail['metadata'] = $this->metadata;
+        }
+
+        return $detail;
     }
 }

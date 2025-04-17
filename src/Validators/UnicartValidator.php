@@ -490,7 +490,10 @@ trait UnicartValidator
         $this->checkItemPrice($id, $price);
         $this->checkItemQuantity($id, $quantity);
         $this->checkHasCartInitiated($id, 'new item');
-        $this->checkItemExist($id);
+
+        if (!$this->allowItemOverride) {
+            $this->checkItemExist($id);
+        }
     }
 
     /**
