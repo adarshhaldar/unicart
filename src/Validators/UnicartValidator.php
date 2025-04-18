@@ -35,7 +35,6 @@ trait UnicartValidator
         }
     }
 
-
     /**
      * Checks new item's id
      * 
@@ -306,26 +305,98 @@ trait UnicartValidator
     }
 
     /**
-     * Validates application of tax on cart
+     * Checks the discount percentage
+     * 
+     * @param int|float $percentage The discount percentage.
+     * @param mixed $id A unique identifier for item.
      * 
      * @return void
      */
-    private function validateApplyingTaxOnCart(): void
+    private function checkDiscountPercentage(int|float $percentage, mixed $id = null): void
+    {
+        if ($percentage <= 0) {
+            $message = $id ? 'Discount percentage can not be less than or equal to 0 for item with Id: ' . $id : 'Discount percentage can not be less than or equal to 0';
+            throw new UnicartException($message);
+        }
+    }
+
+    /**
+     * Checks the discount amount
+     * 
+     * @param int|float $discount The discount amount.
+     * @param mixed $id A unique identifier for item.
+     * 
+     * @return void
+     */
+    private function checkDiscountAmount(int|float $discount, mixed $id = null): void
+    {
+        if ($discount <= 0) {
+            $message = $id ? 'Discount can not be less than or equal to 0 for item with Id: ' . $id : 'Discount can not be less than or equal to 0';
+            throw new UnicartException($message);
+        }
+    }
+
+    /**
+     * Checks the delivery charge
+     * 
+     * @param int|float $charge The delivery charge.
+     * @param mixed $id A unique identifier for item.
+     * 
+     * @return void
+     */
+    private function checkDeliveryCharge(int|float $charge, mixed $id = null): void
+    {
+        if ($charge <= 0) {
+            $message = $id ? 'Delivery charge can not be less than or equal to 0 for item with Id: ' . $id : 'Delivery charge can not be less than or equal to 0';
+            throw new UnicartException($message);
+        }
+    }
+
+    /**
+     * Checks the tax rate
+     * 
+     * @param int|float $rate The tax rate in %.
+     * @param mixed $id A unique identifier for item.
+     * 
+     * @return void
+     */
+    private function checkTaxRate(int|float $rate, mixed $id = null): void
+    {
+        if ($rate <= 0) {
+            $message = $id ? 'Tax can not be less than or equal to 0 for item with Id: ' . $id : 'Tax can not be less than or equal to 0';
+            throw new UnicartException($message);
+        }
+    }
+
+    /**
+     * Validates application of tax on cart
+     * 
+     * @param @rate The tax rate.
+     * 
+     * @return void
+     */
+    private function validateApplyingTaxOnCart(int|float $rate): void
     {
         $this->checkIsCartEmpty();
         $this->checkItemLevelApplications('tax');
+
+        $this->checkTaxRate($rate);
     }
 
     /**
      * Validates application of delivery charge on cart
      * 
+     * @param int|float $charge The delivery charge.
+     * 
      * @return void
      */
-    private function validateApplyingDeliveryChargeOnCart(): void
+    private function validateApplyingDeliveryChargeOnCart(int|float $charge): void
     {
         $this->checkIsCartEmpty();
         $this->checkItemLevelApplications('delivery charge');
         $this->checkDeliveryChargeBeforeAddingNew();
+
+        $this->checkDeliveryCharge($charge);
     }
 
     /**
@@ -353,11 +424,12 @@ trait UnicartValidator
     /**
      * Validates application of percentage-based discount on cart
      * 
+     * @param int|float $percentage The discount percentage.
      * @param int|float $upto The maximum discount allowed in percentage-based discounts. Defaults to 0 (no limit).
      * 
      * @return void
      */
-    private function validateApplyingPercentageDiscountOnCart(int|float $upto): void
+    private function validateApplyingPercentageDiscountOnCart(int|float $percentage, int|float $upto): void
     {
         $this->checkIsCartEmpty();
         $this->checkItemLevelApplications('discount');
@@ -369,14 +441,18 @@ trait UnicartValidator
         if (!$this->cartHasDiscount) {
             $this->cartHasDiscount = true;
         }
+
+        $this->checkDiscountPercentage($percentage);
     }
 
     /**
      * Validates application of flat discount on cart
      * 
+     * @param int|float $discount The discount amount.
+     * 
      * @return void
      */
-    private function validateApplyingFlatDiscountOnCart(): void
+    private function validateApplyingFlatDiscountOnCart(int|float $discount): void
     {
         $this->checkIsCartEmpty();
         $this->checkItemLevelApplications('discount');
@@ -387,32 +463,40 @@ trait UnicartValidator
         if (!$this->cartHasDiscount) {
             $this->cartHasDiscount = true;
         }
+
+        $this->checkDiscountAmount($discount);
     }
 
     /**
      * Validates application of tax on item
      * 
      * @param int|string $id Unique identifier for item.
+     * @param int|float $rate The tax rate in %.
      * 
      * @return void
      */
-    private function validateApplyingTaxOnItem(int|string $id): void
+    private function validateApplyingTaxOnItem(int|string $id, int|float $rate): void
     {
         $this->checkHasCartInitiated($id, 'tax');
         $this->checkItemDoesNotExist($id);
+
+        $this->checkTaxRate($rate, $id);
     }
 
     /**
      * Validates application of delivery charge on item
      * 
      * @param int|string $id Unique identifier for item.
+     * @param int|float $charge The delivery charge.
      * 
      * @return void
      */
-    private function validateApplyingDeliveryChargeOnItem(int|string $id): void
+    private function validateApplyingDeliveryChargeOnItem(int|string $id, int|float $charge): void
     {
         $this->checkHasCartInitiated($id, 'delivery charge');
         $this->checkItemDoesNotExist($id);
+
+        $this->checkDeliveryCharge($charge, $id);
     }
 
     /**
@@ -441,11 +525,12 @@ trait UnicartValidator
      * Validates application of percentage-based discount on item
      * 
      * @param int|string $id Unique identifier for item.
+     * @param int|float $percentage The discount percentage.
      * @param int|float $upto The maximum discount allowed in percentage-based discounts. Defaults to 0 (no limit).
      * 
      * @return void
      */
-    private function validateApplyingPercentageDiscountOnItem(int|string $id, int|float $upto): void
+    private function validateApplyingPercentageDiscountOnItem(int|string $id, int|float $percentage, int|float $upto): void
     {
         $this->checkHasCartInitiated($id, 'discount');
         $this->checkUptoAmount($id, $upto);
@@ -455,16 +540,19 @@ trait UnicartValidator
         if (!$this->anyItemHasDiscount) {
             $this->anyItemHasDiscount = true;
         }
+
+        $this->checkDiscountPercentage($percentage, $id);
     }
 
     /**
      * Validates application of flat discount on item
      * 
      * @param int|string $id Unique identifier for item.
+     * @param int|float $discount The discount amount.
      * 
      * @return void
      */
-    private function validateApplyingFlatDiscountOnItem(int|string $id): void
+    private function validateApplyingFlatDiscountOnItem(int|string $id, int|float $discount): void
     {
         $this->checkHasCartInitiated($id, 'discount');
         $this->checkItemDoesNotExist($id);
@@ -473,6 +561,8 @@ trait UnicartValidator
         if (!$this->anyItemHasDiscount) {
             $this->anyItemHasDiscount = true;
         }
+
+        $this->checkDiscountAmount($discount, $id);
     }
 
     /**
@@ -503,13 +593,17 @@ trait UnicartValidator
      * 
      * @return array
      */
-    private function getVariablesFromParams($params): array
+    private function getVariablesFromParams(array $params): array
     {
         return [
             $params['id'] ?? null,
             $params['price'] ?? null,
             $params['quantity'] ?? null,
+            $params['discount'] ?? null,
+            $params['percentage'] ?? null,
             $params['upto'] ?? null,
+            $params['charge'] ?? null,
+            $params['rate'] ?? null,
             $params['xQuantity'] ?? null,
             $params['yQuantity'] ?? null,
             $params['spend'] ?? null,
@@ -531,20 +625,20 @@ trait UnicartValidator
             throw new UnicartException('Invalid validator for validation');
         }
 
-        list($id, $price, $quantity, $upto, $xQuantity, $yQuantity, $spend, $get) = $this->getVariablesFromParams($params);
+        list($id, $price, $quantity, $discount, $percentage, $upto, $charge, $rate, $xQuantity, $yQuantity, $spend, $get) = $this->getVariablesFromParams($params);
 
         match ($for) {
             'addingItem' => $this->validateAddingItem($id, $price, $quantity),
-            'applyingFlatDiscountOnItem' => $this->validateApplyingFlatDiscountOnItem($id),
-            'applyingPercentageDiscountOnItem' => $this->validateApplyingPercentageDiscountOnItem($id, $upto),
+            'applyingFlatDiscountOnItem' => $this->validateApplyingFlatDiscountOnItem($id, $discount),
+            'applyingPercentageDiscountOnItem' => $this->validateApplyingPercentageDiscountOnItem($id, $percentage, $upto),
             'applyingBxGyOnItem' => $this->validateApplyingBxGyOnItem($id, $xQuantity, $yQuantity),
-            'applyingDeliveryChargeOnItem' => $this->validateApplyingDeliveryChargeOnItem($id),
-            'applyingTaxOnItem' => $this->validateApplyingTaxOnItem($id),
-            'applyingFlatDiscountOnCart' => $this->validateApplyingFlatDiscountOnCart(),
-            'applyingPercentageDiscountOnCart' => $this->validateApplyingPercentageDiscountOnCart($upto),
-            'applyingDeliveryChargeOnCart' => $this->validateApplyingDeliveryChargeOnCart(),
-            'applyingTaxOnCart' => $this->validateApplyingTaxOnCart(),
-            'applyingSpendXGetYOffOnCart' => $this->validateSpendXGetYDiscountOnCart($spend, $get)
+            'applyingDeliveryChargeOnItem' => $this->validateApplyingDeliveryChargeOnItem($id, $charge),
+            'applyingTaxOnItem' => $this->validateApplyingTaxOnItem($id, $rate),
+            'applyingFlatDiscountOnCart' => $this->validateApplyingFlatDiscountOnCart($discount),
+            'applyingPercentageDiscountOnCart' => $this->validateApplyingPercentageDiscountOnCart($percentage, $upto),
+            'applyingDeliveryChargeOnCart' => $this->validateApplyingDeliveryChargeOnCart($charge),
+            'applyingTaxOnCart' => $this->validateApplyingTaxOnCart($rate),
+            'applyingSpendXGetYOffOnCart' => $this->validateSpendXGetYDiscountOnCart($spend, $get),
         };
     }
 }

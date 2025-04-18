@@ -143,7 +143,7 @@ class Item
      */
     public function applyFlatDiscount(int|float $discount): self
     {
-        $this->validate('applyingFlatDiscount');
+        $this->validate('applyingFlatDiscount', ['discount' => $discount]);
 
         $beforeDiscount = $this->payableAmount;
         $this->payableAmount = Discount::flatDiscount($this->payableAmount, $discount * $this->quantity);
@@ -168,7 +168,7 @@ class Item
      */
     public function applyPercentageDiscount(int|float $percentage, int|float $upto = 0): self
     {
-        $this->validate('applyingPercentageDiscount', ['upto' => $upto]);
+        $this->validate('applyingPercentageDiscount', ['percentage' => $percentage, 'upto' => $upto]);
 
         $beforeDiscount = $this->payableAmount;
         $this->payableAmount = Discount::percentageDiscount($this->payableAmount, $percentage, $upto);
@@ -219,7 +219,7 @@ class Item
      */
     public function applyDeliveryCharge(int|float $charge): self
     {
-        $this->validate('applyingDeliveryCharge');
+        $this->validate('applyingDeliveryCharge', ['charge' => $charge]);
 
         $beforeDeliveryCharge = $this->payableAmount;
         $this->payableAmount = $this->payableAmount + $charge;
@@ -235,13 +235,15 @@ class Item
     /**
      * Applies a tax to the item.
      *
-     * @param string $type The type/label of the tax.
      * @param int|float $rate The tax rate in percentage.
-     *
+     * @param string $type The type/label of the tax.
+     * 
      * @return self
      */
-    public function applyTax(string $type = 'general', int|float $rate): self
+    public function applyTax(int|float $rate, string $type = 'general'): self
     {
+        $this->validate('applyingTax', ['rate' => $rate]);
+
         $beforeTax = $this->payableAmount;
         $this->payableAmount = $this->payableAmount + (($this->payableAmount * $rate) / 100);
 
@@ -252,6 +254,38 @@ class Item
             'afterTax' => $this->payableAmount
         ];
 
+        return $this;
+    }
+
+    /**
+     * Executes the given action if the condition evaluates to true
+     * 
+     * @param bool|callable A boolean value or a callable returning a boolean.
+     * @param callable $action The action to execute if the condition is true.
+     * 
+     * @return self
+     */
+    public function when(bool|callable $condition, callable $action): self
+    {
+        if (is_callable($condition) ? $condition() : $condition) {
+            $action();
+        }
+        return $this;
+    }
+
+    /**
+     * Executes the given action if the condition evaluates to false
+     * 
+     * @param bool|callable $condition A boolean value or a callable returning a boolean.
+     * @param callable $action The action to execute if the condition is false.
+     * 
+     * @return self
+     */
+    public function unless(bool|callable $condition, callable $action): self
+    {
+        if (!(is_callable($condition) ? $condition() : $condition)) {
+            $action();
+        }
         return $this;
     }
 

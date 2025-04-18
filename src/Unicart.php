@@ -169,7 +169,7 @@ class Unicart
      */
     public function applyFlatDiscountOnItem(int|string $id, int|float $discount): self
     {
-        $this->validate('applyingFlatDiscountOnItem', ['id' => $id]);
+        $this->validate('applyingFlatDiscountOnItem', ['id' => $id, 'discount' => $discount]);
 
         $this->cartItems[$id]->applyFlatDiscount($discount);
         return $this;
@@ -186,7 +186,7 @@ class Unicart
      */
     public function applyPercentageDiscountOnItem(int|string $id, int|float $percentage, int|float $upto = 0): self
     {
-        $this->validate('applyingPercentageDiscountOnItem', ['id' => $id, 'upto' => $upto]);
+        $this->validate('applyingPercentageDiscountOnItem', ['id' => $id, 'percentage' => $percentage, 'upto' => $upto]);
 
         $this->cartItems[$id]->applyPercentageDiscount($percentage, $upto);
         return $this;
@@ -220,7 +220,7 @@ class Unicart
      */
     public function applyDeliveryChargeOnItem(int|string $id, int|float $charge): self
     {
-        $this->validate('applyingDeliveryChargeOnItem', ['id' => $id]);
+        $this->validate('applyingDeliveryChargeOnItem', ['id' => $id, 'charge' => $charge]);
 
         $this->cartItems[$id]->applyDeliveryCharge($charge);
 
@@ -238,9 +238,9 @@ class Unicart
      */
     public function applyTaxOnItem(int|string $id, int|float $rate, string $type = 'general'): self
     {
-        $this->validate('applyingTaxOnItem', ['id' => $id]);
+        $this->validate('applyingTaxOnItem', ['id' => $id, 'rate' => $rate]);
 
-        $this->cartItems[$id]->applyTax($type, $rate);
+        $this->cartItems[$id]->applyTax($rate, $type);
 
         return $this;
     }
@@ -254,7 +254,7 @@ class Unicart
      */
     public function applyFlatDiscountOnCart(int|float $discount): self
     {
-        $this->validate('applyingFlatDiscountOnCart');
+        $this->validate('applyingFlatDiscountOnCart', ['discount' => $discount]);
 
         $originalPayable = $payableAmount = $this->payableAmount();
         $this->payableAmount = Discount::flatDiscount($payableAmount, $discount);
@@ -278,7 +278,7 @@ class Unicart
      */
     public function applyPercentageDiscountOnCart(int|float $percentage, int|float $upto = 0): self
     {
-        $this->validate('applyingPercentageDiscountOnCart', ['upto' => $upto]);
+        $this->validate('applyingPercentageDiscountOnCart', ['percentage' => $percentage, 'upto' => $upto]);
 
         $originalPayable = $payableAmount = $this->payableAmount();
         $this->payableAmount = Discount::percentageDiscount($payableAmount, $percentage, $upto);
@@ -303,7 +303,7 @@ class Unicart
      */
     public function applyDeliveryChargeOnCart(int|float $charge): self
     {
-        $this->validate('applyingDeliveryChargeOnCart');
+        $this->validate('applyingDeliveryChargeOnCart', ['charge' => $charge]);
 
         $originalPayable = $payableAmount = $this->payableAmount ?? $this->summary()['payableAmount'];
         $this->payableAmount = $payableAmount + $charge;
@@ -326,7 +326,7 @@ class Unicart
      */
     public function applyTaxOnCart(int|float $rate, string $type = 'general'): self
     {
-        $this->validate('applyingTaxOnCart');
+        $this->validate('applyingTaxOnCart', ['rate' => $rate]);
 
         $originalPayable = $payableAmount = $this->payableAmount ?? $this->summary()['payableAmount'];
 
@@ -369,6 +369,39 @@ class Unicart
             ];
         }
 
+        return $this;
+    }
+
+
+    /**
+     * Executes the given action if the condition evaluates to true
+     * 
+     * @param bool|callable A boolean value or a callable returning a boolean.
+     * @param callable $action The action to execute if the condition is true.
+     * 
+     * @return self
+     */
+    public function when(bool|callable $condition, callable $action): self
+    {
+        if (is_callable($condition) ? $condition() : $condition) {
+            $action();
+        }
+        return $this;
+    }
+
+    /**
+     * Executes the given action if the condition evaluates to false
+     * 
+     * @param bool|callable $condition A boolean value or a callable returning a boolean.
+     * @param callable $action The action to execute if the condition is false.
+     * 
+     * @return self
+     */
+    public function unless(bool|callable $condition, callable $action): self
+    {
+        if (!(is_callable($condition) ? $condition() : $condition)) {
+            $action();
+        }
         return $this;
     }
 
@@ -442,6 +475,7 @@ class Unicart
 
         return [
             'discounts' => count($this->discounts) > 0 ? $this->discounts : null,
+            'taxes' => count($this->taxes) > 0 ? $this->taxes : null,
             'deliveryCharge' => count($this->deliveryCharge) > 0 ? $this->deliveryCharge : null,
             'originalPayable' => $this->roundValue($this->roundingMode, $beforeTotal),
             'payableAmount' => $this->roundValue($this->roundingMode, $this->payableAmount ?? $afterTotal)
