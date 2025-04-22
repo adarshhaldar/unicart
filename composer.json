@@ -1,0 +1,27 @@
+{
+    "name": "adarshhaldar/unicart",
+    "description": "A PHP cart library for checkout calculations and summary",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Unicart\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Adarsh Haldar",
+            "email": "hadarsh04@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.4"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/adarshhaldar/unicart.git"
+        }
+    ]
+}
