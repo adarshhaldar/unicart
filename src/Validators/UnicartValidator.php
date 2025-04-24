@@ -2,6 +2,7 @@
 
 namespace Unicart\Validators;
 
+use Unicart\Classes\Locale;
 use Unicart\Exceptions\UnicartException;
 
 trait UnicartValidator
@@ -31,7 +32,7 @@ trait UnicartValidator
     private function checkIsCartEmpty(): void
     {
         if (count($this->cartItems) === 0) {
-            throw new UnicartException('Cart is empty');
+            throw new UnicartException(Locale::translate('unicart_exceptions.empty_cart'));
         }
     }
 
@@ -45,7 +46,7 @@ trait UnicartValidator
     private function checkItemId(int|string $id): void
     {
         if (is_float($id)) {
-            throw new UnicartException('Float values are not allowed as item IDs. Id: ' . $id);
+            throw new UnicartException(Locale::translate('unicart_exceptions.float_item_id_not_allowed', ['id' => $id]));
         }
     }
 
@@ -60,7 +61,7 @@ trait UnicartValidator
     private function checkItemPrice(int|string $id, int|float $price): void
     {
         if ($price <= 0) {
-            throw new UnicartException('Price for item with Id: ' . $id . ' can not be less than or equal to 0.');
+            throw new UnicartException(Locale::translate('unicart_exceptions.invalid_item_price', ['id' => $id]));
         }
     }
 
@@ -75,7 +76,7 @@ trait UnicartValidator
     private function checkItemQuantity(int|string $id, int $quantity): void
     {
         if ($quantity <= 0) {
-            throw new UnicartException('Quantity for item with Id: ' . $id . ' can not be less than or equal to 0.');
+            throw new UnicartException(Locale::translate('unicart_exceptions.invalid_item_qty', ['id' => $id]));
         }
     }
 
@@ -89,7 +90,7 @@ trait UnicartValidator
     private function checkItemExist(int|string $id): void
     {
         if (isset($this->cartItems[$id])) {
-            throw new UnicartException('Item with Id: ' . $id . ' already exist.');
+            throw new UnicartException(Locale::translate('unicart_exceptions.item_exist', ['id' => $id]));
         }
     }
 
@@ -103,7 +104,7 @@ trait UnicartValidator
     private function checkItemDoesNotExist(int|string $id): void
     {
         if (!isset($this->cartItems[$id])) {
-            throw new UnicartException('Item with Id: ' . $id . ' does not exist.');
+            throw new UnicartException(Locale::translate('unicart_exceptions.item_doesnt_exist', ['id' => $id]));
         }
     }
 
@@ -118,7 +119,7 @@ trait UnicartValidator
     private function checkUptoAmount(int|string $id, int|float $upto): void
     {
         if ($upto < 0) {
-            throw new UnicartException('Upto discount amount for Item with Id: ' . $id . ' is invalid.');
+            throw new UnicartException(Locale::translate('unicart_exceptions.invalid_item_upto_amount', ['id' => $id]));
         }
     }
 
@@ -133,7 +134,7 @@ trait UnicartValidator
     {
         foreach ($this->items() as $item) {
             if ($item['taxes'] != null) {
-                throw new UnicartException('Can not apply ' . $applying . ' on cart as tax has already been applied on item with Id: ' . $item['id']);
+                throw new UnicartException(Locale::translate('unicart_exceptions.cannt_apply_on_cart_due_to_item', ['applying' => $applying, 'id' => $item['id']]));
             }
         }
     }
@@ -149,7 +150,7 @@ trait UnicartValidator
     {
         foreach ($this->items() as $item) {
             if ($item['deliveryCharge'] != null) {
-                throw new UnicartException('Can not apply ' . $applying . ' on cart as delivery charge has already been applied on item with Id: ' . $item['id']);
+                throw new UnicartException(Locale::translate('unicart_exceptions.cannt_apply_on_cart_due_to_item', ['applying' => $applying, 'id' => $item['id']]));
             }
         }
     }
@@ -182,7 +183,7 @@ trait UnicartValidator
     private function checkHasCartInitiated(int|string $id, string $applying): void
     {
         if ($this->hasCartApplicationInitiated) {
-            throw new UnicartException('Can not add ' . $applying . ' after cart initiation on item with Id: ' . $id);
+            throw new UnicartException(Locale::translate('unicart_exceptions.cannt_add_in_cart_due_to_item', ['applying' => $applying, 'id' => $id]));
         }
     }
 
@@ -196,7 +197,7 @@ trait UnicartValidator
     private function checkUptoAmountForCart(int|float $upto): void
     {
         if ($upto < 0) {
-            throw new UnicartException('Upto discount amount for cart is invalid.');
+            throw new UnicartException(Locale::translate('unicart_exceptions.invalid_cart_upto_amount'));
         }
     }
 
@@ -208,7 +209,7 @@ trait UnicartValidator
     private function checkTaxHasBeenApplied(): void
     {
         if (count($this->taxes) > 0) {
-            throw new UnicartException('Can not add discount after taxation');
+            throw new UnicartException(Locale::translate('unicart_exceptions.cannt_add_discount_after_tax'));
         }
     }
 
@@ -220,7 +221,7 @@ trait UnicartValidator
     private function checkDeliveryChargeHasBeenApplied(): void
     {
         if (count($this->deliveryCharge) > 0) {
-            throw new UnicartException('Can not add discount after adding delivery charge');
+            throw new UnicartException(Locale::translate('unicart_exceptions.cannt_add_discount_after_delivery'));
         }
     }
 
@@ -232,7 +233,7 @@ trait UnicartValidator
     private function checkDeliveryChargeBeforeAddingNew(): void
     {
         if (count($this->deliveryCharge) > 0) {
-            throw new UnicartException('Can not add another delivery charge on the cart');
+            throw new UnicartException(Locale::translate('unicart_exceptions.cannt_add_another_delivery'));
         }
     }
 
@@ -248,7 +249,7 @@ trait UnicartValidator
     private function checkBxGyQuantity(int|string $id, int $xQuantity, int $yQuantity): void
     {
         if ($xQuantity <= 0 || $yQuantity <= 0) {
-            throw new UnicartException('Buy or get quantity cannot be less than or equal to 0 for item with Id: ' . $this->item($id)->toArray()['id']);
+            throw new UnicartException(Locale::translate('unicart_exceptions.invalid_buy_get_qty_for_item', ['id' => $this->item($id)->toArray()['id']]));
         }
     }
 
@@ -265,7 +266,7 @@ trait UnicartValidator
     {
         $itemQuantity = $this->item($id)->toArray()['quantity'];
         if ($itemQuantity < ($xQuantity + $yQuantity)) {
-            throw new UnicartException('Item quantity is insufficient for the specified BxGy values for item with Id: ' . $this->item($id)->toArray()['id']);
+            throw new UnicartException(Locale::translate('unicart_exceptions.invalid_qty_for_item_bxgy', ['id' => $this->item($id)->toArray()['id']]));
         }
     }
 
@@ -280,15 +281,15 @@ trait UnicartValidator
     private function checkSpendXGetYValidity(int|float $spend, int|float $get): void
     {
         if ($this->isSxGyApplied) {
-            throw new UnicartException('Can not apply another SxGy discount on the cart');
+            throw new UnicartException(Locale::translate('unicart_exceptions.cannt_apply_sxgy'));
         }
 
         if ($spend <= 0 || $get <= 0) {
-            throw new UnicartException('Spend or Get can not be less than or equal to 0 of spendXgetY discount');
+            throw new UnicartException(Locale::translate('unicart_exceptions.invalid_sxgy'));
         }
 
         if ($spend < $get) {
-            throw new UnicartException('Spend can not be less than get for spendXgetY discount');
+            throw new UnicartException(Locale::translate('unicart_exceptions.invalid_spend_in_sxgy'));
         }
     }
 
@@ -300,7 +301,7 @@ trait UnicartValidator
     private function checkDiscountStacking(): void
     {
         if (!$this->allowDiscountStacking && ($this->cartHasDiscount || $this->anyItemHasDiscount)) {
-            throw new UnicartException('Discount stacking is disabled. A discount has already been applied.');
+            throw new UnicartException(Locale::translate('unicart_exceptions.discount_stacking_disabled'));
         }
     }
 
@@ -315,7 +316,7 @@ trait UnicartValidator
     private function checkDiscountPercentage(int|float $percentage, mixed $id = null): void
     {
         if ($percentage <= 0) {
-            $message = $id ? 'Discount percentage can not be less than or equal to 0 for item with Id: ' . $id : 'Discount percentage can not be less than or equal to 0';
+            $message = $id ? Locale::translate('unicart_exceptions.invalid_discount_percentage_for_item', ['id' => $id]) : Locale::translate('unicart_exceptions.invalid_discount_percentage');
             throw new UnicartException($message);
         }
     }
@@ -331,7 +332,7 @@ trait UnicartValidator
     private function checkDiscountAmount(int|float $discount, mixed $id = null): void
     {
         if ($discount <= 0) {
-            $message = $id ? 'Discount can not be less than or equal to 0 for item with Id: ' . $id : 'Discount can not be less than or equal to 0';
+            $message = $id ? Locale::translate('unicart_exceptions.invalid_discount_for_item', ['id' => $id]) : Locale::translate('unicart_exceptions.invalid_discount');
             throw new UnicartException($message);
         }
     }
@@ -347,7 +348,7 @@ trait UnicartValidator
     private function checkDeliveryCharge(int|float $charge, mixed $id = null): void
     {
         if ($charge <= 0) {
-            $message = $id ? 'Delivery charge can not be less than or equal to 0 for item with Id: ' . $id : 'Delivery charge can not be less than or equal to 0';
+            $message = $id ? Locale::translate('unicart_exceptions.invalid_delivery_charge_for_item', ['id' => $id]) : Locale::translate('unicart_exceptions.invalid_delivery_charge');
             throw new UnicartException($message);
         }
     }
@@ -363,7 +364,7 @@ trait UnicartValidator
     private function checkTaxRate(int|float $rate, mixed $id = null): void
     {
         if ($rate <= 0) {
-            $message = $id ? 'Tax can not be less than or equal to 0 for item with Id: ' . $id : 'Tax can not be less than or equal to 0';
+            $message = $id ? Locale::translate('unicart_exceptions.invalid_tax_for_item', ['id' => $id]) : Locale::translate('unicart_exceptions.invalid_tax');
             throw new UnicartException($message);
         }
     }
@@ -622,7 +623,7 @@ trait UnicartValidator
     private function validate(string $for, $params = []): void
     {
         if (!in_array($for, self::VALIDATORS)) {
-            throw new UnicartException('Invalid validator for validation');
+            throw new UnicartException(Locale::translate('invalid_validator'));
         }
 
         list($id, $price, $quantity, $discount, $percentage, $upto, $charge, $rate, $xQuantity, $yQuantity, $spend, $get) = $this->getVariablesFromParams($params);

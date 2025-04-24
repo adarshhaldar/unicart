@@ -1,0 +1,56 @@
+<?php
+
+namespace Unicart\Lang;
+
+// English translation
+return [
+    'invalid_validator' => 'Invalid validator for validation',
+    'unicart_exceptions' => [
+        'empty_cart' => 'Cart is empty',
+        'float_item_id_not_allowed' => 'Float values are not allowed as item IDs. Id: :id.',
+        'invalid_item_price' => 'Price for item with Id: :id can not be less than or equal to 0.',
+        'invalid_item_qty' => 'Quantity for item with Id: :id can not be less than or equal to 0.',
+        'item_exist' => 'Item with Id: :id already exist.',
+        'item_doesnt_exist' => 'Item with Id: :id does not exist.',
+        'invalid_item_upto_amount' => 'Upto discount amount for Item with Id: :id is invalid.',
+        'cannt_apply_on_cart_due_to_item' => 'Can not apply :applying on cart as tax has already been applied on item with Id: :id.',
+        'cannt_add_in_cart_due_to_item' => 'Can not add :applying after cart initiation on item with Id: :id.',
+        'invalid_cart_upto_amount' => 'Upto discount amount for cart is invalid.',
+        'cannt_add_discount_after_tax' => 'Can not add discount after taxation.',
+        'cannt_add_discount_after_delivery' => 'Can not add discount after adding delivery charge.',
+        'cannt_add_another_delivery' => 'Can not add another delivery charge on the cart.',
+        'invalid_buy_get_qty_for_item' => 'Buy or get quantity cannot be less than or equal to 0 for item with Id: :id.',
+        'invalid_qty_for_item_bxgy' => 'Item quantity is insufficient for the specified BxGy values for item with Id: :id.',
+        'cannt_apply_sxgy' => 'Can not apply another SxGy discount on the cart.',
+        'invalid_sxgy' => 'Spend or Get can not be less than or equal to 0 of spendXgetY discount.',
+        'invalid_spend_in_sxgy' => 'Spend can not be less than get for spendXgetY discount.',
+        'discount_stacking_disabled' => 'Discount stacking is disabled. A discount has already been applied.',
+        'invalid_discount_percentage_for_item' => 'Discount percentage can not be less than or equal to 0 for item with Id: :id.',
+        'invalid_discount_percentage' => 'Discount percentage can not be less than or equal to 0.',
+        'invalid_discount_for_item' => 'Discount can not be less than or equal to 0 for item with Id: :id.',
+        'invalid_discount' => 'Discount can not be less than or equal to 0.',
+        'invalid_delivery_charge_for_item' => 'Delivery charge can not be less than or equal to 0 for item with Id: :id.',
+        'invalid_delivery_charge' => 'Delivery charge can not be less than or equal to 0.',
+        'invalid_tax_for_item' => 'Tax can not be less than or equal to 0 for item with Id: :id.',
+        'invalid_tax' => 'Tax can not be less than or equal to 0.',
+    ],
+    'item_exceptions' => [
+        'invalid_id' => 'Float values are not allowed as item IDs. Id: :id.',
+        'invalid_price' => 'Price for item with Id: :id can not be less than or equal to 0.',
+        'invalid_qty' => 'Quantity for item with Id: :id can not be less than or equal to 0.',
+        'invalid_upto_amount' => 'Upto discount amount for Item with Id: :id is invalid.',
+        'cannt_add_discount_after_tax' => 'Can not add discount after taxation for item with Id: :id',
+        'cannt_add_discount_after_delivery_charge' => 'Can not add discount after adding delivery charge for item with Id: :id.',
+        'cannt_add_delivery_charge' => 'Can not add another delivery charge for item with Id: :id.',
+        'cannt_add_bxgy_after_bxgy' => 'Can not add BxGy after adding BxGy for item with Id: :id.',
+        'cannt_add_bxgy_after_dicount' => 'Can not add BxGy after adding other discounts for item with Id: :id.',
+        'cannt_add_discount_after_bxgy' => 'Can not add discount after adding BxGy for item with Id: :id.',
+        'invalid_bxgy_qty' => 'BxGy buy or get quantity can not be negative for item with Id: :id.',
+        'dissatified_bxgy_qty' => 'Quantity does not satisfy BxGy buy and get quantities for item with Id: :id.',
+        'discount_stacking_disabled' => 'Discount stacking is disabled. This item already has a discount.',
+        'invalid_discount_percentage' => 'Discount percentage can not be less than or equal to 0 for item with Id: :id.',
+        'invalid_discount' => 'Discount can not be less than or equal to 0 for item with Id: :id.',
+        'invalid_delivery_charge' => 'Delivery charge can not be less than or equal to 0 for item with Id: :id.',
+        'invalid_tax' => 'Tax can not be less than or equal to 0 for item with Id: :id.'
+    ]
+];

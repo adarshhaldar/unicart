@@ -1,0 +1,56 @@
+<?php
+
+namespace Unicart\Lang;
+
+// Dutch translation
+return [
+    'invalid_validator' => 'Ongeldige validator voor validatie',
+    'unicart_exceptions' => [
+        'empty_cart' => 'Winkelwagen is leeg',
+        'float_item_id_not_allowed' => 'Decimale waarden zijn niet toegestaan als artikel-ID. Id: :id.',
+        'invalid_item_price' => 'De prijs voor artikel met Id: :id mag niet kleiner dan of gelijk aan 0 zijn.',
+        'invalid_item_qty' => 'De hoeveelheid voor artikel met Id: :id mag niet kleiner dan of gelijk aan 0 zijn.',
+        'item_exist' => 'Artikel met Id: :id bestaat al.',
+        'item_doesnt_exist' => 'Artikel met Id: :id bestaat niet.',
+        'invalid_item_upto_amount' => 'Ongeldig maximaal kortingsbedrag voor artikel met Id: :id.',
+        'cannt_apply_on_cart_due_to_item' => 'Kan :applying niet toepassen op de winkelwagen omdat er al belasting is toegepast op artikel met Id: :id.',
+        'cannt_add_in_cart_due_to_item' => 'Kan :applying niet toevoegen na initiatie van de winkelwagen op artikel met Id: :id.',
+        'invalid_cart_upto_amount' => 'Ongeldig maximaal kortingsbedrag voor de winkelwagen.',
+        'cannt_add_discount_after_tax' => 'Kan geen korting toevoegen nadat belasting is toegepast.',
+        'cannt_add_discount_after_delivery' => 'Kan geen korting toevoegen nadat verzendkosten zijn toegevoegd.',
+        'cannt_add_another_delivery' => 'Kan geen extra verzendkosten toevoegen aan de winkelwagen.',
+        'invalid_buy_get_qty_for_item' => 'Koop- of ontvanghoeveelheid mag niet kleiner dan of gelijk aan 0 zijn voor artikel met Id: :id.',
+        'invalid_qty_for_item_bxgy' => 'Onvoldoende hoeveelheid voor opgegeven BxGy-waarden voor artikel met Id: :id.',
+        'cannt_apply_sxgy' => 'Kan geen extra SxGy-korting toepassen op de winkelwagen.',
+        'invalid_sxgy' => 'Bestedings- of ontvanghoeveelheid mag niet kleiner dan of gelijk aan 0 zijn voor spendXgetY-korting.',
+        'invalid_spend_in_sxgy' => 'Besteding mag niet kleiner zijn dan ontvangst voor spendXgetY-korting.',
+        'discount_stacking_disabled' => 'Stapelen van kortingen is uitgeschakeld. Er is al een korting toegepast.',
+        'invalid_discount_percentage_for_item' => 'Kortingspercentage mag niet kleiner dan of gelijk aan 0 zijn voor artikel met Id: :id.',
+        'invalid_discount_percentage' => 'Kortingspercentage mag niet kleiner dan of gelijk aan 0 zijn.',
+        'invalid_discount_for_item' => 'Korting mag niet kleiner dan of gelijk aan 0 zijn voor artikel met Id: :id.',
+        'invalid_discount' => 'Korting mag niet kleiner dan of gelijk aan 0 zijn.',
+        'invalid_delivery_charge_for_item' => 'Verzendkosten mogen niet kleiner dan of gelijk aan 0 zijn voor artikel met Id: :id.',
+        'invalid_delivery_charge' => 'Verzendkosten mogen niet kleiner dan of gelijk aan 0 zijn.',
+        'invalid_tax_for_item' => 'Belasting mag niet kleiner dan of gelijk aan 0 zijn voor artikel met Id: :id.',
+        'invalid_tax' => 'Belasting mag niet kleiner dan of gelijk aan 0 zijn.',
+    ],
+    'item_exceptions' => [
+        'invalid_id' => 'Decimale waarden zijn niet toegestaan als artikel-ID. Id: :id.',
+        'invalid_price' => 'De prijs voor artikel met Id: :id mag niet kleiner dan of gelijk aan 0 zijn.',
+        'invalid_qty' => 'De hoeveelheid voor artikel met Id: :id mag niet kleiner dan of gelijk aan 0 zijn.',
+        'invalid_upto_amount' => 'Ongeldig maximaal kortingsbedrag voor artikel met Id: :id.',
+        'cannt_add_discount_after_tax' => 'Kan geen korting toevoegen na belasting voor artikel met Id: :id.',
+        'cannt_add_discount_after_delivery_charge' => 'Kan geen korting toevoegen na verzendkosten voor artikel met Id: :id.',
+        'cannt_add_delivery_charge' => 'Kan geen extra verzendkosten toevoegen voor artikel met Id: :id.',
+        'cannt_add_bxgy_after_bxgy' => 'Kan geen BxGy toevoegen na reeds toegepaste BxGy voor artikel met Id: :id.',
+        'cannt_add_bxgy_after_dicount' => 'Kan geen BxGy toevoegen na een andere korting voor artikel met Id: :id.',
+        'cannt_add_discount_after_bxgy' => 'Kan geen korting toevoegen na BxGy voor artikel met Id: :id.',
+        'invalid_bxgy_qty' => 'Koop- of ontvanghoeveelheid van BxGy mag niet negatief zijn voor artikel met Id: :id.',
+        'dissatified_bxgy_qty' => 'Hoeveelheid voldoet niet aan de BxGy-voorwaarden voor artikel met Id: :id.',
+        'discount_stacking_disabled' => 'Stapelen van kortingen is uitgeschakeld. Dit artikel heeft al een korting.',
+        'invalid_discount_percentage' => 'Kortingspercentage mag niet kleiner dan of gelijk aan 0 zijn voor artikel met Id: :id.',
+        'invalid_discount' => 'Korting mag niet kleiner dan of gelijk aan 0 zijn voor artikel met Id: :id.',
+        'invalid_delivery_charge' => 'Verzendkosten mogen niet kleiner dan of gelijk aan 0 zijn voor artikel met Id: :id.',
+        'invalid_tax' => 'Belasting mag niet kleiner dan of gelijk aan 0 zijn voor artikel met Id: :id.'
+    ]
+];

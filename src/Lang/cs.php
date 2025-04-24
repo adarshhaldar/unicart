@@ -1,0 +1,56 @@
+<?php
+
+namespace Unicart\Lang;
+
+// Czech translation
+return [
+    'invalid_validator' => 'Neplatný validátor pro validaci',
+    'unicart_exceptions' => [
+        'empty_cart' => 'Košík je prázdný',
+        'float_item_id_not_allowed' => 'Desetinné hodnoty nejsou povoleny jako ID položek. Id: :id.',
+        'invalid_item_price' => 'Cena položky s Id: :id nemůže být menší nebo rovna 0.',
+        'invalid_item_qty' => 'Množství položky s Id: :id nemůže být menší nebo rovno 0.',
+        'item_exist' => 'Položka s Id: :id již existuje.',
+        'item_doesnt_exist' => 'Položka s Id: :id neexistuje.',
+        'invalid_item_upto_amount' => 'Neplatná maximální sleva pro položku s Id: :id.',
+        'cannt_apply_on_cart_due_to_item' => 'Nelze aplikovat :applying na košík, protože na položku s Id: :id již byl aplikován daň.',
+        'cannt_add_in_cart_due_to_item' => 'Nelze přidat :applying do košíku po jeho inicializaci pro položku s Id: :id.',
+        'invalid_cart_upto_amount' => 'Neplatná maximální sleva pro košík.',
+        'cannt_add_discount_after_tax' => 'Nelze přidat slevu po zdanění.',
+        'cannt_add_discount_after_delivery' => 'Nelze přidat slevu po přidání nákladů na dopravu.',
+        'cannt_add_another_delivery' => 'Nelze přidat další poplatek za dopravu do košíku.',
+        'invalid_buy_get_qty_for_item' => 'Množství pro koupi nebo získání nemůže být menší nebo rovno 0 pro položku s Id: :id.',
+        'invalid_qty_for_item_bxgy' => 'Množství položky není dostatečné pro specifikované hodnoty BxGy pro položku s Id: :id.',
+        'cannt_apply_sxgy' => 'Nelze aplikovat další slevu SxGy na košík.',
+        'invalid_sxgy' => 'Hodnota SpendXGetY nemůže být menší nebo rovna 0.',
+        'invalid_spend_in_sxgy' => 'Hodnota výdajů nemůže být menší než hodnota získání pro slevu SpendXGetY.',
+        'discount_stacking_disabled' => 'Skládání slev je zakázáno. Sleva již byla aplikována.',
+        'invalid_discount_percentage_for_item' => 'Procento slevy nemůže být menší nebo rovno 0 pro položku s Id: :id.',
+        'invalid_discount_percentage' => 'Procento slevy nemůže být menší nebo rovno 0.',
+        'invalid_discount_for_item' => 'Sleva nemůže být menší nebo rovna 0 pro položku s Id: :id.',
+        'invalid_discount' => 'Sleva nemůže být menší nebo rovna 0.',
+        'invalid_delivery_charge_for_item' => 'Poplatek za dopravu nemůže být menší nebo rovno 0 pro položku s Id: :id.',
+        'invalid_delivery_charge' => 'Poplatek za dopravu nemůže být menší nebo rovno 0.',
+        'invalid_tax_for_item' => 'Daň nemůže být menší nebo rovno 0 pro položku s Id: :id.',
+        'invalid_tax' => 'Daň nemůže být menší nebo rovno 0.',
+    ],
+    'item_exceptions' => [
+        'invalid_id' => 'Desetinné hodnoty nejsou povoleny jako ID položek. Id: :id.',
+        'invalid_price' => 'Cena položky s Id: :id nemůže být menší nebo rovna 0.',
+        'invalid_qty' => 'Množství položky s Id: :id nemůže být menší nebo rovno 0.',
+        'invalid_upto_amount' => 'Neplatná maximální sleva pro položku s Id: :id.',
+        'cannt_add_discount_after_tax' => 'Nelze přidat slevu po zdanění pro položku s Id: :id.',
+        'cannt_add_discount_after_delivery_charge' => 'Nelze přidat slevu po přidání nákladů na dopravu pro položku s Id: :id.',
+        'cannt_add_delivery_charge' => 'Nelze přidat další poplatek za dopravu pro položku s Id: :id.',
+        'cannt_add_bxgy_after_bxgy' => 'Nelze přidat BxGy po již přidaném BxGy pro položku s Id: :id.',
+        'cannt_add_bxgy_after_dicount' => 'Nelze přidat BxGy po přidání jiné slevy pro položku s Id: :id.',
+        'cannt_add_discount_after_bxgy' => 'Nelze přidat slevu po přidání BxGy pro položku s Id: :id.',
+        'invalid_bxgy_qty' => 'Množství BxGy nemůže být záporné pro položku s Id: :id.',
+        'dissatified_bxgy_qty' => 'Množství nevyhovuje požadavkům na BxGy pro položku s Id: :id.',
+        'discount_stacking_disabled' => 'Skládání slev je zakázáno. Tato položka již má slevu.',
+        'invalid_discount_percentage' => 'Procento slevy nemůže být menší nebo rovno 0 pro položku s Id: :id.',
+        'invalid_discount' => 'Sleva nemůže být menší nebo rovna 0 pro položku s Id: :id.',
+        'invalid_delivery_charge' => 'Poplatek za dopravu nemůže být menší nebo rovno 0 pro položku s Id: :id.',
+        'invalid_tax' => 'Daň nemůže být menší nebo rovno 0 pro položku s Id: :id.'
+    ]
+];

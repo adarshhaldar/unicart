@@ -1,0 +1,56 @@
+<?php
+
+namespace Unicart\Lang;
+
+// Chinese translation
+return [
+    'invalid_validator' => '用于验证的验证器无效',
+    'unicart_exceptions' => [
+        'empty_cart' => '购物车为空',
+        'float_item_id_not_allowed' => '不允许使用浮点值作为商品ID。Id: :id。',
+        'invalid_item_price' => 'Id 为 :id 的商品价格不能小于或等于 0。',
+        'invalid_item_qty' => 'Id 为 :id 的商品数量不能小于或等于 0。',
+        'item_exist' => 'Id 为 :id 的商品已存在。',
+        'item_doesnt_exist' => 'Id 为 :id 的商品不存在。',
+        'invalid_item_upto_amount' => 'Id 为 :id 的商品的最大折扣金额无效。',
+        'cannt_apply_on_cart_due_to_item' => '由于 Id 为 :id 的商品已应用税费，无法在购物车上应用 :applying。',
+        'cannt_add_in_cart_due_to_item' => '在购物车初始化后，无法对 Id 为 :id 的商品添加 :applying。',
+        'invalid_cart_upto_amount' => '购物车的最大折扣金额无效。',
+        'cannt_add_discount_after_tax' => '征税后无法添加折扣。',
+        'cannt_add_discount_after_delivery' => '添加配送费用后无法再添加折扣。',
+        'cannt_add_another_delivery' => '购物车中无法再添加另一个配送费用。',
+        'invalid_buy_get_qty_for_item' => 'Id 为 :id 的商品的购买或赠送数量不能小于或等于 0。',
+        'invalid_qty_for_item_bxgy' => 'Id 为 :id 的商品数量不足以满足指定的 BxGy 值。',
+        'cannt_apply_sxgy' => '购物车上无法再应用另一个 SxGy 折扣。',
+        'invalid_sxgy' => 'SpendXGetY 折扣中的消费或赠送数量不能小于或等于 0。',
+        'invalid_spend_in_sxgy' => 'SpendXGetY 折扣中的消费金额不能小于赠送金额。',
+        'discount_stacking_disabled' => '不允许叠加折扣。已应用一个折扣。',
+        'invalid_discount_percentage_for_item' => 'Id 为 :id 的商品的折扣百分比不能小于或等于 0。',
+        'invalid_discount_percentage' => '折扣百分比不能小于或等于 0。',
+        'invalid_discount_for_item' => 'Id 为 :id 的商品的折扣不能小于或等于 0。',
+        'invalid_discount' => '折扣不能小于或等于 0。',
+        'invalid_delivery_charge_for_item' => 'Id 为 :id 的商品的配送费不能小于或等于 0。',
+        'invalid_delivery_charge' => '配送费不能小于或等于 0。',
+        'invalid_tax_for_item' => 'Id 为 :id 的商品的税费不能小于或等于 0。',
+        'invalid_tax' => '税费不能小于或等于 0。',
+    ],
+    'item_exceptions' => [
+        'invalid_id' => '不允许使用浮点值作为商品ID。Id: :id。',
+        'invalid_price' => 'Id 为 :id 的商品价格不能小于或等于 0。',
+        'invalid_qty' => 'Id 为 :id 的商品数量不能小于或等于 0。',
+        'invalid_upto_amount' => 'Id 为 :id 的商品的最大折扣金额无效。',
+        'cannt_add_discount_after_tax' => 'Id 为 :id 的商品在征税后无法添加折扣。',
+        'cannt_add_discount_after_delivery_charge' => 'Id 为 :id 的商品在添加配送费用后无法添加折扣。',
+        'cannt_add_delivery_charge' => 'Id 为 :id 的商品无法再添加另一个配送费用。',
+        'cannt_add_bxgy_after_bxgy' => 'Id 为 :id 的商品已应用 BxGy 后无法再添加 BxGy。',
+        'cannt_add_bxgy_after_dicount' => 'Id 为 :id 的商品在已添加其他折扣后无法再添加 BxGy。',
+        'cannt_add_discount_after_bxgy' => 'Id 为 :id 的商品已应用 BxGy 后无法再添加折扣。',
+        'invalid_bxgy_qty' => 'Id 为 :id 的商品的 BxGy 购买或赠送数量不能为负数。',
+        'dissatified_bxgy_qty' => 'Id 为 :id 的商品数量不足以满足 BxGy 的购买和赠送数量。',
+        'discount_stacking_disabled' => '不允许叠加折扣。该商品已应用折扣。',
+        'invalid_discount_percentage' => 'Id 为 :id 的商品的折扣百分比不能小于或等于 0。',
+        'invalid_discount' => 'Id 为 :id 的商品的折扣不能小于或等于 0。',
+        'invalid_delivery_charge' => 'Id 为 :id 的商品的配送费用不能小于或等于 0。',
+        'invalid_tax' => 'Id 为 :id 的商品的税费不能小于或等于 0。'
+    ]
+];

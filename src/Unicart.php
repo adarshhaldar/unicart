@@ -2,6 +2,7 @@
 
 namespace Unicart;
 
+use Unicart\Classes\Locale;
 use Unicart\Classes\Discount;
 use Unicart\Classes\Item;
 use Unicart\Formats\OutputFormat;
@@ -82,6 +83,38 @@ class Unicart
      * @var string
      */
     private $roundingMode = 'round';
+
+    /**
+     * Get current locale
+     * 
+     * @return string
+     */
+    public function getLocale(): string
+    {
+        return Locale::getLocale();
+    }
+
+    /**
+     * Get list of locales
+     * 
+     * @return array
+     */
+    public function getLocales(): array
+    {
+        return Locale::getLocales();
+    }
+
+    /**
+     * Set locale
+     * 
+     * @param string $locale The locale that has to be set. Default set to en.
+     * 
+     * @return void
+     */
+    public function setLocale(string $locale = 'en'): void
+    {
+        Locale::setLocale($locale);
+    }
 
     /**
      * Set permission for item override

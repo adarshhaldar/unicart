@@ -1,0 +1,56 @@
+<?php
+
+namespace Unicart\Lang;
+
+// French translation
+return [
+    'invalid_validator' => 'Validateur invalide pour la validation',
+    'unicart_exceptions' => [
+        'empty_cart' => 'Le panier est vide',
+        'float_item_id_not_allowed' => 'Les valeurs décimales ne sont pas autorisées comme identifiants d\'article. Id : :id.',
+        'invalid_item_price' => 'Le prix de l\'article avec l\'Id : :id ne peut pas être inférieur ou égal à 0.',
+        'invalid_item_qty' => 'La quantité de l\'article avec l\'Id : :id ne peut pas être inférieure ou égale à 0.',
+        'item_exist' => 'L\'article avec l\'Id : :id existe déjà.',
+        'item_doesnt_exist' => 'L\'article avec l\'Id : :id n\'existe pas.',
+        'invalid_item_upto_amount' => 'Montant maximum de remise invalide pour l\'article avec l\'Id : :id.',
+        'cannt_apply_on_cart_due_to_item' => 'Impossible d\'appliquer :applying au panier car une taxe a déjà été appliquée sur l\'article avec l\'Id : :id.',
+        'cannt_add_in_cart_due_to_item' => 'Impossible d\'ajouter :applying après l\'initialisation du panier pour l\'article avec l\'Id : :id.',
+        'invalid_cart_upto_amount' => 'Montant maximum de remise invalide pour le panier.',
+        'cannt_add_discount_after_tax' => 'Impossible d\'ajouter une remise après l\'application de la taxe.',
+        'cannt_add_discount_after_delivery' => 'Impossible d\'ajouter une remise après l\'ajout des frais de livraison.',
+        'cannt_add_another_delivery' => 'Impossible d\'ajouter d\'autres frais de livraison au panier.',
+        'invalid_buy_get_qty_for_item' => 'Les quantités "acheter" ou "obtenir" ne peuvent pas être inférieures ou égales à 0 pour l\'article avec l\'Id : :id.',
+        'invalid_qty_for_item_bxgy' => 'Quantité insuffisante pour les valeurs BxGy spécifiées pour l\'article avec l\'Id : :id.',
+        'cannt_apply_sxgy' => 'Impossible d\'appliquer une autre remise SxGy au panier.',
+        'invalid_sxgy' => 'La dépense ou la remise ne peut pas être inférieure ou égale à 0 pour une remise de type dépenserX-obtenirY.',
+        'invalid_spend_in_sxgy' => 'Le montant dépensé ne peut pas être inférieur à celui à obtenir pour une remise dépenserX-obtenirY.',
+        'discount_stacking_disabled' => 'Le cumul des remises est désactivé. Une remise a déjà été appliquée.',
+        'invalid_discount_percentage_for_item' => 'Le pourcentage de remise ne peut pas être inférieur ou égal à 0 pour l\'article avec l\'Id : :id.',
+        'invalid_discount_percentage' => 'Le pourcentage de remise ne peut pas être inférieur ou égal à 0.',
+        'invalid_discount_for_item' => 'La remise ne peut pas être inférieure ou égale à 0 pour l\'article avec l\'Id : :id.',
+        'invalid_discount' => 'La remise ne peut pas être inférieure ou égale à 0.',
+        'invalid_delivery_charge_for_item' => 'Les frais de livraison ne peuvent pas être inférieurs ou égaux à 0 pour l\'article avec l\'Id : :id.',
+        'invalid_delivery_charge' => 'Les frais de livraison ne peuvent pas être inférieurs ou égaux à 0.',
+        'invalid_tax_for_item' => 'La taxe ne peut pas être inférieure ou égale à 0 pour l\'article avec l\'Id : :id.',
+        'invalid_tax' => 'La taxe ne peut pas être inférieure ou égale à 0.',
+    ],
+    'item_exceptions' => [
+        'invalid_id' => 'Les valeurs décimales ne sont pas autorisées comme identifiants d\'article. Id : :id.',
+        'invalid_price' => 'Le prix de l\'article avec l\'Id : :id ne peut pas être inférieur ou égal à 0.',
+        'invalid_qty' => 'La quantité de l\'article avec l\'Id : :id ne peut pas être inférieure ou égale à 0.',
+        'invalid_upto_amount' => 'Montant maximum de remise invalide pour l\'article avec l\'Id : :id.',
+        'cannt_add_discount_after_tax' => 'Impossible d\'ajouter une remise après l\'application de la taxe pour l\'article avec l\'Id : :id.',
+        'cannt_add_discount_after_delivery_charge' => 'Impossible d\'ajouter une remise après l\'ajout des frais de livraison pour l\'article avec l\'Id : :id.',
+        'cannt_add_delivery_charge' => 'Impossible d\'ajouter d\'autres frais de livraison pour l\'article avec l\'Id : :id.',
+        'cannt_add_bxgy_after_bxgy' => 'Impossible d\'ajouter une remise BxGy après en avoir déjà ajouté une pour l\'article avec l\'Id : :id.',
+        'cannt_add_bxgy_after_dicount' => 'Impossible d\'ajouter une remise BxGy après l\'ajout d\'autres remises pour l\'article avec l\'Id : :id.',
+        'cannt_add_discount_after_bxgy' => 'Impossible d\'ajouter une remise après une remise BxGy pour l\'article avec l\'Id : :id.',
+        'invalid_bxgy_qty' => 'Les quantités "acheter" ou "obtenir" de BxGy ne peuvent pas être négatives pour l\'article avec l\'Id : :id.',
+        'dissatified_bxgy_qty' => 'La quantité ne satisfait pas les conditions BxGy pour l\'article avec l\'Id : :id.',
+        'discount_stacking_disabled' => 'Le cumul des remises est désactivé. Cet article a déjà une remise.',
+        'invalid_discount_percentage' => 'Le pourcentage de remise ne peut pas être inférieur ou égal à 0 pour l\'article avec l\'Id : :id.',
+        'invalid_discount' => 'La remise ne peut pas être inférieure ou égale à 0 pour l\'article avec l\'Id : :id.',
+        'invalid_delivery_charge' => 'Les frais de livraison ne peuvent pas être inférieurs ou égaux à 0 pour l\'article avec l\'Id : :id.',
+        'invalid_tax' => 'La taxe ne peut pas être inférieure ou égale à 0 pour l\'article avec l\'Id : :id.'
+    ]
+];

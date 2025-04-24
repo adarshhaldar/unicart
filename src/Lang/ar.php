@@ -1,0 +1,56 @@
+<?php
+
+namespace Unicart\Lang;
+
+// Arabic translation
+return [
+    'invalid_validator' => 'مدقق غير صالح للتحقق',
+    'unicart_exceptions' => [
+        'empty_cart' => 'سلة التسوق فارغة',
+        'float_item_id_not_allowed' => 'لا يُسمح بالقيم العشرية كمعرّف للعنصر. المعرّف: :id.',
+        'invalid_item_price' => 'سعر العنصر بالمعرّف :id لا يمكن أن يكون صفرًا أو أقل.',
+        'invalid_item_qty' => 'كمية العنصر بالمعرّف :id لا يمكن أن تكون صفرًا أو أقل.',
+        'item_exist' => 'العنصر بالمعرّف :id موجود بالفعل.',
+        'item_doesnt_exist' => 'العنصر بالمعرّف :id غير موجود.',
+        'invalid_item_upto_amount' => 'قيمة خصم "حتى" للعنصر بالمعرّف :id غير صالحة.',
+        'cannt_apply_on_cart_due_to_item' => 'لا يمكن تطبيق :applying على السلة لأن الضريبة تم تطبيقها بالفعل على العنصر بالمعرّف :id.',
+        'cannt_add_in_cart_due_to_item' => 'لا يمكن إضافة :applying إلى العنصر بالمعرّف :id بعد بدء السلة.',
+        'invalid_cart_upto_amount' => 'قيمة خصم "حتى" للسلة غير صالحة.',
+        'cannt_add_discount_after_tax' => 'لا يمكن إضافة خصم بعد تطبيق الضريبة.',
+        'cannt_add_discount_after_delivery' => 'لا يمكن إضافة خصم بعد تطبيق رسوم التوصيل.',
+        'cannt_add_another_delivery' => 'لا يمكن إضافة رسوم توصيل إضافية إلى السلة.',
+        'invalid_buy_get_qty_for_item' => 'كمية الشراء أو الاستلام للعنصر بالمعرّف :id لا يمكن أن تكون صفرًا أو أقل.',
+        'invalid_qty_for_item_bxgy' => 'الكمية غير كافية للعنصر بالمعرّف :id للقيم المحددة في BxGy.',
+        'cannt_apply_sxgy' => 'لا يمكن تطبيق خصم SpendXGetY إضافي على السلة.',
+        'invalid_sxgy' => 'قيمة الإنفاق أو الاستلام في خصم SpendXGetY لا يمكن أن تكون صفرًا أو أقل.',
+        'invalid_spend_in_sxgy' => 'قيمة الإنفاق في خصم SpendXGetY لا يمكن أن تكون أقل من الاستلام.',
+        'discount_stacking_disabled' => 'تكديس الخصومات غير مفعل. تم تطبيق خصم بالفعل.',
+        'invalid_discount_percentage_for_item' => 'نسبة الخصم للعنصر بالمعرّف :id لا يمكن أن تكون صفرًا أو أقل.',
+        'invalid_discount_percentage' => 'نسبة الخصم لا يمكن أن تكون صفرًا أو أقل.',
+        'invalid_discount_for_item' => 'الخصم للعنصر بالمعرّف :id لا يمكن أن يكون صفرًا أو أقل.',
+        'invalid_discount' => 'الخصم لا يمكن أن يكون صفرًا أو أقل.',
+        'invalid_delivery_charge_for_item' => 'رسوم التوصيل للعنصر بالمعرّف :id لا يمكن أن تكون صفرًا أو أقل.',
+        'invalid_delivery_charge' => 'رسوم التوصيل لا يمكن أن تكون صفرًا أو أقل.',
+        'invalid_tax_for_item' => 'الضريبة للعنصر بالمعرّف :id لا يمكن أن تكون صفرًا أو أقل.',
+        'invalid_tax' => 'الضريبة لا يمكن أن تكون صفرًا أو أقل.',
+    ],
+    'item_exceptions' => [
+        'invalid_id' => 'لا يُسمح بالقيم العشرية كمعرّف للعنصر. المعرّف: :id.',
+        'invalid_price' => 'سعر العنصر بالمعرّف :id لا يمكن أن يكون صفرًا أو أقل.',
+        'invalid_qty' => 'كمية العنصر بالمعرّف :id لا يمكن أن تكون صفرًا أو أقل.',
+        'invalid_upto_amount' => 'قيمة خصم "حتى" للعنصر بالمعرّف :id غير صالحة.',
+        'cannt_add_discount_after_tax' => 'لا يمكن إضافة خصم للعنصر بالمعرّف :id بعد تطبيق الضريبة.',
+        'cannt_add_discount_after_delivery_charge' => 'لا يمكن إضافة خصم للعنصر بالمعرّف :id بعد تطبيق رسوم التوصيل.',
+        'cannt_add_delivery_charge' => 'لا يمكن إضافة رسوم توصيل إضافية للعنصر بالمعرّف :id.',
+        'cannt_add_bxgy_after_bxgy' => 'لا يمكن إضافة BxGy آخر للعنصر بالمعرّف :id بعد تطبيق BxGy.',
+        'cannt_add_bxgy_after_dicount' => 'لا يمكن إضافة BxGy للعنصر بالمعرّف :id بعد تطبيق خصومات أخرى.',
+        'cannt_add_discount_after_bxgy' => 'لا يمكن إضافة خصم للعنصر بالمعرّف :id بعد تطبيق BxGy.',
+        'invalid_bxgy_qty' => 'كمية الشراء أو الاستلام لـ BxGy للعنصر بالمعرّف :id لا يمكن أن تكون سالبة.',
+        'dissatified_bxgy_qty' => 'كمية الشراء والاستلام لـ BxGy للعنصر بالمعرّف :id غير كافية.',
+        'discount_stacking_disabled' => 'تكديس الخصومات غير مفعل. تم تطبيق خصم بالفعل على هذا العنصر.',
+        'invalid_discount_percentage' => 'نسبة الخصم للعنصر بالمعرّف :id لا يمكن أن تكون صفرًا أو أقل.',
+        'invalid_discount' => 'الخصم للعنصر بالمعرّف :id لا يمكن أن يكون صفرًا أو أقل.',
+        'invalid_delivery_charge' => 'رسوم التوصيل للعنصر بالمعرّف :id لا يمكن أن تكون صفرًا أو أقل.',
+        'invalid_tax' => 'الضريبة للعنصر بالمعرّف :id لا يمكن أن تكون صفرًا أو أقل.',
+    ]
+];

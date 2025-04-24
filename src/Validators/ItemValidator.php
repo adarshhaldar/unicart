@@ -2,6 +2,7 @@
 
 namespace Unicart\Validators;
 
+use Unicart\Classes\Locale;
 use Unicart\Exceptions\ItemException;
 
 trait ItemValidator
@@ -28,7 +29,7 @@ trait ItemValidator
     private function checkId(int|string $id): void
     {
         if (is_float($id)) {
-            throw new ItemException('Float values are not allowed as item IDs. Id: ' . $id);
+            throw new ItemException(Locale::translate('item_exceptions.invalid_id', ['id' => $id]));
         }
     }
 
@@ -43,7 +44,7 @@ trait ItemValidator
     private function checkPrice(int|string $id, int|float $price): void
     {
         if ($price <= 0) {
-            throw new ItemException('Price for item with Id: ' . $id . ' can not be less than or equal to 0.');
+            throw new ItemException(Locale::translate('item_exceptions.invalid_price', ['id' => $id]));
         }
     }
 
@@ -58,7 +59,7 @@ trait ItemValidator
     private function checkQuantity(int|string $id, int $quantity): void
     {
         if ($quantity <= 0) {
-            throw new ItemException('Quantity for item with Id: ' . $id . ' can not be less than or equal to 0.');
+            throw new ItemException(Locale::translate('item_exceptions.invalid_qty', ['id' => $id]));
         }
     }
 
@@ -72,7 +73,7 @@ trait ItemValidator
     private function checkUptoAmount(int|float $upto): void
     {
         if ($upto < 0) {
-            throw new ItemException('Upto discount amount for Item with Id: ' . $this->id . ' is invalid.');
+            throw new ItemException(Locale::translate('item_exceptions.invalid_upto_amount', ['id' => $this->id]));
         }
     }
 
@@ -84,7 +85,7 @@ trait ItemValidator
     private function checkTaxBeforeApplyingDiscount(): void
     {
         if (count($this->taxes) > 0) {
-            throw new ItemException('Can not add discount after taxation for item with Id: ' . $this->id);
+            throw new ItemException(Locale::translate('item_exceptions.cannt_add_discount_after_tax', ['id' => $this->id]));
         }
     }
 
@@ -96,7 +97,7 @@ trait ItemValidator
     private function checkDeliveryChargeBeforeApplyingDiscount(): void
     {
         if (count($this->deliveryCharge) > 0) {
-            throw new ItemException('Can not add discount after adding delivery charge for item with Id: ' . $this->id);
+            throw new ItemException(Locale::translate('item_exceptions.cannt_add_discount_after_delivery_charge', ['id' => $this->id]));
         }
     }
 
@@ -108,7 +109,7 @@ trait ItemValidator
     private function checkDeliveryChargeBeforeAddingNew(): void
     {
         if (count($this->deliveryCharge) > 0) {
-            throw new ItemException('Can not add another delivery charge for item with Id: ' . $this->id);
+            throw new ItemException(Locale::translate('item_exceptions.cannt_add_delivery_charge', ['id' => $this->id]));
         }
     }
 
@@ -120,7 +121,7 @@ trait ItemValidator
     private function checkBxGyBeforeApplyingNewBxGy(): void
     {
         if ($this->isBxGyApplied) {
-            throw new ItemException('Can not add BxGy after adding BxGy for item with Id: ' . $this->id);
+            throw new ItemException(Locale::translate('item_exceptions.cannt_add_bxgy_after_bxgy', ['id' => $this->id]));
         }
     }
 
@@ -132,7 +133,7 @@ trait ItemValidator
     private function checkDiscountBeforeApplyingBxGy(): void
     {
         if (count($this->discounts) > 0) {
-            throw new ItemException('Can not add BxGy after adding other discounts for item with Id: ' . $this->id);
+            throw new ItemException(Locale::translate('item_exceptions.cannt_add_bxgy_after_dicount', ['id' => $this->id]));
         }
     }
 
@@ -144,7 +145,7 @@ trait ItemValidator
     private function checkBxGyBeforeApplyingDiscount(): void
     {
         if ($this->isBxGyApplied) {
-            throw new ItemException('Can not add discount after adding BxGy for item with Id: ' . $this->id);
+            throw new ItemException(Locale::translate('item_exceptions.cannt_add_discount_after_bxgy', ['id' => $this->id]));
         }
     }
 
@@ -159,7 +160,7 @@ trait ItemValidator
     private function checkBxGyQuantity(int $xQuantity, int $yQuantity): void
     {
         if ($xQuantity < 0 || $yQuantity < 0) {
-            throw new ItemException('BxGy buy or get quantity can not be negative for item with Id: ' . $this->id);
+            throw new ItemException(Locale::translate('item_exceptions.invalid_bxgy_qty', ['id' => $this->id]));
         }
     }
 
@@ -175,7 +176,7 @@ trait ItemValidator
     {
         $itemQuantity = $this->quantity;
         if ($itemQuantity < ($xQuantity + $yQuantity)) {
-            throw new ItemException('Quantity does not satisfy BxGy buy and get quantities for item with Id: ' . $this->id);
+            throw new ItemException(Locale::translate('item_exceptions.dissatified_bxgy_qty', ['id' =>  $this->id]));
         }
     }
 
@@ -187,7 +188,7 @@ trait ItemValidator
     private function checkDiscountStacking(): void
     {
         if (!$this->allowDiscountStacking && $this->hasDiscount) {
-            throw new ItemException('Discount stacking is disabled. This item already has a discount.');
+            throw new ItemException(Locale::translate('item_exceptions.discount_stacking_disabled'));
         }
     }
 
@@ -201,7 +202,7 @@ trait ItemValidator
     private function checkDiscountPercentage(int|float $percentage): void
     {
         if ($percentage <= 0) {
-            throw new ItemException('Discount percentage can not be less than or equal to 0 for item with Id: ' . $this->id);
+            throw new ItemException(Locale::translate('item_exceptions.invalid_discount_percentage', ['id' => $this->id]));
         }
     }
 
@@ -215,7 +216,7 @@ trait ItemValidator
     private function checkDiscountAmount(int|float $discount): void
     {
         if ($discount <= 0) {
-            throw new ItemException('Discount can not be less than or equal to 0 for item with Id: ' . $this->id);
+            throw new ItemException(Locale::translate('item_exceptions.invalid_discount', ['id' => $this->id]));
         }
     }
 
@@ -229,7 +230,7 @@ trait ItemValidator
     private function checkDeliveryCharge(int|float $charge): void
     {
         if ($charge <= 0) {
-            throw new ItemException('Delivery charge can not be less than or equal to 0 for item with Id: ' . $this->id);
+            throw new ItemException(Locale::translate('item_exceptions.invalid_delivery_charge', ['id' => $this->id]));
         }
     }
 
@@ -243,7 +244,7 @@ trait ItemValidator
     private function checkTaxRate(int|float $rate): void
     {
         if ($rate <= 0) {
-            throw new ItemException('Tax can not be less than or equal to 0 for item with Id: ' . $this->id);
+            throw new ItemException(Locale::translate('item_exceptions.invalid_tax', ['id' => $this->id]));
         }
     }
 
@@ -391,7 +392,7 @@ trait ItemValidator
     private function validate(string $for, array $params = []): void
     {
         if (!in_array($for, self::VALIDATORS)) {
-            throw new ItemException('Invalid validator for item validation');
+            throw new ItemException(Locale::translate('invalid_validator'));
         }
 
         list($id, $price, $quantity, $discount, $percentage, $upto, $charge, $rate, $xQuantity, $yQuantity) = $this->getVariablesFromParams($params);

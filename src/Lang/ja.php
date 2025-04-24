@@ -1,0 +1,56 @@
+<?php
+
+namespace Unicart\Lang;
+
+// Japanese translation
+return [
+    'invalid_validator' => '検証用のバリデーターが無効です',
+    'unicart_exceptions' => [
+        'empty_cart' => 'カートが空です',
+        'float_item_id_not_allowed' => '商品IDに浮動小数点数は使用できません。Id: :id。',
+        'invalid_item_price' => 'Id: :id の商品の価格は 0 以下にできません。',
+        'invalid_item_qty' => 'Id: :id の商品の数量は 0 以下にできません。',
+        'item_exist' => 'Id: :id の商品はすでに存在します。',
+        'item_doesnt_exist' => 'Id: :id の商品は存在しません。',
+        'invalid_item_upto_amount' => 'Id: :id の商品の割引上限額が無効です。',
+        'cannt_apply_on_cart_due_to_item' => 'Id: :id の商品にすでに税金が適用されているため、:applying をカートに適用できません。',
+        'cannt_add_in_cart_due_to_item' => 'カート開始後、Id: :id の商品に :applying を追加できません。',
+        'invalid_cart_upto_amount' => 'カートの割引上限額が無効です。',
+        'cannt_add_discount_after_tax' => '税金適用後に割引を追加することはできません。',
+        'cannt_add_discount_after_delivery' => '配送料追加後に割引を適用することはできません。',
+        'cannt_add_another_delivery' => 'カートに別の配送料を追加することはできません。',
+        'invalid_buy_get_qty_for_item' => 'Id: :id の商品の「購入」または「獲得」数量は 0 以下にできません。',
+        'invalid_qty_for_item_bxgy' => 'Id: :id の商品の数量が指定された BxGy 値に対して不十分です。',
+        'cannt_apply_sxgy' => 'カートに別の SxGy 割引を適用することはできません。',
+        'invalid_sxgy' => 'SpendXGetY 割引の支出または獲得数量は 0 以下にできません。',
+        'invalid_spend_in_sxgy' => 'SpendXGetY 割引では、支出が獲得を下回ることはできません。',
+        'discount_stacking_disabled' => '割引の重複適用は無効です。すでに割引が適用されています。',
+        'invalid_discount_percentage_for_item' => 'Id: :id の商品の割引率は 0 以下にできません。',
+        'invalid_discount_percentage' => '割引率は 0 以下にできません。',
+        'invalid_discount_for_item' => 'Id: :id の商品の割引額は 0 以下にできません。',
+        'invalid_discount' => '割引額は 0 以下にできません。',
+        'invalid_delivery_charge_for_item' => 'Id: :id の商品の配送料は 0 以下にできません。',
+        'invalid_delivery_charge' => '配送料は 0 以下にできません。',
+        'invalid_tax_for_item' => 'Id: :id の商品の税額は 0 以下にできません。',
+        'invalid_tax' => '税額は 0 以下にできません。',
+    ],
+    'item_exceptions' => [
+        'invalid_id' => '商品IDに浮動小数点数は使用できません。Id: :id。',
+        'invalid_price' => 'Id: :id の商品の価格は 0 以下にできません。',
+        'invalid_qty' => 'Id: :id の商品の数量は 0 以下にできません。',
+        'invalid_upto_amount' => 'Id: :id の商品の割引上限額が無効です。',
+        'cannt_add_discount_after_tax' => 'Id: :id の商品には、税金適用後に割引を追加できません。',
+        'cannt_add_discount_after_delivery_charge' => 'Id: :id の商品には、配送料追加後に割引を追加できません。',
+        'cannt_add_delivery_charge' => 'Id: :id の商品には、さらに配送料を追加できません。',
+        'cannt_add_bxgy_after_bxgy' => 'Id: :id の商品には、すでに BxGy が適用されているため、別の BxGy を追加できません。',
+        'cannt_add_bxgy_after_dicount' => 'Id: :id の商品には、他の割引がすでに適用されているため、BxGy を追加できません。',
+        'cannt_add_discount_after_bxgy' => 'Id: :id の商品には、BxGy 適用後に割引を追加できません。',
+        'invalid_bxgy_qty' => 'Id: :id の商品の BxGy の「購入」または「獲得」数量は負の値にできません。',
+        'dissatified_bxgy_qty' => 'Id: :id の商品の数量が BxGy の条件を満たしていません。',
+        'discount_stacking_disabled' => '割引の重複適用は無効です。この商品にはすでに割引が適用されています。',
+        'invalid_discount_percentage' => 'Id: :id の商品の割引率は 0 以下にできません。',
+        'invalid_discount' => 'Id: :id の商品の割引額は 0 以下にできません。',
+        'invalid_delivery_charge' => 'Id: :id の商品の配送料は 0 以下にできません。',
+        'invalid_tax' => 'Id: :id の商品の税額は 0 以下にできません。'
+    ]
+];

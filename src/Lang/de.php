@@ -1,0 +1,56 @@
+<?php
+
+namespace Unicart\Lang;
+
+// German translation
+return [
+    'invalid_validator' => 'Ungültiger Validator für die Validierung',
+    'unicart_exceptions' => [
+        'empty_cart' => 'Der Warenkorb ist leer',
+        'float_item_id_not_allowed' => 'Dezimalzahlen sind nicht als Artikel-IDs erlaubt. Id: :id.',
+        'invalid_item_price' => 'Der Preis für den Artikel mit der Id: :id kann nicht kleiner oder gleich 0 sein.',
+        'invalid_item_qty' => 'Die Menge des Artikels mit der Id: :id kann nicht kleiner oder gleich 0 sein.',
+        'item_exist' => 'Artikel mit der Id: :id existiert bereits.',
+        'item_doesnt_exist' => 'Artikel mit der Id: :id existiert nicht.',
+        'invalid_item_upto_amount' => 'Der maximal mögliche Rabattbetrag für den Artikel mit der Id: :id ist ungültig.',
+        'cannt_apply_on_cart_due_to_item' => 'Kann :applying nicht auf den Warenkorb anwenden, da bereits eine Steuer auf den Artikel mit der Id: :id angewendet wurde.',
+        'cannt_add_in_cart_due_to_item' => 'Kann :applying nach der Initialisierung des Warenkorbs nicht zum Artikel mit der Id: :id hinzufügen.',
+        'invalid_cart_upto_amount' => 'Der maximal mögliche Rabattbetrag für den Warenkorb ist ungültig.',
+        'cannt_add_discount_after_tax' => 'Kann keinen Rabatt nach der Besteuerung hinzufügen.',
+        'cannt_add_discount_after_delivery' => 'Kann keinen Rabatt nach der Hinzufügung der Liefergebühr hinzufügen.',
+        'cannt_add_another_delivery' => 'Kann keine weiteren Liefergebühren zum Warenkorb hinzufügen.',
+        'invalid_buy_get_qty_for_item' => 'Kauf- oder Erhaltmengen dürfen für den Artikel mit der Id: :id nicht kleiner oder gleich 0 sein.',
+        'invalid_qty_for_item_bxgy' => 'Die Menge reicht nicht für die angegebenen BxGy-Werte für den Artikel mit der Id: :id.',
+        'cannt_apply_sxgy' => 'Kann keinen weiteren SxGy-Rabatt auf den Warenkorb anwenden.',
+        'invalid_sxgy' => 'Ausgeben oder Erhalten darf für den SpendXGetY-Rabatt nicht kleiner oder gleich 0 sein.',
+        'invalid_spend_in_sxgy' => 'Der ausgegebene Betrag darf für den SpendXGetY-Rabatt nicht kleiner als der zu erhaltende Betrag sein.',
+        'discount_stacking_disabled' => 'Rabattstapelung ist deaktiviert. Es wurde bereits ein Rabatt angewendet.',
+        'invalid_discount_percentage_for_item' => 'Der Rabattprozentsatz darf für den Artikel mit der Id: :id nicht kleiner oder gleich 0 sein.',
+        'invalid_discount_percentage' => 'Der Rabattprozentsatz darf nicht kleiner oder gleich 0 sein.',
+        'invalid_discount_for_item' => 'Der Rabatt darf für den Artikel mit der Id: :id nicht kleiner oder gleich 0 sein.',
+        'invalid_discount' => 'Der Rabatt darf nicht kleiner oder gleich 0 sein.',
+        'invalid_delivery_charge_for_item' => 'Die Liefergebühr darf für den Artikel mit der Id: :id nicht kleiner oder gleich 0 sein.',
+        'invalid_delivery_charge' => 'Die Liefergebühr darf nicht kleiner oder gleich 0 sein.',
+        'invalid_tax_for_item' => 'Die Steuer darf für den Artikel mit der Id: :id nicht kleiner oder gleich 0 sein.',
+        'invalid_tax' => 'Die Steuer darf nicht kleiner oder gleich 0 sein.',
+    ],
+    'item_exceptions' => [
+        'invalid_id' => 'Dezimalzahlen sind nicht als Artikel-IDs erlaubt. Id: :id.',
+        'invalid_price' => 'Der Preis für den Artikel mit der Id: :id kann nicht kleiner oder gleich 0 sein.',
+        'invalid_qty' => 'Die Menge des Artikels mit der Id: :id kann nicht kleiner oder gleich 0 sein.',
+        'invalid_upto_amount' => 'Der maximal mögliche Rabattbetrag für den Artikel mit der Id: :id ist ungültig.',
+        'cannt_add_discount_after_tax' => 'Kann keinen Rabatt nach der Besteuerung für den Artikel mit der Id: :id hinzufügen.',
+        'cannt_add_discount_after_delivery_charge' => 'Kann keinen Rabatt nach der Hinzufügung der Liefergebühr für den Artikel mit der Id: :id hinzufügen.',
+        'cannt_add_delivery_charge' => 'Kann keine weiteren Liefergebühren für den Artikel mit der Id: :id hinzufügen.',
+        'cannt_add_bxgy_after_bxgy' => 'Kann keinen BxGy nach einem bereits hinzugefügten BxGy für den Artikel mit der Id: :id hinzufügen.',
+        'cannt_add_bxgy_after_dicount' => 'Kann keinen BxGy nach einem bereits hinzugefügten Rabatt für den Artikel mit der Id: :id hinzufügen.',
+        'cannt_add_discount_after_bxgy' => 'Kann keinen Rabatt nach einem hinzugefügten BxGy für den Artikel mit der Id: :id hinzufügen.',
+        'invalid_bxgy_qty' => 'Die BxGy Kauf- oder Erhaltmengen dürfen für den Artikel mit der Id: :id nicht negativ sein.',
+        'dissatified_bxgy_qty' => 'Die Menge erfüllt nicht die Anforderungen der BxGy Kauf- und Erhaltmengen für den Artikel mit der Id: :id.',
+        'discount_stacking_disabled' => 'Rabattstapelung ist deaktiviert. Dieser Artikel hat bereits einen Rabatt.',
+        'invalid_discount_percentage' => 'Der Rabattprozentsatz darf für den Artikel mit der Id: :id nicht kleiner oder gleich 0 sein.',
+        'invalid_discount' => 'Der Rabatt darf für den Artikel mit der Id: :id nicht kleiner oder gleich 0 sein.',
+        'invalid_delivery_charge' => 'Die Liefergebühr darf für den Artikel mit der Id: :id nicht kleiner oder gleich 0 sein.',
+        'invalid_tax' => 'Die Steuer darf für den Artikel mit der Id: :id nicht kleiner oder gleich 0 sein.'
+    ]
+];
