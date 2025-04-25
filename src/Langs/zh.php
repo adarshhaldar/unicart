@@ -1,6 +1,6 @@
 <?php
 
-namespace Unicart\Lang;
+namespace Unicart\Langs;
 
 // Chinese translation
 return [
@@ -52,5 +52,27 @@ return [
         'invalid_discount' => 'Id 为 :id 的商品的折扣不能小于或等于 0。',
         'invalid_delivery_charge' => 'Id 为 :id 的商品的配送费用不能小于或等于 0。',
         'invalid_tax' => 'Id 为 :id 的商品的税费不能小于或等于 0。'
+    ],
+    'invoice' => [
+        'download_invoice_btn' => '下载电子发票',
+        'title' => '发票',
+        'logo' => '徽标',
+        'invoice_number' => '发票号码',
+        'order_number' => '订单号码',
+        'date' => '日期',
+        'bill_from' => '账单来源',
+        'bill_to' => '账单接收',
+        'cart' => '购物车',
+        'cart_applicables' => '购物车级别适用项',
+        'item' => '商品',
+        'qty' => '数量',
+        'unit_rate' => '单价',
+        'discount' => '折扣',
+        'delivery_charge' => '运费',
+        'tax' => '税',
+        'amount' => '金额',
+        'total' => '总计',
+        'thank_you' => '谢谢'
     ]
+
 ];

@@ -342,6 +342,7 @@ class Unicart
         $this->payableAmount = $payableAmount + $charge;
 
         $this->deliveryCharge[] = [
+            'charge' => $charge,
             'beforeDeliveryCharge' => $originalPayable,
             'afterDeliveryCharge' => $this->payableAmount
         ];
@@ -497,19 +498,47 @@ class Unicart
      */
     private function summary(): array
     {
-        $beforeTotal = 0;
-        $afterTotal = 0;
-
+        $beforeTotal = $afterTotal = $totalDiscount = $totalDiscountOnCart = $totalTax = $totalTaxOnCart = $totalDeliveryCharge = $totalDeliveryChargeOnCart = 0;
         foreach ($this->cartItems as $item) {
             $details = $item->toArray();
+            $totalDiscount += $details['totalDiscount'];
+            $totalTax += $details['totalTax'];
+            $totalDeliveryCharge += $details['totalDeliveryCharge'];
             $beforeTotal += $details['originalPayable'];
             $afterTotal += $details['payableAmount'];
         }
 
+        if (count($this->discounts) > 0) {
+            foreach ($this->discounts as $discount) {
+                $totalDiscount += $discount['beforeDiscount'] - $discount['afterDiscount'];
+                $totalDiscountOnCart += $discount['beforeDiscount'] - $discount['afterDiscount'];
+            }
+        }
+
+        if (count($this->taxes) > 0) {
+            foreach ($this->taxes as $tax) {
+                $totalTax += $tax['afterTax'] - $tax['beforeTax'];
+                $totalTaxOnCart += $tax['afterTax'] - $tax['beforeTax'];
+            }
+        }
+
+        if (count($this->deliveryCharge) > 0) {
+            foreach ($this->deliveryCharge as $deliveryCharge) {
+                $totalDeliveryCharge += $deliveryCharge;
+                $totalDeliveryChargeOnCart += $deliveryCharge;
+            }
+        }
+
         return [
             'discounts' => count($this->discounts) > 0 ? $this->discounts : null,
+            'totalDiscountOnCart' => $this->roundValue($this->roundingMode, $totalDiscountOnCart),
+            'totalDiscount' => $this->roundValue($this->roundingMode, $totalDiscount),
             'taxes' => count($this->taxes) > 0 ? $this->taxes : null,
+            'totalTaxOnCart' => $this->roundValue($this->roundingMode, $totalTaxOnCart),
+            'totalTax' => $this->roundValue($this->roundingMode, $totalTax),
             'deliveryCharge' => count($this->deliveryCharge) > 0 ? $this->deliveryCharge : null,
+            'totalDeliveryChargeOnCart' => $this->roundValue($this->roundingMode, $totalDeliveryChargeOnCart),
+            'totalDeliveryCharge' => $this->roundValue($this->roundingMode, $totalDeliveryCharge),
             'originalPayable' => $this->roundValue($this->roundingMode, $beforeTotal),
             'payableAmount' => $this->roundValue($this->roundingMode, $this->payableAmount ?? $afterTotal)
         ];

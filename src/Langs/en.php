@@ -1,6 +1,6 @@
 <?php
 
-namespace Unicart\Lang;
+namespace Unicart\Langs;
 
 // English translation
 return [
@@ -52,5 +52,26 @@ return [
         'invalid_discount' => 'Discount can not be less than or equal to 0 for item with Id: :id.',
         'invalid_delivery_charge' => 'Delivery charge can not be less than or equal to 0 for item with Id: :id.',
         'invalid_tax' => 'Tax can not be less than or equal to 0 for item with Id: :id.'
+    ],
+    'invoice' => [
+        'download_invoice_btn' => 'Download E-Invoice',
+        'title' => 'Invoice',
+        'logo' => 'Logo',
+        'invoice_number' => 'Invoice Number',
+        'order_number' => 'Order Number',
+        'date' => 'Date',
+        'bill_from' => 'Bill From',
+        'bill_to' => 'Bill To',
+        'cart' => 'Cart',
+        'cart_applicables' => 'Cart level applicables',
+        'item' => 'Item',
+        'qty' => 'Qty',
+        'unit_rate' => 'Unit Rate',
+        'discount' => 'Discount',
+        'delivery_charge' => 'Delivery Charge',
+        'tax' => 'Tax',
+        'amount' => 'Amount',
+        'total' => 'Total',
+        'thank_you' => 'Thank You'
     ]
 ];

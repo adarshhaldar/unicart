@@ -1,6 +1,6 @@
 <?php
 
-namespace Unicart\Lang;
+namespace Unicart\Langs;
 
 // French translation
 return [
@@ -52,5 +52,27 @@ return [
         'invalid_discount' => 'La remise ne peut pas être inférieure ou égale à 0 pour l\'article avec l\'Id : :id.',
         'invalid_delivery_charge' => 'Les frais de livraison ne peuvent pas être inférieurs ou égaux à 0 pour l\'article avec l\'Id : :id.',
         'invalid_tax' => 'La taxe ne peut pas être inférieure ou égale à 0 pour l\'article avec l\'Id : :id.'
+    ],
+    'invoice' => [
+        'download_invoice_btn' => 'Télécharger la facture électronique',
+        'title' => 'Facture',
+        'logo' => 'Logo',
+        'invoice_number' => 'Numéro de facture',
+        'order_number' => 'Numéro de commande',
+        'date' => 'Date',
+        'bill_from' => 'Facturé par',
+        'bill_to' => 'Facturé à',
+        'cart' => 'Panier',
+        'cart_applicables' => 'Apports au niveau du panier',
+        'item' => 'Article',
+        'qty' => 'Qté',
+        'unit_rate' => 'Prix unitaire',
+        'discount' => 'Remise',
+        'delivery_charge' => 'Frais de livraison',
+        'tax' => 'Taxe',
+        'amount' => 'Montant',
+        'total' => 'Total',
+        'thank_you' => 'Merci'
     ]
+
 ];

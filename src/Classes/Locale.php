@@ -32,6 +32,7 @@ final class Locale
      */
     public static function setLocale(string $locale = 'en'): void
     {
+        $locale = strtolower($locale);
         self::$locale = in_array($locale, self::$locales) ? $locale : self::$defaultLocale;
     }
 
@@ -87,7 +88,7 @@ final class Locale
     {
         $locale = $locale ? (in_array($locale, self::$locales) ? $locale : self::getLocale()) : self::getLocale();
 
-        $file = file_exists(__DIR__ . "/../Lang/{$locale}.php") ? __DIR__ . "/../Lang/{$locale}.php" : __DIR__ . "/../Lang/en.php";
+        $file = file_exists(__DIR__ . "/../Langs/{$locale}.php") ? __DIR__ . "/../Langs/{$locale}.php" : __DIR__ . "/../Langs/en.php";
 
         if (!file_exists($file)) {
             throw new LocaleException("Locale file not found: {$file}");

@@ -1,6 +1,6 @@
 <?php
 
-namespace Unicart\Lang;
+namespace Unicart\Langs;
 
 // Russian translation
 return [
@@ -52,5 +52,27 @@ return [
         'invalid_discount' => 'Скидка не может быть меньше или равна 0 для товара с Id: :id.',
         'invalid_delivery_charge' => 'Стоимость доставки не может быть меньше или равна 0 для товара с Id: :id.',
         'invalid_tax' => 'Налог не может быть меньше или равен 0 для товара с Id: :id.'
+    ],
+    'invoice' => [
+        'download_invoice_btn' => 'Скачать Э-Фактуру',
+        'title' => 'Счет-фактура',
+        'logo' => 'Логотип',
+        'invoice_number' => 'Номер счета-фактуры',
+        'order_number' => 'Номер заказа',
+        'date' => 'Дата',
+        'bill_from' => 'Счет от',
+        'bill_to' => 'Счет для',
+        'cart' => 'Корзина',
+        'cart_applicables' => 'Применимо на уровне корзины',
+        'item' => 'Товар',
+        'qty' => 'Количество',
+        'unit_rate' => 'Цена за единицу',
+        'discount' => 'Скидка',
+        'delivery_charge' => 'Стоимость доставки',
+        'tax' => 'Налог',
+        'amount' => 'Сумма',
+        'total' => 'Итого',
+        'thank_you' => 'Спасибо'
     ]
+
 ];

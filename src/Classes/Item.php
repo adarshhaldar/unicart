@@ -5,7 +5,7 @@ namespace Unicart\Classes;
 use Unicart\Formats\OutputFormat;
 use Unicart\Validators\ItemValidator;
 
-class Item
+final class Item
 {
     use ItemValidator, OutputFormat;
 
@@ -105,6 +105,38 @@ class Item
         $this->price = $price;
         $this->quantity = $quantity;
         $this->originalPayable = $this->payableAmount = $price * $quantity;
+    }
+
+    /**
+     * Get current locale
+     * 
+     * @return string
+     */
+    public function getLocale(): string
+    {
+        return Locale::getLocale();
+    }
+
+    /**
+     * Get list of locales
+     * 
+     * @return array
+     */
+    public function getLocales(): array
+    {
+        return Locale::getLocales();
+    }
+
+    /**
+     * Set locale
+     * 
+     * @param string $locale The locale that has to be set. Default set to en.
+     * 
+     * @return void
+     */
+    public function setLocale(string $locale = 'en'): void
+    {
+        Locale::setLocale($locale);
     }
 
     /**
@@ -225,6 +257,7 @@ class Item
         $this->payableAmount = $this->payableAmount + $charge;
 
         $this->deliveryCharge[] = [
+            'charge' => $charge,
             'beforeDeliveryCharge' => $beforeDeliveryCharge,
             'afterDeliveryCharge' => $this->payableAmount
         ];
@@ -316,13 +349,36 @@ class Item
      */
     private function getDetail(): array
     {
+        $totalDiscount = $totalTax = $totalDeliveryCharge = 0;
+
+        if (count($this->discounts) > 0) {
+            foreach ($this->discounts as $discount) {
+                $totalDiscount += $discount['beforeDiscount'] - $discount['afterDiscount'];
+            }
+        }
+
+        if (count($this->taxes) > 0) {
+            foreach ($this->taxes as $tax) {
+                $totalTax += $tax['afterTax'] - $tax['beforeTax'];
+            }
+        }
+
+        if (count($this->deliveryCharge) > 0) {
+            foreach ($this->deliveryCharge as $deliveryCharge) {
+                $totalDeliveryCharge += $deliveryCharge;
+            }
+        }
+
         $detail = [
             'id' => $this->id,
             'price' => $this->price,
             'quantity' => $this->quantity,
             'discounts' => count($this->discounts) > 0 ? $this->discounts : null,
+            'totalDiscount' => $this->roundValue($this->roundingMode, $totalDiscount),
             'taxes' => count($this->taxes) > 0 ? $this->taxes : null,
+            'totalTax' => $this->roundValue($this->roundingMode, $totalTax),
             'deliveryCharge' => count($this->deliveryCharge) > 0 ? $this->deliveryCharge : null,
+            'totalDeliveryCharge' => $this->roundValue($this->roundingMode, $totalDeliveryCharge),
             'originalPayable' => $this->roundValue($this->roundingMode, $this->originalPayable),
             'payableAmount' => $this->roundValue($this->roundingMode, $this->payableAmount),
         ];

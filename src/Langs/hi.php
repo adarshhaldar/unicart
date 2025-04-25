@@ -1,6 +1,6 @@
 <?php
 
-namespace Unicart\Lang;
+namespace Unicart\Langs;
 
 // Hindi translation
 return [
@@ -52,5 +52,27 @@ return [
         'invalid_discount' => 'आईडी: :id वाले आइटम के लिए डिस्काउंट 0 या उससे कम नहीं हो सकता।',
         'invalid_delivery_charge' => 'आईडी: :id वाले आइटम के लिए डिलीवरी चार्ज 0 या उससे कम नहीं हो सकता।',
         'invalid_tax' => 'आईडी: :id वाले आइटम के लिए टैक्स 0 या उससे कम नहीं हो सकता।'
+    ],
+    'invoice' => [
+        'download_invoice_btn' => 'ई-चालान डाउनलोड करें',
+        'title' => 'चालान',
+        'logo' => 'लोगो',
+        'invoice_number' => 'चालान संख्या',
+        'order_number' => 'ऑर्डर संख्या',
+        'date' => 'तारीख',
+        'bill_from' => 'बिल भेजने वाला',
+        'bill_to' => 'बिल पाने वाला',
+        'cart' => 'कार्ट',
+        'cart_applicables' => 'कार्ट स्तर पर लागू',
+        'item' => 'आइटम',
+        'qty' => 'मात्रा',
+        'unit_rate' => 'इकाई दर',
+        'discount' => 'छूट',
+        'delivery_charge' => 'डिलीवरी शुल्क',
+        'tax' => 'कर',
+        'amount' => 'राशि',
+        'total' => 'कुल',
+        'thank_you' => 'धन्यवाद'
     ]
+
 ];

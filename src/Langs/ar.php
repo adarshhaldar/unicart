@@ -1,6 +1,6 @@
 <?php
 
-namespace Unicart\Lang;
+namespace Unicart\Langs;
 
 // Arabic translation
 return [
@@ -52,5 +52,27 @@ return [
         'invalid_discount' => 'الخصم للعنصر بالمعرّف :id لا يمكن أن يكون صفرًا أو أقل.',
         'invalid_delivery_charge' => 'رسوم التوصيل للعنصر بالمعرّف :id لا يمكن أن تكون صفرًا أو أقل.',
         'invalid_tax' => 'الضريبة للعنصر بالمعرّف :id لا يمكن أن تكون صفرًا أو أقل.',
+    ],
+    'invoice' => [
+        'download_invoice_btn' => 'تحميل الفاتورة الإلكترونية',
+        'title' => 'فاتورة',
+        'logo' => 'الشعار',
+        'invoice_number' => 'رقم الفاتورة',
+        'order_number' => 'رقم الطلب',
+        'date' => 'التاريخ',
+        'bill_from' => 'الفاتورة من',
+        'bill_to' => 'الفاتورة إلى',
+        'cart' => 'سلة التسوق',
+        'cart_applicables' => 'تطبيقات على مستوى السلة',
+        'item' => 'العنصر',
+        'qty' => 'الكمية',
+        'unit_rate' => 'سعر الوحدة',
+        'discount' => 'الخصم',
+        'delivery_charge' => 'رسوم التوصيل',
+        'tax' => 'الضريبة',
+        'amount' => 'المبلغ',
+        'total' => 'الإجمالي',
+        'thank_you' => 'شكرًا لك'
     ]
+
 ];

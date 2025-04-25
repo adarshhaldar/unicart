@@ -164,7 +164,9 @@ trait UnicartValidator
      */
     private function checkItemLevelApplications(string $applying): void
     {
-        $this->checkAnyItemHasTaxApplied($applying);
+        if($applying !== 'tax'){
+            $this->checkAnyItemHasTaxApplied($applying);
+        }
         $this->checkAnyItemHasDeliveryChargeApplied($applying);
 
         if (!$this->hasCartApplicationInitiated) {

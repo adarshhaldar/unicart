@@ -1,6 +1,6 @@
 <?php
 
-namespace Unicart\Lang;
+namespace Unicart\Langs;
 
 // German translation
 return [
@@ -52,5 +52,27 @@ return [
         'invalid_discount' => 'Der Rabatt darf für den Artikel mit der Id: :id nicht kleiner oder gleich 0 sein.',
         'invalid_delivery_charge' => 'Die Liefergebühr darf für den Artikel mit der Id: :id nicht kleiner oder gleich 0 sein.',
         'invalid_tax' => 'Die Steuer darf für den Artikel mit der Id: :id nicht kleiner oder gleich 0 sein.'
+    ],
+    'invoice' => [
+        'download_invoice_btn' => 'E-Rechnung herunterladen',
+        'title' => 'Rechnung',
+        'logo' => 'Logo',
+        'invoice_number' => 'Rechnungsnummer',
+        'order_number' => 'Bestellnummer',
+        'date' => 'Datum',
+        'bill_from' => 'Rechnung von',
+        'bill_to' => 'Rechnung an',
+        'cart' => 'Warenkorb',
+        'cart_applicables' => 'Warenkorb-bezogene Anpassungen',
+        'item' => 'Artikel',
+        'qty' => 'Menge',
+        'unit_rate' => 'Stückpreis',
+        'discount' => 'Rabatt',
+        'delivery_charge' => 'Liefergebühr',
+        'tax' => 'Steuer',
+        'amount' => 'Betrag',
+        'total' => 'Gesamt',
+        'thank_you' => 'Vielen Dank'
     ]
+
 ];

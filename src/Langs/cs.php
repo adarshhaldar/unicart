@@ -1,6 +1,6 @@
 <?php
 
-namespace Unicart\Lang;
+namespace Unicart\Langs;
 
 // Czech translation
 return [
@@ -52,5 +52,27 @@ return [
         'invalid_discount' => 'Sleva nemůže být menší nebo rovna 0 pro položku s Id: :id.',
         'invalid_delivery_charge' => 'Poplatek za dopravu nemůže být menší nebo rovno 0 pro položku s Id: :id.',
         'invalid_tax' => 'Daň nemůže být menší nebo rovno 0 pro položku s Id: :id.'
+    ],
+    'invoice' => [
+        'download_invoice_btn' => 'Stáhnout e-fakturu',
+        'title' => 'Faktura',
+        'logo' => 'Logo',
+        'invoice_number' => 'Číslo faktury',
+        'order_number' => 'Číslo objednávky',
+        'date' => 'Datum',
+        'bill_from' => 'Fakturováno od',
+        'bill_to' => 'Fakturováno pro',
+        'cart' => 'Košík',
+        'cart_applicables' => 'Úpravy na úrovni košíku',
+        'item' => 'Položka',
+        'qty' => 'Množství',
+        'unit_rate' => 'Cena za jednotku',
+        'discount' => 'Sleva',
+        'delivery_charge' => 'Poplatek za doručení',
+        'tax' => 'Daň',
+        'amount' => 'Částka',
+        'total' => 'Celkem',
+        'thank_you' => 'Děkujeme'
     ]
+
 ];
