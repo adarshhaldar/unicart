@@ -54,25 +54,23 @@ return [
         'invalid_tax' => 'Daň nemůže být menší nebo rovno 0 pro položku s Id: :id.'
     ],
     'invoice' => [
-        'download_invoice_btn' => 'Stáhnout e-fakturu',
         'title' => 'Faktura',
         'logo' => 'Logo',
-        'invoice_number' => 'Číslo faktury',
-        'order_number' => 'Číslo objednávky',
+        'order' => 'Objednávka',
         'date' => 'Datum',
         'bill_from' => 'Fakturováno od',
-        'bill_to' => 'Fakturováno pro',
+        'bill_to' => 'Fakturováno komu',
         'cart' => 'Košík',
-        'cart_applicables' => 'Úpravy na úrovni košíku',
+        'cart_applicables' => 'Položky na úrovni košíku',
         'item' => 'Položka',
         'qty' => 'Množství',
-        'unit_rate' => 'Cena za jednotku',
+        'price' => 'Cena',
         'discount' => 'Sleva',
         'delivery_charge' => 'Poplatek za doručení',
         'tax' => 'Daň',
-        'amount' => 'Částka',
         'total' => 'Celkem',
-        'thank_you' => 'Děkujeme'
+        'total_discount' => 'Celková sleva',
+        'total_delivery' => 'Celkové doručení',
+        'total_tax' => 'Celková daň'
     ]
-
 ];

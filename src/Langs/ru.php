@@ -54,25 +54,23 @@ return [
         'invalid_tax' => 'Налог не может быть меньше или равен 0 для товара с Id: :id.'
     ],
     'invoice' => [
-        'download_invoice_btn' => 'Скачать Э-Фактуру',
-        'title' => 'Счет-фактура',
+        'title' => 'Счет',
         'logo' => 'Логотип',
-        'invoice_number' => 'Номер счета-фактуры',
-        'order_number' => 'Номер заказа',
+        'order' => 'Заказ',
         'date' => 'Дата',
         'bill_from' => 'Счет от',
         'bill_to' => 'Счет для',
         'cart' => 'Корзина',
         'cart_applicables' => 'Применимо на уровне корзины',
         'item' => 'Товар',
-        'qty' => 'Количество',
-        'unit_rate' => 'Цена за единицу',
+        'qty' => 'Кол-во',
+        'price' => 'Цена',
         'discount' => 'Скидка',
-        'delivery_charge' => 'Стоимость доставки',
+        'delivery_charge' => 'Доставка',
         'tax' => 'Налог',
-        'amount' => 'Сумма',
         'total' => 'Итого',
-        'thank_you' => 'Спасибо'
+        'total_discount' => 'Общая скидка',
+        'total_delivery' => 'Общая доставка',
+        'total_tax' => 'Общий налог'
     ]
-
 ];

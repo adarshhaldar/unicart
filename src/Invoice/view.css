@@ -1,0 +1,163 @@
+html,
+body {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+p {
+    font-size: 16px;
+}
+
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 1rem 0;
+}
+
+#download-btn {
+    background-color: transparent;
+    color: #4CAF50;
+    padding: 0.5rem;
+    font-size: 20px;
+    border: 2px solid #4CAF50;
+    border-radius: 100%;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: block;
+    font-weight: bolder;
+    background-color: transparent;
+    transition: 0.5s all;
+    margin-bottom: 0.5rem;
+}
+
+#download-btn:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.invoice-container {
+    border: 1px solid black;
+    width: 670px;
+    padding: 1rem;
+}
+
+.invoice-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.invoice-header img {
+    display: inline-block;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin: 0 0.6rem;
+}
+
+.invoice-detail {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.invoice-detail p {
+    font-weight: bolder;
+}
+
+.invoice-detail span {
+    display: block;
+    font-weight: normal;
+    margin-top: 0.3rem;
+}
+
+.biller-detail {
+    display: flex;
+    justify-content: space-between;
+}
+
+.biller-detail .from-detail,
+.biller-detail .to-detail {
+    width: 45%;
+    padding: 0 0.5rem;
+}
+
+.biller-detail .from-detail {
+    text-align: start;
+}
+
+.biller-detail .to-detail {
+    text-align: end;
+}
+
+.biller-detail .from-detail p,
+.biller-detail .to-detail p {
+    padding: 0;
+    margin: 0.4rem 0;
+}
+
+.item-level-table,
+.cart-level-table {
+    width: 100%;
+}
+
+.item-level-table thead th,
+.item-level-table tbody tr td,
+.cart-level-table thead th,
+.cart-level-table tbody tr td {
+    text-align: center;
+    padding: 0.5rem;
+}
+
+.item-level-table tbody tr td span {
+    display: block;
+    font-size: 12px;
+    word-break: break-word;
+}
+
+.item-level-table thead th,
+.cart-level-table thead th {
+    background-color: rgb(249, 198, 135);
+}
+
+.invoice-summary {
+    display: flex;
+    justify-content: end;
+}
+
+.summary {
+    padding: 0 0.5rem;
+    width: 12rem;
+}
+
+.summary p {
+    width: 100%;
+    font-weight: bold;
+}
+
+.summary p span {
+    margin: 0 1rem;
+    font-weight: normal;
+    direction: ltr;
+}
+
+.summary p:last-child {
+    font-size: 22px;
+}
+
+.summary p:last-child span {
+    font-weight: bold;
+}
+
+@media only screen and (max-width: 600px) {
+    .invoice-container {
+        width: 95%;
+    }
+
+    .item-level {
+        overflow-x: scroll;
+    }
+}

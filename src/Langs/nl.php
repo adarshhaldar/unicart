@@ -54,25 +54,23 @@ return [
         'invalid_tax' => 'Belasting mag niet kleiner dan of gelijk aan 0 zijn voor artikel met Id: :id.'
     ],
     'invoice' => [
-        'download_invoice_btn' => 'Download E-Factuur',
         'title' => 'Factuur',
         'logo' => 'Logo',
-        'invoice_number' => 'Factuurnummer',
-        'order_number' => 'Bestelnummer',
+        'order' => 'Bestelling',
         'date' => 'Datum',
-        'bill_from' => 'Factureren van',
-        'bill_to' => 'Factureren aan',
+        'bill_from' => 'Factuur van',
+        'bill_to' => 'Factuur aan',
         'cart' => 'Winkelwagen',
-        'cart_applicables' => 'Cart-niveau toepasbaar',
+        'cart_applicables' => 'Toepassingen op winkelwagen-niveau',
         'item' => 'Artikel',
         'qty' => 'Aantal',
-        'unit_rate' => 'Eenheidsprijs',
+        'price' => 'Prijs',
         'discount' => 'Korting',
-        'delivery_charge' => 'Verzendkosten',
+        'delivery_charge' => 'Bezorgkosten',
         'tax' => 'Belasting',
-        'amount' => 'Bedrag',
         'total' => 'Totaal',
-        'thank_you' => 'Bedankt'
+        'total_discount' => 'Totale korting',
+        'total_delivery' => 'Totale bezorging',
+        'total_tax' => 'Totale belasting'
     ]
-
 ];

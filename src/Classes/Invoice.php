@@ -101,29 +101,22 @@ final class Invoice
     private $currency = null;
 
     /**
-     * Flag to set currency symbol position
-     * @var bool
-     */
-    private $isCurrencyPrefix = true;
-
-    /**
      * Constructor to initate invoice generation
      * 
      * @param Unicart $cart The Unicart instance.
+     * @param null|string $date The date of the invoice.
      * @param null|string $invoiceNumber Invoice number.
      * @param null|string $orderNumber Order number.
      * @param null|string $currency The currency symbol.
-     * @param bool $isCurrencyPrefix Flag for currency position.
      * 
      */
-    public function __construct(Unicart $cart, null|string $date, null|string $invoiceNumber = null, null|string $orderNumber = null, null|string $currency = null, bool $isCurrencyPrefix = true)
+    public function __construct(Unicart $cart, null|string $date = null, null|string $invoiceNumber = null, null|string $orderNumber = null, null|string $currency = null)
     {
         $this->cart = $cart;
-        $this->date = $date ? htmlspecialchars($date) : date('d/m/Y, h:i:s a');
+        $this->date = $date ? htmlspecialchars($date) : date('d/m/Y');
         $this->invoiceNumber = $invoiceNumber ? htmlspecialchars($invoiceNumber) : $this->generateInvoiceNumber();
         $this->orderNumber = $orderNumber ? htmlspecialchars($orderNumber) : null;
         $this->currency = $currency ? htmlspecialchars($currency) : null;
-        $this->isCurrencyPrefix = $isCurrencyPrefix;
     }
 
     /**
@@ -221,14 +214,13 @@ final class Invoice
     }
 
     /**
-     * Get invoice in HTML
+     * Get invoice page
      * 
-     * @param bool $downloadHtml The download invoice in HTML button flag.
-     * @param bool $rtl The right to left alignment flag.
+     * @param bool $downloadPdf The download pdf invoice button flag.
      * 
      * @return string
      */
-    public function getHtmlInvoice(bool $downloadHtml = false): string
+    public function getInvoice(bool $downloadPdf = false): string
     {
         $this->validate();
 
@@ -238,7 +230,7 @@ final class Invoice
 
         list($lang, $title, $labels, $companyName, $logoLink) = $this->getHtmlPageDetail();
 
-        list($invoiceNumber, $orderNumber, $date, $currency, $isCurrencyPrefix) = $this->getInvoiceDetail();
+        list($invoiceNumber, $orderNumber, $date, $currency) = $this->getInvoiceDetail();
 
         list($billFromName, $billFromAddress, $billFromEmail, $billFromContact) = $this->getBillFromDetail();
 
@@ -257,11 +249,9 @@ final class Invoice
     private function getTextLabels(): array
     {
         return [
-            'downloadBtn' => Locale::translate('invoice.download_invoice_btn'),
             'logo' => Locale::translate('invoice.logo'),
             'invoice' => Locale::translate('invoice.title'),
-            'invoice_number' => Locale::translate('invoice.invoice_number'),
-            'order_number' => Locale::translate('invoice.order_number'),
+            'order' => Locale::translate('invoice.order'),
             'date' => Locale::translate('invoice.date'),
             'bill_from' => Locale::translate('invoice.bill_from'),
             'bill_to' => Locale::translate('invoice.bill_to'),
@@ -269,13 +259,14 @@ final class Invoice
             'cart_applicables' => Locale::translate('invoice.cart_applicables'),
             'item'  => Locale::translate('invoice.item'),
             'qty'  => Locale::translate('invoice.qty'),
-            'unit_rate'  => Locale::translate('invoice.unit_rate'),
+            'price'  => Locale::translate('invoice.price'),
             'discount'  => Locale::translate('invoice.discount'),
             'delivery_charge'  => Locale::translate('invoice.delivery_charge'),
             'tax'  => Locale::translate('invoice.tax'),
-            'amount'  => Locale::translate('invoice.amount'),
-            'total'  => Locale::translate('invoice.total'),
-            'thank_you'  => Locale::translate('invoice.thank_you')
+            'total_discount'  => Locale::translate('invoice.total_discount'),
+            'total_delivery'  => Locale::translate('invoice.total_delivery'),
+            'total_tax'  => Locale::translate('invoice.total_tax'),
+            'total'  => Locale::translate('invoice.total')
         ];
     }
 
@@ -307,7 +298,6 @@ final class Invoice
             $this->orderNumber,
             $this->date,
             $this->currency,
-            $this->isCurrencyPrefix
         ];
     }
 

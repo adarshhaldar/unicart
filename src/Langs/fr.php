@@ -54,25 +54,23 @@ return [
         'invalid_tax' => 'La taxe ne peut pas être inférieure ou égale à 0 pour l\'article avec l\'Id : :id.'
     ],
     'invoice' => [
-        'download_invoice_btn' => 'Télécharger la facture électronique',
         'title' => 'Facture',
         'logo' => 'Logo',
-        'invoice_number' => 'Numéro de facture',
-        'order_number' => 'Numéro de commande',
+        'order' => 'Commande',
         'date' => 'Date',
         'bill_from' => 'Facturé par',
         'bill_to' => 'Facturé à',
         'cart' => 'Panier',
-        'cart_applicables' => 'Apports au niveau du panier',
+        'cart_applicables' => 'Éléments applicables au panier',
         'item' => 'Article',
-        'qty' => 'Qté',
-        'unit_rate' => 'Prix unitaire',
+        'qty' => 'Quantité',
+        'price' => 'Prix',
         'discount' => 'Remise',
         'delivery_charge' => 'Frais de livraison',
         'tax' => 'Taxe',
-        'amount' => 'Montant',
         'total' => 'Total',
-        'thank_you' => 'Merci'
+        'total_discount' => 'Remise totale',
+        'total_delivery' => 'Livraison totale',
+        'total_tax' => 'Taxe totale'
     ]
-
 ];

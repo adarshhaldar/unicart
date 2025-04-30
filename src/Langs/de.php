@@ -54,25 +54,23 @@ return [
         'invalid_tax' => 'Die Steuer darf für den Artikel mit der Id: :id nicht kleiner oder gleich 0 sein.'
     ],
     'invoice' => [
-        'download_invoice_btn' => 'E-Rechnung herunterladen',
         'title' => 'Rechnung',
         'logo' => 'Logo',
-        'invoice_number' => 'Rechnungsnummer',
-        'order_number' => 'Bestellnummer',
+        'order' => 'Bestellung',
         'date' => 'Datum',
         'bill_from' => 'Rechnung von',
         'bill_to' => 'Rechnung an',
         'cart' => 'Warenkorb',
-        'cart_applicables' => 'Warenkorb-bezogene Anpassungen',
+        'cart_applicables' => 'Warenkorb-bezogene Angaben',
         'item' => 'Artikel',
         'qty' => 'Menge',
-        'unit_rate' => 'Stückpreis',
+        'price' => 'Preis',
         'discount' => 'Rabatt',
-        'delivery_charge' => 'Liefergebühr',
+        'delivery_charge' => 'Lieferkosten',
         'tax' => 'Steuer',
-        'amount' => 'Betrag',
         'total' => 'Gesamt',
-        'thank_you' => 'Vielen Dank'
+        'total_discount' => 'Gesamtrabatt',
+        'total_delivery' => 'Gesamte Lieferung',
+        'total_tax' => 'Gesamtsteuer'
     ]
-
 ];

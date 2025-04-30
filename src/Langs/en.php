@@ -54,11 +54,9 @@ return [
         'invalid_tax' => 'Tax can not be less than or equal to 0 for item with Id: :id.'
     ],
     'invoice' => [
-        'download_invoice_btn' => 'Download E-Invoice',
         'title' => 'Invoice',
         'logo' => 'Logo',
-        'invoice_number' => 'Invoice Number',
-        'order_number' => 'Order Number',
+        'order' => 'Order',
         'date' => 'Date',
         'bill_from' => 'Bill From',
         'bill_to' => 'Bill To',
@@ -66,12 +64,13 @@ return [
         'cart_applicables' => 'Cart level applicables',
         'item' => 'Item',
         'qty' => 'Qty',
-        'unit_rate' => 'Unit Rate',
+        'price' => 'Price',
         'discount' => 'Discount',
-        'delivery_charge' => 'Delivery Charge',
+        'delivery_charge' => 'Delivery',
         'tax' => 'Tax',
-        'amount' => 'Amount',
         'total' => 'Total',
-        'thank_you' => 'Thank You'
+        'total_discount' => 'Total Discount',
+        'total_delivery' => 'Total Delivery',
+        'total_tax' => 'Total Tax'
     ]
 ];

@@ -54,11 +54,9 @@ return [
         'invalid_tax' => 'Id: :id の商品の税額は 0 以下にできません。'
     ],
     'invoice' => [
-        'download_invoice_btn' => '電子インボイスをダウンロード',
-        'title' => 'インボイス',
+        'title' => '請求書',
         'logo' => 'ロゴ',
-        'invoice_number' => 'インボイス番号',
-        'order_number' => '注文番号',
+        'order' => '注文',
         'date' => '日付',
         'bill_from' => '請求元',
         'bill_to' => '請求先',
@@ -66,13 +64,13 @@ return [
         'cart_applicables' => 'カートレベルの適用項目',
         'item' => '商品',
         'qty' => '数量',
-        'unit_rate' => '単価',
+        'price' => '価格',
         'discount' => '割引',
         'delivery_charge' => '配送料',
         'tax' => '税金',
-        'amount' => '金額',
         'total' => '合計',
-        'thank_you' => 'ありがとうございます'
+        'total_discount' => '割引合計',
+        'total_delivery' => '配送料合計',
+        'total_tax' => '税金合計'
     ]
-
 ];

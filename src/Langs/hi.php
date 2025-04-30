@@ -54,25 +54,23 @@ return [
         'invalid_tax' => 'आईडी: :id वाले आइटम के लिए टैक्स 0 या उससे कम नहीं हो सकता।'
     ],
     'invoice' => [
-        'download_invoice_btn' => 'ई-चालान डाउनलोड करें',
         'title' => 'चालान',
         'logo' => 'लोगो',
-        'invoice_number' => 'चालान संख्या',
-        'order_number' => 'ऑर्डर संख्या',
+        'order' => 'आदेश',
         'date' => 'तारीख',
         'bill_from' => 'बिल भेजने वाला',
-        'bill_to' => 'बिल पाने वाला',
+        'bill_to' => 'बिल प्राप्तकर्ता',
         'cart' => 'कार्ट',
         'cart_applicables' => 'कार्ट स्तर पर लागू',
         'item' => 'आइटम',
         'qty' => 'मात्रा',
-        'unit_rate' => 'इकाई दर',
+        'price' => 'कीमत',
         'discount' => 'छूट',
-        'delivery_charge' => 'डिलीवरी शुल्क',
+        'delivery_charge' => 'वितरण शुल्क',
         'tax' => 'कर',
-        'amount' => 'राशि',
         'total' => 'कुल',
-        'thank_you' => 'धन्यवाद'
+        'total_discount' => 'कुल छूट',
+        'total_delivery' => 'कुल वितरण',
+        'total_tax' => 'कुल कर'
     ]
-
 ];

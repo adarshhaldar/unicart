@@ -54,25 +54,23 @@ return [
         'invalid_tax' => 'Id 为 :id 的商品的税费不能小于或等于 0。'
     ],
     'invoice' => [
-        'download_invoice_btn' => '下载电子发票',
         'title' => '发票',
-        'logo' => '徽标',
-        'invoice_number' => '发票号码',
-        'order_number' => '订单号码',
+        'logo' => '标志',
+        'order' => '订单',
         'date' => '日期',
-        'bill_from' => '账单来源',
-        'bill_to' => '账单接收',
+        'bill_from' => '开票方',
+        'bill_to' => '收票方',
         'cart' => '购物车',
-        'cart_applicables' => '购物车级别适用项',
+        'cart_applicables' => '购物车级别的应用项',
         'item' => '商品',
         'qty' => '数量',
-        'unit_rate' => '单价',
+        'price' => '价格',
         'discount' => '折扣',
         'delivery_charge' => '运费',
-        'tax' => '税',
-        'amount' => '金额',
+        'tax' => '税费',
         'total' => '总计',
-        'thank_you' => '谢谢'
+        'total_discount' => '总折扣',
+        'total_delivery' => '总运费',
+        'total_tax' => '总税费'
     ]
-
 ];
