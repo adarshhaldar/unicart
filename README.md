@@ -22,6 +22,8 @@
 - Rounding Mode Configuration: Set custom rounding behavior on totals for both items and the cart.
 - Item Override Control: Prevent or allow overriding items with the same ID.
 - Meta Data Support: Attach developer-defined meta information for item.
+- Locale system: Multi-language error handling
+- Invoice generation: Styled HTML invoice with full cart summary, company details, and optional PDF download with RTL/LTR rendering.
 
 ---
 
