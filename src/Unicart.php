@@ -524,8 +524,8 @@ class Unicart
 
         if (count($this->deliveryCharge) > 0) {
             foreach ($this->deliveryCharge as $deliveryCharge) {
-                $totalDeliveryCharge += $deliveryCharge;
-                $totalDeliveryChargeOnCart += $deliveryCharge;
+                $totalDeliveryCharge += $deliveryCharge['charge'];
+                $totalDeliveryChargeOnCart += $deliveryCharge['charge'];
             }
         }
 

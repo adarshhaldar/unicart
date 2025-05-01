@@ -1,6 +1,6 @@
 # Unicart
 
-**Unicart** is a robust, object-oriented PHP shopping cart system designed for flexibility, modularity, and precision. It allows developers to manage individual items or full carts with support for detailed pricing operations such as discounts, taxes, and delivery charges at both item and cart levels.
+**Unicart** is a robust, object-oriented PHP shopping cart system designed for flexibility, modularity, and precision. It allows developers to manage individual items or full carts with support for detailed pricing operations such as discounts, taxes, and delivery charges at both item and cart levels as well as empowers developers to generate invoices based on the cart.
 
 ---
 

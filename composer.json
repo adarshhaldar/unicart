@@ -1,6 +1,6 @@
 {
     "name": "adarshhaldar/unicart",
-    "description": "A PHP cart library for checkout calculations and summary",
+    "description": "A PHP cart library for checkout calculations, summary and invoice generation.",
     "type": "library",
     "license": "MIT",
     "autoload": {

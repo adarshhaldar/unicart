@@ -169,48 +169,54 @@ final class Invoice
      * @param string $companyName The company name.
      * @param null|string $logoLink Company's logo link.
      * 
-     * @return void
+     * @return self
      */
-    public function setCompanyDetail(string $companyName, null|string $logoLink = null): void
+    public function setCompanyDetail(string $companyName, null|string $logoLink = null): self
     {
         $this->companyName = htmlspecialchars($companyName);
         $this->logoLink = $logoLink ? htmlspecialchars($logoLink) : null;
+
+        return $this;
     }
 
     /**
      * Set bill from party detail
      * 
      * @param string $billFromName The bill from party name.
-     * @param null|string $billFromAddress Bill from party's address.
+     * @param string $billFromAddress Bill from party's address.
      * @param null|string $billFromEmail Bill from party's email.
      * @param null|string $billFromContact Bill from party's contact.
      * 
-     * @return void
+     * @return self
      */
-    public function setBillFromDetails(string $billFromName, string $billFromAddress, null|string $billFromEmail = null, null|string $billFromContact = null): void
+    public function setBillFromDetails(string $billFromName, string $billFromAddress, null|string $billFromEmail = null, null|string $billFromContact = null): self
     {
         $this->billFromName = htmlspecialchars($billFromName);
         $this->billFromAddress = htmlspecialchars($billFromAddress);
         $this->billFromEmail = $billFromEmail ? htmlspecialchars($billFromEmail) : null;
         $this->billFromContact = $billFromContact ? htmlspecialchars($billFromContact) : null;
+
+        return $this;
     }
 
     /**
      * Set bill to party detail
      * 
      * @param string $billToName The bill to party name.
-     * @param null|string $billToAddress Bill to party's address.
+     * @param string $billToAddress Bill to party's address.
      * @param null|string $billToEmail Bill to party's email.
      * @param null|string $billToContact Bill to party's contact.
      * 
-     * @return void
+     * @return self
      */
-    public function setBillToDetails(string $billToName, string $billToAddress, null|string $billToEmail = null, null|string $billToContact = null): void
+    public function setBillToDetails(string $billToName, string $billToAddress, null|string $billToEmail = null, null|string $billToContact = null): self
     {
         $this->billToName = htmlspecialchars($billToName);
         $this->billToAddress = htmlspecialchars($billToAddress);
         $this->billToEmail = $billToEmail ? htmlspecialchars($billToEmail) : null;
         $this->billToContact = $billToContact ? htmlspecialchars($billToContact) : null;
+
+        return $this;
     }
 
     /**

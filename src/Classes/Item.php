@@ -365,7 +365,7 @@ final class Item
 
         if (count($this->deliveryCharge) > 0) {
             foreach ($this->deliveryCharge as $deliveryCharge) {
-                $totalDeliveryCharge += $deliveryCharge;
+                $totalDeliveryCharge += $deliveryCharge['charge'];
             }
         }
 

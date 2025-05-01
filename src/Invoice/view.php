@@ -11,6 +11,23 @@ function formatNumber(float $number, null|string $currency = null, int $decimals
 
     return $formatted;
 }
+
+function renderMetadata($metadata, $rtl = false, $prefix = '')
+{
+    foreach ($metadata as $key => $value) {
+        $key = is_numeric($key) ? '' : $key;
+
+        $label = $key != '' ? $prefix . $key : substr($prefix, 0, -1);
+        if (is_array($value)) {
+            renderMetadata($value, $rtl, $label . '-'); // Use dot notation or change as needed
+        } else {
+            echo '<span>';
+            echo $rtl ? htmlspecialchars($value) . ': ' . htmlspecialchars($label) : htmlspecialchars($label) . ': ' . htmlspecialchars($value);
+            echo '</span>';
+        }
+    }
+}
+
 ?>
 
 <html lang="<?php echo $lang ?>" dir="<?php echo $rtl ? 'rtl' : 'ltr'; ?>">
@@ -116,11 +133,7 @@ function formatNumber(float $number, null|string $currency = null, int $decimals
                                     <td><b>#<?php echo $item['id'] ?></b>
                                         <?php
                                         if (isset($item['metadata'])) {
-                                            foreach ($item['metadata'] as $key => $data) {
-                                        ?>
-                                                <span><?php echo $rtl ? $data : $key; ?>: <?php echo $rtl ? $key : $data; ?></span>
-                                        <?php
-                                            }
+                                            renderMetadata($item['metadata'], $rtl);
                                         }
                                         ?>
                                     </td>
