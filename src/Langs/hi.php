@@ -53,6 +53,13 @@ return [
         'invalid_delivery_charge' => 'आईडी: :id वाले आइटम के लिए डिलीवरी चार्ज 0 या उससे कम नहीं हो सकता।',
         'invalid_tax' => 'आईडी: :id वाले आइटम के लिए टैक्स 0 या उससे कम नहीं हो सकता।'
     ],
+    'invoice_exceptions' => [
+        'bill_to_address_requried' => 'प्राप्तकर्ता का पता आवश्यक है',
+        'bill_to_name_requried' => 'प्राप्तकर्ता का नाम आवश्यक है',
+        'bill_from_address_requried' => 'प्रेषक का पता आवश्यक है',
+        'bill_from_name_requried' => 'प्रेषक का नाम आवश्यक है',
+        'company_name_required' => 'कंपनी का नाम आवश्यक है',
+    ],
     'invoice' => [
         'title' => 'चालान',
         'logo' => 'लोगो',

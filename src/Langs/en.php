@@ -53,6 +53,13 @@ return [
         'invalid_delivery_charge' => 'Delivery charge can not be less than or equal to 0 for item with Id: :id.',
         'invalid_tax' => 'Tax can not be less than or equal to 0 for item with Id: :id.'
     ],
+    'invoice_exceptions' => [
+        'bill_to_address_requried' => 'Bill to address is required',
+        'bill_to_name_requried' => 'Bill to name is required',
+        'bill_from_address_requried' => 'Bill from address is required',
+        'bill_from_name_requried' => 'Bill from name is required',
+        'company_name_required' => 'Comapany name is required'
+    ],
     'invoice' => [
         'title' => 'Invoice',
         'logo' => 'Logo',

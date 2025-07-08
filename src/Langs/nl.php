@@ -53,6 +53,13 @@ return [
         'invalid_delivery_charge' => 'Verzendkosten mogen niet kleiner dan of gelijk aan 0 zijn voor artikel met Id: :id.',
         'invalid_tax' => 'Belasting mag niet kleiner dan of gelijk aan 0 zijn voor artikel met Id: :id.'
     ],
+    'invoice_exceptions' => [
+        'bill_to_address_requried' => 'Factuuradres van ontvanger is vereist',
+        'bill_to_name_requried' => 'Naam van ontvanger is vereist',
+        'bill_from_address_requried' => 'Factuuradres van afzender is vereist',
+        'bill_from_name_requried' => 'Naam van afzender is vereist',
+        'company_name_required' => 'Bedrijfsnaam is vereist',
+    ],
     'invoice' => [
         'title' => 'Factuur',
         'logo' => 'Logo',

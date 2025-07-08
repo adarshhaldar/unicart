@@ -53,6 +53,13 @@ return [
         'invalid_delivery_charge' => 'Les frais de livraison ne peuvent pas être inférieurs ou égaux à 0 pour l\'article avec l\'Id : :id.',
         'invalid_tax' => 'La taxe ne peut pas être inférieure ou égale à 0 pour l\'article avec l\'Id : :id.'
     ],
+    'invoice_exceptions' => [
+        'bill_to_address_requried' => 'L’adresse du destinataire est requise',
+        'bill_to_name_requried' => 'Le nom du destinataire est requis',
+        'bill_from_address_requried' => 'L’adresse de l’expéditeur est requise',
+        'bill_from_name_requried' => 'Le nom de l’expéditeur est requis',
+        'company_name_required' => 'Le nom de l’entreprise est requis',
+    ],
     'invoice' => [
         'title' => 'Facture',
         'logo' => 'Logo',

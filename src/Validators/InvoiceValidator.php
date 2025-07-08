@@ -2,6 +2,7 @@
 
 namespace Unicart\Validators;
 
+use Unicart\Classes\Locale;
 use Unicart\Exceptions\InvoiceException;
 
 trait InvoiceValidator
@@ -14,7 +15,7 @@ trait InvoiceValidator
     private function checkBillToAddress(): void
     {
         if ($this->billToAddress == null) {
-            throw new InvoiceException('Bill to address is required');
+            throw new InvoiceException(Locale::translate('invoice_exceptions.bill_to_address_requried'));
         }
     }
 
@@ -26,7 +27,7 @@ trait InvoiceValidator
     private function checkBillToName(): void
     {
         if ($this->billToName == null) {
-            throw new InvoiceException('Bill to name is required');
+            throw new InvoiceException(Locale::translate('invoice_exceptions.bill_to_name_requried'));
         }
     }
 
@@ -38,7 +39,7 @@ trait InvoiceValidator
     private function checkBillFromAddress(): void
     {
         if ($this->billFromAddress == null) {
-            throw new InvoiceException('Bill from address is required');
+            throw new InvoiceException(Locale::translate('invoice_exceptions.bill_from_address_requried'));
         }
     }
 
@@ -50,7 +51,7 @@ trait InvoiceValidator
     private function checkBillFromName(): void
     {
         if ($this->billFromName == null) {
-            throw new InvoiceException('Bill from name is required');
+            throw new InvoiceException(Locale::translate('invoice_exceptions.bill_from_name_requried'));
         }
     }
 
@@ -62,7 +63,7 @@ trait InvoiceValidator
     private function checkCompanyName(): void
     {
         if ($this->companyName == null) {
-            throw new InvoiceException('Comapany name is required');
+            throw new InvoiceException(Locale::translate('invoice_exceptions.company_name_requried'));
         }
     }
 

@@ -53,6 +53,13 @@ return [
         'invalid_delivery_charge' => 'Id: :id の商品の配送料は 0 以下にできません。',
         'invalid_tax' => 'Id: :id の商品の税額は 0 以下にできません。'
     ],
+    'invoice_exceptions' => [
+        'bill_to_address_requried' => '請求先の住所が必要です',
+        'bill_to_name_requried' => '請求先の名前が必要です',
+        'bill_from_address_requried' => '請求元の住所が必要です',
+        'bill_from_name_requried' => '請求元の名前が必要です',
+        'company_name_required' => '会社名が必要です',
+    ],
     'invoice' => [
         'title' => '請求書',
         'logo' => 'ロゴ',

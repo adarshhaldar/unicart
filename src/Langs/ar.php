@@ -53,6 +53,20 @@ return [
         'invalid_delivery_charge' => 'رسوم التوصيل للعنصر بالمعرّف :id لا يمكن أن تكون صفرًا أو أقل.',
         'invalid_tax' => 'الضريبة للعنصر بالمعرّف :id لا يمكن أن تكون صفرًا أو أقل.',
     ],
+    'invoice_exceptions' => [
+        'bill_to_address_requried' => 'Bill to address is required',
+        'bill_to_name_requried' => 'Bill to name is required',
+        'bill_from_address_requried' => 'Bill from address is required',
+        'bill_from_name_requried' => 'Bill from name is required',
+        'company_name_required' => 'Comapany name is required'
+    ],
+    'invoice_exceptions' => [
+        'bill_to_address_requried' => 'عنوان المُرسل إليه مطلوب',
+        'bill_to_name_requried' => 'اسم المُرسل إليه مطلوب',
+        'bill_from_address_requried' => 'عنوان المُرسل مطلوب',
+        'bill_from_name_requried' => 'اسم المُرسل مطلوب',
+        'company_name_required' => 'اسم الشركة مطلوب',
+    ],
     'invoice' => [
         'title' => 'فاتورة',
         'logo' => 'الشعار',

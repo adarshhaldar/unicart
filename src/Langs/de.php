@@ -53,6 +53,13 @@ return [
         'invalid_delivery_charge' => 'Die Liefergebühr darf für den Artikel mit der Id: :id nicht kleiner oder gleich 0 sein.',
         'invalid_tax' => 'Die Steuer darf für den Artikel mit der Id: :id nicht kleiner oder gleich 0 sein.'
     ],
+    'invoice_exceptions' => [
+        'bill_to_address_requried' => 'Rechnungsadresse des Empfängers ist erforderlich',
+        'bill_to_name_requried' => 'Name des Empfängers ist erforderlich',
+        'bill_from_address_requried' => 'Rechnungsadresse des Absenders ist erforderlich',
+        'bill_from_name_requried' => 'Name des Absenders ist erforderlich',
+        'company_name_required' => 'Firmenname ist erforderlich',
+    ],
     'invoice' => [
         'title' => 'Rechnung',
         'logo' => 'Logo',

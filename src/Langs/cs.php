@@ -53,6 +53,13 @@ return [
         'invalid_delivery_charge' => 'Poplatek za dopravu nemůže být menší nebo rovno 0 pro položku s Id: :id.',
         'invalid_tax' => 'Daň nemůže být menší nebo rovno 0 pro položku s Id: :id.'
     ],
+    'invoice_exceptions' => [
+        'bill_to_address_requried' => 'Adresa příjemce je povinná',
+        'bill_to_name_requried' => 'Jméno příjemce je povinné',
+        'bill_from_address_requried' => 'Adresa odesílatele je povinná',
+        'bill_from_name_requried' => 'Jméno odesílatele je povinné',
+        'company_name_required' => 'Název společnosti je povinný',
+    ],
     'invoice' => [
         'title' => 'Faktura',
         'logo' => 'Logo',

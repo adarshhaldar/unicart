@@ -53,6 +53,13 @@ return [
         'invalid_delivery_charge' => 'Id 为 :id 的商品的配送费用不能小于或等于 0。',
         'invalid_tax' => 'Id 为 :id 的商品的税费不能小于或等于 0。'
     ],
+    'invoice_exceptions' => [
+        'bill_to_address_requried' => '收款方地址为必填项',
+        'bill_to_name_requried' => '收款方名称为必填项',
+        'bill_from_address_requried' => '付款方地址为必填项',
+        'bill_from_name_requried' => '付款方名称为必填项',
+        'company_name_required' => '公司名称为必填项',
+    ],
     'invoice' => [
         'title' => '发票',
         'logo' => '标志',

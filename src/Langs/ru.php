@@ -53,6 +53,13 @@ return [
         'invalid_delivery_charge' => 'Стоимость доставки не может быть меньше или равна 0 для товара с Id: :id.',
         'invalid_tax' => 'Налог не может быть меньше или равен 0 для товара с Id: :id.'
     ],
+    'invoice_exceptions' => [
+        'bill_to_address_requried' => 'Необходим адрес получателя счета',
+        'bill_to_name_requried' => 'Необходимо указать имя получателя счета',
+        'bill_from_address_requried' => 'Необходим адрес отправителя счета',
+        'bill_from_name_requried' => 'Необходимо указать имя отправителя счета',
+        'company_name_required' => 'Необходимо указать название компании',
+    ],
     'invoice' => [
         'title' => 'Счет',
         'logo' => 'Логотип',
