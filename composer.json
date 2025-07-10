@@ -3,25 +3,50 @@
     "description": "A PHP cart library for checkout calculations, summary and invoice generation.",
     "type": "library",
     "license": "MIT",
+    "keywords": [
+        "php",
+        "shopping cart",
+        "ecommerce",
+        "cart",
+        "discount",
+        "tax",
+        "delivery charge",
+        "checkout",
+        "order summary",
+        "pricing",
+        "cart management",
+        "cart system",
+        "shopping",
+        "unicart",
+        "ecommerce library",
+        "discount engine",
+        "php cart",
+        "order calculation",
+        "invoice"
+    ],
     "autoload": {
         "psr-4": {
             "Unicart\\": "src/"
         }
     },
-    "authors": [
-        {
-            "name": "Adarsh Haldar",
-            "email": "hadarsh04@gmail.com",
-            "role": "Developer"
-        }
-    ],
     "require": {
         "php": ">=7.4"
     },
+     "require-dev": {
+        "phpunit/phpunit": "^10"
+    },
+    "minimum-stability": "stable",
     "repositories": [
         {
             "type": "vcs",
             "url": "https://github.com/adarshhaldar/unicart.git"
+        }
+    ],
+     "authors": [
+        {
+            "name": "Adarsh Haldar",
+            "email": "hadarsh04@gmail.com",
+            "role": "Developer"
         }
     ]
 }
